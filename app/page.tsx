@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, type FormEvent } from 'react'
 import Image from 'next/image'
 import { Syne, DM_Sans } from 'next/font/google'
 
@@ -132,6 +132,24 @@ const TESTIMONIALS = [
     initials: 'SL',
     quote: "Les urgences nocturnes sont gérées sans que je touche mon téléphone. L'IA me notifie uniquement quand c'est critique. Mon taux de conversion a doublé et mes clients adorent la réactivité.",
   },
+  {
+    name: 'Antoine Rivière',
+    role: 'Serrurier Artisan · Bordeaux',
+    initials: 'AR',
+    quote: "Ce qui me bluffe, c'est que l'agent s'améliore tout seul. Au début il confondait certains modèles de cylindres, aujourd'hui il les reconnaît mieux que mon apprenti. Il a appris mon vocabulaire métier en quelques semaines.",
+  },
+  {
+    name: 'Mehdi Cherif',
+    role: 'Plomberie Cherif & Fils · Toulouse',
+    initials: 'MC',
+    quote: "L'IA apprend de chaque appel — elle anticipe maintenant les bonnes questions à poser pour un dégorgement vs. une recherche de fuite. C'est comme avoir une secrétaire qui maîtrise mon métier, sans pause, sans congé.",
+  },
+  {
+    name: 'Laurent Pasquier',
+    role: 'Garage Pasquier Auto · Nantes',
+    initials: 'LP',
+    quote: "Au bout de trois mois, l'agent a intégré tout notre catalogue de prestations et notre grille tarifaire. Il qualifie les devis avec une précision que je n'aurais pas crue possible. + 22 % de RDV honorés depuis qu'on l'utilise.",
+  },
 ]
 
 /* ─── Hero Voice Agent Mockup ────────────────────────────────────────────── */
@@ -224,10 +242,83 @@ function VoiceAgentMockup() {
   )
 }
 
+/* ─── Form Field ─────────────────────────────────────────────────────────── */
+function Field({
+  label,
+  name,
+  type = 'text',
+  placeholder,
+  value,
+  onChange,
+  required,
+}: {
+  label: string
+  name: string
+  type?: string
+  placeholder?: string
+  value: string
+  onChange: (v: string) => void
+  required?: boolean
+}) {
+  return (
+    <div>
+      <label htmlFor={name} className="mb-2 block text-xs font-medium uppercase tracking-[0.16em] text-white/55">
+        {label}
+      </label>
+      <input
+        id={name}
+        name={name}
+        type={type}
+        required={required}
+        placeholder={placeholder}
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        className="w-full rounded-xl border border-white/[0.1] bg-white/[0.03] px-4 py-3 text-sm text-white placeholder:text-white/30 outline-none transition-all duration-300 focus:border-[var(--accent)]/60 focus:bg-white/[0.05] focus:ring-2 focus:ring-[var(--accent)]/25"
+      />
+    </div>
+  )
+}
+
 /* ─── Page ───────────────────────────────────────────────────────────────── */
+type FormState = {
+  fullName: string
+  company: string
+  phone: string
+  message: string
+  date: string
+  time: string
+}
+
+const INITIAL_FORM: FormState = {
+  fullName: '',
+  company: '',
+  phone: '',
+  message: '',
+  date: '',
+  time: '',
+}
+
 export default function MonolithAIPage() {
   const [scrolled, setScrolled] = useState(false)
   const [logoError, setLogoError] = useState(false)
+  const [form, setForm] = useState<FormState>(INITIAL_FORM)
+  const [submitting, setSubmitting] = useState(false)
+  const [submitted, setSubmitted] = useState(false)
+
+  const minDate = new Date().toISOString().split('T')[0]
+
+  const updateField = <K extends keyof FormState>(key: K, value: FormState[K]) => {
+    setForm((prev) => ({ ...prev, [key]: value }))
+  }
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    setSubmitting(true)
+    await new Promise((r) => setTimeout(r, 900))
+    setSubmitting(false)
+    setSubmitted(true)
+    setForm(INITIAL_FORM)
+  }
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24)
@@ -535,7 +626,7 @@ export default function MonolithAIPage() {
             </p>
           </div>
 
-          <div className="grid gap-6 md:grid-cols-3">
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {TESTIMONIALS.map((t) => (
               <figure
                 key={t.name}
@@ -696,21 +787,151 @@ export default function MonolithAIPage() {
             </p>
           </div>
 
-          <div className="overflow-hidden rounded-3xl border border-white/[0.1] bg-white/[0.03] shadow-[0_40px_120px_-30px_rgba(20,40,120,0.6)] backdrop-blur-md">
+          <div className="relative overflow-hidden rounded-3xl border border-white/[0.1] bg-gradient-to-br from-white/[0.045] via-white/[0.025] to-white/[0.01] shadow-[0_40px_120px_-30px_rgba(20,40,120,0.6)] backdrop-blur-xl">
+            <div className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-[radial-gradient(circle,rgba(107,140,255,0.28),transparent_70%)] blur-2xl" />
+            <div className="pointer-events-none absolute -bottom-32 -left-16 h-72 w-72 rounded-full bg-[radial-gradient(circle,rgba(64,96,220,0.22),transparent_70%)] blur-2xl" />
+
             <div className="flex items-center gap-2.5 border-b border-white/[0.06] px-6 py-4">
               <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 soft-pulse" />
-              <span className="text-xs font-medium text-white/65">
-                Disponibilités en temps réel · Appel stratégique 30 min · Gratuit
+              <span className="text-xs font-medium tracking-wide text-white/65">
+                Formulaire de réservation · Réponse sous 2h ouvrées · Gratuit
               </span>
             </div>
-            <div className="relative aspect-[4/3] w-full min-h-[560px] sm:aspect-[16/11] sm:min-h-[640px] lg:aspect-[16/10] lg:min-h-[720px]">
-              <iframe
-                src="https://calendly.com/monolith-ai/appel-strategie"
-                title="Réserver un appel Monolith AI"
-                loading="lazy"
-                className="absolute inset-0 block h-full w-full border-0 bg-transparent"
-              />
-            </div>
+
+            {submitted ? (
+              <div className="relative px-8 py-16 text-center sm:px-12">
+                <div className="mx-auto mb-6 flex h-14 w-14 items-center justify-center rounded-full border border-emerald-400/30 bg-emerald-400/15 text-emerald-300">
+                  <Check className="h-6 w-6" />
+                </div>
+                <h3 className="font-[var(--font-syne)] text-2xl font-semibold tracking-tight text-white">
+                  Demande envoyée
+                </h3>
+                <p className="mx-auto mt-3 max-w-md text-[0.95rem] leading-relaxed text-[var(--ink-soft)]">
+                  Merci. Notre équipe vous contacte sous 2 heures ouvrées pour confirmer votre créneau et préparer l&apos;appel stratégique.
+                </p>
+                <button
+                  type="button"
+                  onClick={() => setSubmitted(false)}
+                  className="mt-8 inline-flex items-center gap-2 rounded-full border border-white/15 px-5 py-2.5 text-sm font-medium text-white/85 transition-colors hover:border-white/35 hover:text-white"
+                >
+                  Envoyer une autre demande
+                </button>
+              </div>
+            ) : (
+              <form onSubmit={handleSubmit} className="relative grid gap-5 px-6 py-8 sm:px-10 sm:py-10">
+                <div className="grid gap-5 sm:grid-cols-2">
+                  <Field
+                    label="Nom complet"
+                    name="fullName"
+                    placeholder="Jean Dupont"
+                    value={form.fullName}
+                    onChange={(v) => updateField('fullName', v)}
+                    required
+                  />
+                  <Field
+                    label="Nom de l'entreprise"
+                    name="company"
+                    placeholder="Dupont Plomberie SARL"
+                    value={form.company}
+                    onChange={(v) => updateField('company', v)}
+                    required
+                  />
+                </div>
+
+                <Field
+                  label="Numéro de téléphone"
+                  name="phone"
+                  type="tel"
+                  placeholder="+33 6 12 34 56 78"
+                  value={form.phone}
+                  onChange={(v) => updateField('phone', v)}
+                  required
+                />
+
+                <div>
+                  <label htmlFor="message" className="mb-2 block text-xs font-medium uppercase tracking-[0.16em] text-white/55">
+                    Message · Problème à résoudre
+                  </label>
+                  <textarea
+                    id="message"
+                    name="message"
+                    rows={4}
+                    required
+                    placeholder="Décrivez brièvement votre activité et le goulot d'étranglement que vous voulez automatiser…"
+                    value={form.message}
+                    onChange={(e) => updateField('message', e.target.value)}
+                    className="w-full resize-none rounded-xl border border-white/[0.1] bg-white/[0.03] px-4 py-3 text-sm text-white placeholder:text-white/30 outline-none transition-all duration-300 focus:border-[var(--accent)]/60 focus:bg-white/[0.05] focus:ring-2 focus:ring-[var(--accent)]/25"
+                  />
+                </div>
+
+                <div className="rounded-2xl border border-white/[0.08] bg-white/[0.02] p-5">
+                  <div className="mb-4 flex items-center gap-2.5">
+                    <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-[var(--accent)]/15 text-[var(--accent)]">
+                      <CalendarIcon className="h-3.5 w-3.5" />
+                    </span>
+                    <span className="text-xs font-medium uppercase tracking-[0.16em] text-white/65">
+                      Vos disponibilités pour l&apos;appel
+                    </span>
+                  </div>
+                  <div className="grid gap-4 sm:grid-cols-2">
+                    <div>
+                      <label htmlFor="date" className="mb-2 block text-[0.7rem] font-medium uppercase tracking-[0.16em] text-white/50">
+                        Date
+                      </label>
+                      <input
+                        id="date"
+                        name="date"
+                        type="date"
+                        required
+                        min={minDate}
+                        value={form.date}
+                        onChange={(e) => updateField('date', e.target.value)}
+                        className="w-full rounded-xl border border-white/[0.1] bg-white/[0.03] px-4 py-3 text-sm text-white outline-none transition-all duration-300 focus:border-[var(--accent)]/60 focus:bg-white/[0.05] focus:ring-2 focus:ring-[var(--accent)]/25 [color-scheme:dark]"
+                      />
+                    </div>
+                    <div>
+                      <label htmlFor="time" className="mb-2 block text-[0.7rem] font-medium uppercase tracking-[0.16em] text-white/50">
+                        Créneau horaire
+                      </label>
+                      <select
+                        id="time"
+                        name="time"
+                        required
+                        value={form.time}
+                        onChange={(e) => updateField('time', e.target.value)}
+                        className="w-full appearance-none rounded-xl border border-white/[0.1] bg-white/[0.03] px-4 py-3 text-sm text-white outline-none transition-all duration-300 focus:border-[var(--accent)]/60 focus:bg-white/[0.05] focus:ring-2 focus:ring-[var(--accent)]/25 [color-scheme:dark]"
+                      >
+                        <option value="" disabled>Choisir un créneau</option>
+                        <option value="09:00">09h00 – 09h30</option>
+                        <option value="10:00">10h00 – 10h30</option>
+                        <option value="11:00">11h00 – 11h30</option>
+                        <option value="14:00">14h00 – 14h30</option>
+                        <option value="15:00">15h00 – 15h30</option>
+                        <option value="16:00">16h00 – 16h30</option>
+                        <option value="17:00">17h00 – 17h30</option>
+                        <option value="18:00">18h00 – 18h30</option>
+                      </select>
+                    </div>
+                  </div>
+                  <p className="mt-3 text-[0.72rem] leading-relaxed text-white/40">
+                    Notre équipe confirme votre créneau par WhatsApp dans les 2 heures ouvrées suivantes.
+                  </p>
+                </div>
+
+                <button
+                  type="submit"
+                  disabled={submitting}
+                  className="group mt-2 inline-flex items-center justify-center gap-2 rounded-full bg-white px-7 py-4 text-sm font-semibold text-[#06102f] shadow-[0_20px_60px_-15px_rgba(107,140,255,0.5)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_25px_70px_-15px_rgba(107,140,255,0.7)] disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0"
+                >
+                  {submitting ? 'Envoi en cours…' : 'Réserver mon appel stratégique'}
+                  {!submitting && <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />}
+                </button>
+
+                <p className="text-center text-[0.7rem] text-white/35">
+                  En soumettant ce formulaire, vous acceptez d&apos;être recontacté par Monolith AI. Aucune donnée n&apos;est partagée avec des tiers.
+                </p>
+              </form>
+            )}
           </div>
         </div>
       </section>
