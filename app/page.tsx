@@ -96,6 +96,10 @@ const PRICING = [
     setup: '5 500 €',
     monthly: '1 000 €',
     desc: 'L\'écosystème complet — acquisition, conversion et rétention entièrement automatisées.',
+    spotlight: {
+      title: 'IA Apprenante & Autonome',
+      body: "Votre agent vocal apprend en continu à partir de vos appels, de vos données métier et des interactions clients. Il s'adapte de manière autonome, affine son vocabulaire, ses réponses et ses décisions — et devient chaque jour plus précis et plus pertinent pour votre environnement.",
+    },
     features: [
       'Tout le package Business inclus',
       'Booking automatique multi‑agendas',
@@ -106,6 +110,27 @@ const PRICING = [
     ],
     cta: 'Choisir Premium',
     highlight: false,
+  },
+]
+
+const TESTIMONIALS = [
+  {
+    name: 'Jean Moreau',
+    role: 'Plombier Pro Paris',
+    initials: 'JM',
+    quote: "L'agent vocal a sauvé une fuite à 23h un dimanche. Mon client a été pris en charge en moins de 2 minutes, et j'ai gagné un contrat de 2 800 €. En trois mois, mon chiffre d'affaires a bondi de 38 %.",
+  },
+  {
+    name: 'Karim Benali',
+    role: 'MécaAuto Lyon',
+    initials: 'KB',
+    quote: "Avant Monolith AI, je laissais filer 6 à 8 appels par jour quand j'étais sous une voiture. Aujourd'hui, chaque appel est traité, qualifié et planifié. Mon planning est plein deux semaines à l'avance.",
+  },
+  {
+    name: 'Sophie Lefèvre',
+    role: 'Serrurerie Express Marseille',
+    initials: 'SL',
+    quote: "Les urgences nocturnes sont gérées sans que je touche mon téléphone. L'IA me notifie uniquement quand c'est critique. Mon taux de conversion a doublé et mes clients adorent la réactivité.",
   },
 ]
 
@@ -492,6 +517,58 @@ export default function MonolithAIPage() {
         </div>
       </section>
 
+      {/* ════════════════════════════════════════════════════════ TÉMOIGNAGES */}
+      <section id="temoignages" className="relative px-6 py-28">
+        <div className="pointer-events-none absolute left-1/2 top-1/4 h-[420px] w-[820px] -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgba(107,140,255,0.1),transparent_65%)] blur-3xl" />
+
+        <div className="relative mx-auto max-w-6xl">
+          <div className="mb-14 text-center">
+            <span className="mb-4 inline-block text-xs font-medium uppercase tracking-[0.22em] text-[var(--accent)]/85">
+              Témoignages clients
+            </span>
+            <h2 className="font-[var(--font-syne)] text-[clamp(2rem,4vw,3.2rem)] font-semibold tracking-tight text-white">
+              Ils ne ratent plus jamais un appel.
+            </h2>
+            <p className="mx-auto mt-5 max-w-2xl text-[1rem] leading-relaxed text-[var(--ink-soft)]">
+              Des artisans français qui ont remplacé leur répondeur par un agent vocal IA
+              — et qui voient les résultats au quotidien.
+            </p>
+          </div>
+
+          <div className="grid gap-6 md:grid-cols-3">
+            {TESTIMONIALS.map((t) => (
+              <figure
+                key={t.name}
+                className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.025] p-7 backdrop-blur-sm transition-all duration-500 hover:-translate-y-1 hover:border-white/[0.18] hover:bg-white/[0.04]"
+              >
+                <svg viewBox="0 0 24 24" fill="none" className="mb-5 h-6 w-6 text-[var(--accent)]/70" aria-hidden>
+                  <path d="M9 7H5a2 2 0 00-2 2v3a2 2 0 002 2h2v1a3 3 0 01-3 3v2a5 5 0 005-5V9a2 2 0 00-2-2zm12 0h-4a2 2 0 00-2 2v3a2 2 0 002 2h2v1a3 3 0 01-3 3v2a5 5 0 005-5V9a2 2 0 00-2-2z" fill="currentColor" />
+                </svg>
+                <blockquote className="flex-1 text-[0.97rem] leading-relaxed text-white/90">
+                  « {t.quote} »
+                </blockquote>
+                <figcaption className="mt-7 flex items-center gap-3 border-t border-white/[0.06] pt-5">
+                  <span className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-[var(--accent)]/40 to-white/10 font-[var(--font-syne)] text-sm font-semibold text-white">
+                    {t.initials}
+                  </span>
+                  <div>
+                    <div className="font-[var(--font-syne)] text-sm font-semibold text-white">{t.name}</div>
+                    <div className="text-xs text-white/55">{t.role}</div>
+                  </div>
+                  <div className="ml-auto flex gap-0.5 text-[#ffd166]">
+                    {Array.from({ length: 5 }).map((_, i) => (
+                      <svg key={i} viewBox="0 0 16 16" className="h-3.5 w-3.5" fill="currentColor" aria-hidden>
+                        <path d="M8 1.5l1.95 4.18 4.55.55-3.36 3.13.86 4.5L8 11.6 3.99 13.86l.86-4.5L1.5 6.23l4.55-.55L8 1.5z" />
+                      </svg>
+                    ))}
+                  </div>
+                </figcaption>
+              </figure>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ════════════════════════════════════════════════════════ TARIFS */}
       <section id="tarifs" className="relative px-6 py-28">
         <div className="pointer-events-none absolute left-1/2 top-1/3 h-[500px] w-[800px] -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgba(107,140,255,0.12),transparent_65%)] blur-3xl" />
@@ -549,6 +626,25 @@ export default function MonolithAIPage() {
                     <span className="text-xs uppercase tracking-[0.16em] text-white/50">/ mois</span>
                   </div>
                 </div>
+
+                {'spotlight' in p && p.spotlight && (
+                  <div className="mb-6 overflow-hidden rounded-2xl border border-[var(--accent)]/35 bg-gradient-to-br from-[var(--accent)]/[0.18] via-[var(--accent)]/[0.08] to-transparent p-4">
+                    <div className="mb-2 flex items-center gap-2">
+                      <span className="inline-flex h-6 w-6 items-center justify-center rounded-md bg-[var(--accent)]/30 text-[var(--accent)]">
+                        <svg viewBox="0 0 16 16" fill="none" className="h-3.5 w-3.5" aria-hidden>
+                          <path d="M8 2v3M8 11v3M2 8h3M11 8h3M4 4l2 2M10 10l2 2M4 12l2-2M10 6l2-2" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
+                        </svg>
+                      </span>
+                      <span className="text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-[#cfd8ff]">Nouveau</span>
+                    </div>
+                    <div className="font-[var(--font-syne)] text-base font-semibold text-white">
+                      {p.spotlight.title}
+                    </div>
+                    <p className="mt-2 text-[0.82rem] leading-relaxed text-[var(--ink-soft)]">
+                      {p.spotlight.body}
+                    </p>
+                  </div>
+                )}
 
                 <ul className="flex-1 space-y-3">
                   {p.features.map((f) => (
