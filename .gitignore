@@ -36,6 +36,11 @@ yarn-error.log*
 # vercel
 .vercel
 
+# local agent config / private workflows
+.claude/
+/My N8n/
+/Logo.png
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts
