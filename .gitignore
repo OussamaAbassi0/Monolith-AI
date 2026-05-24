@@ -40,6 +40,7 @@ yarn-error.log*
 .claude/
 /My N8n/
 /Logo.png
+/Logo-removebg-preview.png
 
 # typescript
 *.tsbuildinfo
