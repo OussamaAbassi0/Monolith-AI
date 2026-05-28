@@ -76,12 +76,16 @@ const PRICING = [
   {
     name: 'Business',
     tag: 'Pro',
-    setup: '3 000 €',
+    setup: '5 500 €',
     monthly: '700 €',
     desc: 'Le système recommandé pour les artisans qui veulent capter 100 % de leurs appels.',
-    earnToLearn: true,
+    earnToLearn: {
+      title: 'Technologie « Earn to Learn » via Supabase',
+      body: "L'IA apprend en continu de vos clients et s'améliore chaque jour grâce à une synchronisation sécurisée sur notre base de données Supabase.",
+    },
     features: [
       'Agent Vocal IA 24h/24 · 7j/7',
+      'Technologie « Earn to Learn » via Supabase',
       'Détection automatique d\'urgence',
       'Alertes SMS Patron en temps réel',
       'Intégrations WhatsApp · Gmail · Calendly',
@@ -94,16 +98,20 @@ const PRICING = [
   {
     name: 'Premium',
     tag: '360',
-    setup: '5 500 €',
+    setup: '9 000 €',
     monthly: '1 000 €',
     desc: 'L\'écosystème complet — acquisition, conversion et rétention entièrement automatisées.',
-    earnToLearn: true,
+    earnToLearn: {
+      title: 'Système « Earn to Learn » Autonome Avancé',
+      body: "Infrastructure Supabase dédiée pour une adaptation totale aux habitudes de l'entreprise. Apprentissage continu, autonome et entièrement isolé.",
+    },
     spotlight: {
       title: 'IA Apprenante & Autonome',
       body: "Votre agent vocal apprend en continu à partir de vos appels, de vos données métier et des interactions clients. Il s'adapte de manière autonome, affine son vocabulaire, ses réponses et ses décisions — et devient chaque jour plus précis et plus pertinent pour votre environnement.",
     },
     features: [
       'Tout le package Business inclus',
+      'Système « Earn to Learn » Autonome Avancé',
       'Booking automatique multi‑agendas',
       'Suivi post‑intervention automatisé',
       'Demandes d\'avis Google automatisées',
@@ -735,12 +743,10 @@ export default function MonolithAIPage() {
                       </span>
                     </div>
                     <div className="font-[var(--font-syne)] text-sm font-semibold text-white">
-                      Technologie « Earn to Learn » via Supabase
+                      {p.earnToLearn.title}
                     </div>
                     <p className="mt-1.5 text-[0.8rem] leading-relaxed text-[var(--ink-soft)]">
-                      L&apos;IA apprend en continu de vos interactions clients et des données de l&apos;entreprise.
-                      Elle s&apos;améliore de jour en jour pour s&apos;adapter parfaitement aux habitudes de votre
-                      structure grâce à une synchronisation sécurisée sur notre base de données Supabase.
+                      {p.earnToLearn.body}
                     </p>
                   </div>
                 )}
