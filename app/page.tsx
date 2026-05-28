@@ -79,6 +79,7 @@ const PRICING = [
     setup: '3 000 €',
     monthly: '700 €',
     desc: 'Le système recommandé pour les artisans qui veulent capter 100 % de leurs appels.',
+    earnToLearn: true,
     features: [
       'Agent Vocal IA 24h/24 · 7j/7',
       'Détection automatique d\'urgence',
@@ -96,6 +97,7 @@ const PRICING = [
     setup: '5 500 €',
     monthly: '1 000 €',
     desc: 'L\'écosystème complet — acquisition, conversion et rétention entièrement automatisées.',
+    earnToLearn: true,
     spotlight: {
       title: 'IA Apprenante & Autonome',
       body: "Votre agent vocal apprend en continu à partir de vos appels, de vos données métier et des interactions clients. Il s'adapte de manière autonome, affine son vocabulaire, ses réponses et ses décisions — et devient chaque jour plus précis et plus pertinent pour votre environnement.",
@@ -717,6 +719,31 @@ export default function MonolithAIPage() {
                     <span className="text-xs uppercase tracking-[0.16em] text-white/50">/ mois</span>
                   </div>
                 </div>
+
+                {'earnToLearn' in p && p.earnToLearn && (
+                  <div className="mb-4 overflow-hidden rounded-2xl border border-emerald-400/30 bg-gradient-to-br from-emerald-400/[0.12] via-emerald-400/[0.05] to-transparent p-4">
+                    <div className="mb-2 flex flex-wrap items-center gap-2">
+                      <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-400/40 bg-emerald-400/15 px-2.5 py-1 text-[0.6rem] font-semibold uppercase tracking-[0.16em] text-emerald-200">
+                        <svg viewBox="0 0 24 24" fill="none" className="h-3 w-3" aria-hidden>
+                          <path d="M12 3l3 6 6 .9-4.5 4.4 1 6.2L12 17.7 6.5 20.5l1-6.2L3 9.9 9 9l3-6z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
+                        </svg>
+                        Earn to Learn
+                      </span>
+                      <span className="inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/[0.04] px-2.5 py-1 text-[0.6rem] font-medium uppercase tracking-[0.16em] text-white/70">
+                        <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 soft-pulse" />
+                        Supabase
+                      </span>
+                    </div>
+                    <div className="font-[var(--font-syne)] text-sm font-semibold text-white">
+                      Technologie « Earn to Learn » via Supabase
+                    </div>
+                    <p className="mt-1.5 text-[0.8rem] leading-relaxed text-[var(--ink-soft)]">
+                      L&apos;IA apprend en continu de vos interactions clients et des données de l&apos;entreprise.
+                      Elle s&apos;améliore de jour en jour pour s&apos;adapter parfaitement aux habitudes de votre
+                      structure grâce à une synchronisation sécurisée sur notre base de données Supabase.
+                    </p>
+                  </div>
+                )}
 
                 {'spotlight' in p && p.spotlight && (
                   <div className="mb-6 overflow-hidden rounded-2xl border border-[var(--accent)]/35 bg-gradient-to-br from-[var(--accent)]/[0.18] via-[var(--accent)]/[0.08] to-transparent p-4">
