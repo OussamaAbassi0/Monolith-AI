@@ -60,9 +60,9 @@ const PRICING = [
   {
     name: 'Essentiel',
     tag: 'Urgence',
-    setup: '1 200 €',
+    setup: '1 500 €',
     monthly: '400 €',
-    desc: 'Pour démarrer immédiatement avec un socle d\'automatisations conversationnelles fiable.',
+    desc: 'Pour les artisans qui veulent démarrer immédiatement avec un socle d\'automatisations conversationnelles fiable.',
     features: [
       'Réponses automatiques WhatsApp 24/7',
       'Rappels & relances clients programmés',
@@ -76,7 +76,7 @@ const PRICING = [
   {
     name: 'Business',
     tag: 'Pro',
-    setup: '5 500 €',
+    setup: '3 000 €',
     monthly: '700 €',
     desc: 'Le système recommandé pour les artisans qui veulent capter 100 % de leurs appels.',
     earnToLearn: {
@@ -98,9 +98,9 @@ const PRICING = [
   {
     name: 'Premium',
     tag: '360',
-    setup: '9 000 €',
-    monthly: '1 000 €',
-    desc: 'L\'écosystème complet — acquisition, conversion et rétention entièrement automatisées.',
+    setup: '5 000 €',
+    monthly: '1 200 €',
+    desc: 'L\'infrastructure premium complète pour les artisans — acquisition, conversion et rétention entièrement automatisées.',
     earnToLearn: {
       title: 'Système « Earn to Learn » Autonome Avancé',
       body: "Infrastructure Supabase dédiée pour une adaptation totale aux habitudes de l'entreprise. Apprentissage continu, autonome et entièrement isolé.",
@@ -126,37 +126,37 @@ const PRICING = [
 const TESTIMONIALS = [
   {
     name: 'Jean Moreau',
-    role: 'Plombier Pro Paris',
+    role: 'Artisan · Paris',
     initials: 'JM',
-    quote: "L'agent vocal a sauvé une fuite à 23h un dimanche. Mon client a été pris en charge en moins de 2 minutes, et j'ai gagné un contrat de 2 800 €. En trois mois, mon chiffre d'affaires a bondi de 38 %.",
+    quote: "L'agent vocal a capté une urgence à 23h un dimanche. Mon client a été pris en charge en moins de 2 minutes, et j'ai gagné un contrat de 2 800 €. En trois mois, mon chiffre d'affaires a bondi de 38 %.",
   },
   {
     name: 'Karim Benali',
-    role: 'MécaAuto Lyon',
+    role: 'Artisan · Lyon',
     initials: 'KB',
-    quote: "Avant Monolith AI, je laissais filer 6 à 8 appels par jour quand j'étais sous une voiture. Aujourd'hui, chaque appel est traité, qualifié et planifié. Mon planning est plein deux semaines à l'avance.",
+    quote: "Avant Monolith AI, je laissais filer 6 à 8 appels par jour quand j'étais sur un chantier. Aujourd'hui, chaque appel est traité, qualifié et planifié. Mon planning est plein deux semaines à l'avance.",
   },
   {
     name: 'Sophie Lefèvre',
-    role: 'Serrurerie Express Marseille',
+    role: 'Artisan · Marseille',
     initials: 'SL',
     quote: "Les urgences nocturnes sont gérées sans que je touche mon téléphone. L'IA me notifie uniquement quand c'est critique. Mon taux de conversion a doublé et mes clients adorent la réactivité.",
   },
   {
     name: 'Antoine Rivière',
-    role: 'Serrurier Artisan · Bordeaux',
+    role: 'Artisan · Bordeaux',
     initials: 'AR',
-    quote: "Ce qui me bluffe, c'est que l'agent s'améliore tout seul. Au début il confondait certains modèles de cylindres, aujourd'hui il les reconnaît mieux que mon apprenti. Il a appris mon vocabulaire métier en quelques semaines.",
+    quote: "Ce qui me bluffe, c'est que l'agent s'améliore tout seul. Au début il confondait certains termes techniques, aujourd'hui il les maîtrise mieux que mon apprenti. Il a appris mon vocabulaire métier en quelques semaines.",
   },
   {
     name: 'Mehdi Cherif',
-    role: 'Plomberie Cherif & Fils · Toulouse',
+    role: 'Artisan · Toulouse',
     initials: 'MC',
-    quote: "L'IA apprend de chaque appel — elle anticipe maintenant les bonnes questions à poser pour un dégorgement vs. une recherche de fuite. C'est comme avoir une secrétaire qui maîtrise mon métier, sans pause, sans congé.",
+    quote: "L'IA apprend de chaque appel — elle anticipe maintenant les bonnes questions à poser pour qualifier une demande. C'est comme avoir une secrétaire qui maîtrise mon métier, sans pause, sans congé.",
   },
   {
     name: 'Laurent Pasquier',
-    role: 'Garage Pasquier Auto · Nantes',
+    role: 'Artisan · Nantes',
     initials: 'LP',
     quote: "Au bout de trois mois, l'agent a intégré tout notre catalogue de prestations et notre grille tarifaire. Il qualifie les devis avec une précision que je n'aurais pas crue possible. + 22 % de RDV honorés depuis qu'on l'utilise.",
   },
@@ -178,7 +178,7 @@ function VoiceAgentMockup() {
               <PhoneIcon className="h-4 w-4" />
             </span>
             <div>
-              <div className="font-[var(--font-syne)] text-sm font-semibold text-white">Agent MécaPro</div>
+              <div className="font-[var(--font-syne)] text-sm font-semibold text-white">Agent Artisan</div>
               <div className="text-[0.7rem] text-white/45">Appel entrant · +33 6 12 34 56 78</div>
             </div>
           </div>
@@ -203,7 +203,7 @@ function VoiceAgentMockup() {
         <div className="space-y-2.5">
           <div className="flex justify-start">
             <div className="max-w-[80%] rounded-2xl rounded-tl-sm border border-white/[0.06] bg-white/[0.04] px-3.5 py-2 text-[0.8rem] leading-relaxed text-white/85">
-              Bonjour, mon chauffe‑eau fuit depuis ce matin, c&apos;est urgent.
+              Bonjour, j&apos;ai une urgence à mon domicile depuis ce matin, pouvez‑vous intervenir ?
             </div>
           </div>
           <div className="flex justify-end">
@@ -452,13 +452,14 @@ export default function MonolithAIPage() {
                 Agents Vocaux IA
               </span>
               <br />
-              pour les PME françaises.
+              pour les artisans français.
             </h1>
 
             <p className="mt-7 max-w-xl text-[1.05rem] leading-relaxed text-[var(--ink-soft)]">
-              Des agents vocaux qui répondent à 100 % de vos appels, qualifient
-              vos prospects et remplissent votre agenda — pendant que vous
-              travaillez sur le terrain.
+              Une infrastructure premium pour les artisans et les petites
+              entreprises du bâtiment : des agents vocaux qui répondent à 100 %
+              de vos appels, qualifient vos prospects et remplissent votre
+              agenda — pendant que vous travaillez sur le terrain.
             </p>
 
             <div className="mt-9 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
@@ -631,8 +632,8 @@ export default function MonolithAIPage() {
               Ils ne ratent plus jamais un appel.
             </h2>
             <p className="mx-auto mt-5 max-w-2xl text-[1rem] leading-relaxed text-[var(--ink-soft)]">
-              Des artisans français qui ont remplacé leur répondeur par un agent vocal IA
-              — et qui voient les résultats au quotidien.
+              Des artisans français de tous corps de métier qui ont remplacé leur répondeur
+              par un agent vocal IA — et qui voient les résultats au quotidien.
             </p>
           </div>
 
@@ -864,7 +865,7 @@ export default function MonolithAIPage() {
                   <Field
                     label="Nom de l'entreprise"
                     name="company"
-                    placeholder="Dupont Plomberie SARL"
+                    placeholder="Dupont Artisans SARL"
                     value={form.company}
                     onChange={(v) => updateField('company', v)}
                     required
@@ -987,8 +988,8 @@ export default function MonolithAIPage() {
                 </span>
               </div>
               <p className="text-sm leading-relaxed text-[var(--ink-mute)]">
-                L&apos;agence d&apos;automatisation IA spécialisée dans les services à domicile français.
-                Agents vocaux, workflows n8n, intégrations sur mesure.
+                L&apos;agence d&apos;automatisation IA qui équipe les artisans français d&apos;une
+                infrastructure premium. Agents vocaux, workflows n8n, intégrations sur mesure.
               </p>
             </div>
 
