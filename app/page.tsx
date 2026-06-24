@@ -60,8 +60,6 @@ const PRICING = [
   {
     name: 'Essentiel',
     tag: 'Urgence',
-    setup: '1 500 €',
-    monthly: '400 €',
     desc: 'Pour les artisans qui veulent démarrer immédiatement avec un socle d\'automatisations conversationnelles fiable.',
     features: [
       'Réponses automatiques WhatsApp 24/7',
@@ -70,14 +68,12 @@ const PRICING = [
       'Templates métier prêts à l\'emploi',
       'Support email sous 24h',
     ],
-    cta: 'Choisir Essentiel',
+    cta: 'Réserver un appel stratégique',
     highlight: false,
   },
   {
     name: 'Business',
     tag: 'Pro',
-    setup: '3 000 €',
-    monthly: '700 €',
     desc: 'Le système recommandé pour les artisans qui veulent capter 100 % de leurs appels.',
     earnToLearn: {
       title: 'Technologie « Earn to Learn » via Supabase',
@@ -92,14 +88,12 @@ const PRICING = [
       'Tableau de bord des appels',
       'Support prioritaire',
     ],
-    cta: 'Choisir Business',
+    cta: 'Réserver un appel stratégique',
     highlight: true,
   },
   {
     name: 'Premium',
     tag: '360',
-    setup: '5 000 €',
-    monthly: '1 200 €',
     desc: 'L\'infrastructure premium complète pour les artisans — acquisition, conversion et rétention entièrement automatisées.',
     earnToLearn: {
       title: 'Système « Earn to Learn » Autonome Avancé',
@@ -118,7 +112,7 @@ const PRICING = [
       'Analytics temps réel & reporting',
       'Account manager dédié',
     ],
-    cta: 'Choisir Premium',
+    cta: 'Réserver un appel stratégique',
     highlight: false,
   },
 ]
@@ -716,17 +710,13 @@ export default function MonolithAIPage() {
 
                 <div className="my-7 border-y border-white/[0.06] py-6">
                   <div className="flex items-baseline gap-2">
-                    <span className="font-[var(--font-syne)] text-4xl font-semibold tracking-tight text-white">
-                      {p.setup}
+                    <span className="font-[var(--font-syne)] text-3xl font-semibold tracking-tight text-white">
+                      Tarif sur demande
                     </span>
-                    <span className="text-xs uppercase tracking-[0.16em] text-white/50">Setup</span>
                   </div>
-                  <div className="mt-2 flex items-baseline gap-2">
-                    <span className="font-[var(--font-syne)] text-xl font-semibold text-white/85">
-                      + {p.monthly}
-                    </span>
-                    <span className="text-xs uppercase tracking-[0.16em] text-white/50">/ mois</span>
-                  </div>
+                  <p className="mt-2 text-xs uppercase tracking-[0.16em] text-white/50">
+                    Devis personnalisé après audit
+                  </p>
                 </div>
 
                 {'earnToLearn' in p && p.earnToLearn && (
