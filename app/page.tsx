@@ -83,6 +83,50 @@ const DoubleCheck = ({ className = 'w-4 h-4' }: { className?: string }) => (
     <path d="M1 8.5l3.2 3.2L11 4.5M8.5 11.7l.7.7L16 5.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
   </svg>
 )
+const ChatIcon = ({ className = 'w-4 h-4' }: { className?: string }) => (
+  <svg viewBox="0 0 24 24" fill="none" className={className} aria-hidden>
+    <path d="M4 5.5A1.5 1.5 0 015.5 4h13A1.5 1.5 0 0120 5.5v9A1.5 1.5 0 0118.5 16H9l-4 3.5V16H5.5A1.5 1.5 0 014 14.5v-9z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
+    <path d="M8 9h8M8 12h5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+  </svg>
+)
+
+/* ─── SMS & WhatsApp badge ───────────────────────────────────────────────── */
+function ChannelBadge({ className = '' }: { className?: string }) {
+  return (
+    <span className={`inline-flex items-center gap-2 rounded-full border border-emerald-400/25 bg-emerald-400/[0.08] px-3.5 py-1.5 text-xs font-medium text-emerald-200 ${className}`}>
+      <ChatIcon className="h-3.5 w-3.5" />
+      Fonctionne sur WhatsApp <span className="text-emerald-300/50">&amp;</span> SMS classique
+    </span>
+  )
+}
+
+/* ─── Paliers (Comment ça marche) ────────────────────────────────────────── */
+const PALIERS = [
+  {
+    id: 'p1',
+    n: 'Palier 1',
+    title: 'Client écrit directement sur WhatsApp',
+    desc: "Le prospect envoie un message sur votre WhatsApp Business (ou par SMS). L'agent répond en quelques secondes, qualifie la demande et propose un créneau — sans que vous touchiez votre téléphone.",
+    client: { src: '/palier1-client.jpg', w: 392, h: 513 },
+    artisan: { src: '/palier1-artisan.jpg', w: 651, h: 778 },
+  },
+  {
+    id: 'p2',
+    n: 'Palier 2',
+    title: "Appel manqué, l'IA relance le client",
+    desc: "Vous êtes sur un chantier et un appel passe en absence. L'agent envoie immédiatement une relance WhatsApp/SMS, engage la conversation et récupère le lead avant qu'il n'appelle un concurrent.",
+    client: { src: '/palier2-client.jpg', w: 1600, h: 831 },
+    artisan: { src: '/palier2-artisan.jpg', w: 1600, h: 831 },
+  },
+  {
+    id: 'p3',
+    n: 'Palier 3',
+    title: 'No‑show, reprise de créneau',
+    desc: "Un client ne se présente pas au rendez‑vous. L'agent le recontacte automatiquement, comprend l'imprévu et repositionne un nouveau créneau — votre agenda ne reste jamais vide.",
+    client: { src: '/palier3-client.jpg', w: 1600, h: 831 },
+    artisan: { src: '/palier3-artisan.jpg', w: 1600, h: 831 },
+  },
+]
 
 /* ─── Data ───────────────────────────────────────────────────────────────── */
 const PROCESS_STEPS = [
@@ -358,6 +402,211 @@ function VoiceAgentMockup() {
   )
 }
 
+/* ─── Comment ça marche (Paliers tabs + client → artisan screens) ────────── */
+function CommentCaMarche() {
+  const [active, setActive] = useState(PALIERS[0].id)
+  const current = PALIERS.find((p) => p.id === active) ?? PALIERS[0]
+
+  const Screen = ({
+    img,
+    label,
+    tone,
+  }: {
+    img: { src: string; w: number; h: number }
+    label: string
+    tone: 'client' | 'artisan'
+  }) => (
+    <figure className="w-full">
+      <figcaption
+        className={`mb-3 flex items-center gap-2 text-xs font-medium uppercase tracking-[0.16em] ${
+          tone === 'client' ? 'text-emerald-300' : 'text-[var(--accent)]'
+        }`}
+      >
+        <span className={`h-1.5 w-1.5 rounded-full ${tone === 'client' ? 'bg-emerald-400' : 'bg-[var(--accent)]'}`} />
+        {label}
+      </figcaption>
+      <div className="overflow-hidden rounded-2xl border border-white/[0.1] bg-[var(--panel)] shadow-[0_30px_80px_-30px_rgba(0,0,0,0.8)]">
+        <Image
+          src={img.src}
+          alt={label}
+          width={img.w}
+          height={img.h}
+          sizes="(max-width: 1024px) 90vw, 420px"
+          className="h-auto w-full object-contain"
+        />
+      </div>
+    </figure>
+  )
+
+  return (
+    <section id="comment" className="relative px-6 py-28">
+      <div className="pointer-events-none absolute left-1/2 top-1/4 h-[420px] w-[820px] -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgba(61,123,253,0.12),transparent_65%)] blur-3xl" />
+
+      <div className="relative mx-auto max-w-6xl">
+        <div className="mb-10 text-center">
+          <span className="mb-4 inline-block text-xs font-medium uppercase tracking-[0.22em] text-[var(--accent)]/85">
+            Comment ça marche
+          </span>
+          <h2 className="font-[var(--font-syne)] text-[clamp(2rem,4vw,3.2rem)] font-semibold tracking-tight text-white">
+            Trois paliers, zéro lead perdu.
+          </h2>
+          <p className="mx-auto mt-5 max-w-2xl text-[1rem] leading-relaxed text-[var(--ink-soft)]">
+            De la première prise de contact au rattrapage d&apos;un rendez‑vous manqué,
+            l&apos;agent gère chaque scénario et vous envoie un résumé clair côté artisan.
+          </p>
+          <div className="mt-6 flex justify-center">
+            <ChannelBadge />
+          </div>
+        </div>
+
+        {/* tabs */}
+        <div role="tablist" aria-label="Paliers" className="mb-10 flex flex-wrap justify-center gap-3">
+          {PALIERS.map((p) => {
+            const on = p.id === active
+            return (
+              <button
+                key={p.id}
+                role="tab"
+                aria-selected={on}
+                onClick={() => setActive(p.id)}
+                className={`flex items-center gap-3 rounded-2xl border px-5 py-3 text-left transition-all duration-300 ${
+                  on
+                    ? 'border-[var(--accent)]/45 bg-gradient-to-r from-[var(--accent)]/[0.16] to-white/[0.02] shadow-[0_20px_50px_-25px_rgba(61,123,253,0.7)]'
+                    : 'border-white/[0.08] bg-white/[0.02] hover:border-white/[0.18] hover:bg-white/[0.04]'
+                }`}
+              >
+                <span
+                  className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-lg font-[var(--font-syne)] text-sm font-semibold ${
+                    on ? 'bg-[var(--accent)]/25 text-[var(--accent)]' : 'bg-white/[0.05] text-white/55'
+                  }`}
+                >
+                  {p.n.split(' ')[1]}
+                </span>
+                <span className="font-[var(--font-syne)] text-sm font-semibold tracking-tight text-white">
+                  {p.n}
+                </span>
+              </button>
+            )
+          })}
+        </div>
+
+        {/* active palier */}
+        <div key={active} className="fade-swap">
+          <div className="mx-auto mb-8 max-w-2xl text-center">
+            <h3 className="font-[var(--font-syne)] text-xl font-semibold tracking-tight text-white sm:text-2xl">
+              {current.title}
+            </h3>
+            <p className="mx-auto mt-3 text-[0.95rem] leading-relaxed text-[var(--ink-soft)]">
+              {current.desc}
+            </p>
+          </div>
+
+          {/* client → arrow → artisan */}
+          <div className="flex flex-col items-center gap-6 lg:flex-row lg:items-center lg:justify-center lg:gap-4">
+            <div className="w-full max-w-md lg:max-w-[440px]">
+              <Screen img={current.client} label="Conversation client" tone="client" />
+            </div>
+
+            <div className="flex shrink-0 items-center justify-center">
+              <span className="flex h-12 w-12 rotate-90 items-center justify-center rounded-full border border-[var(--accent)]/30 bg-[var(--accent)]/10 text-[var(--accent)] lg:rotate-0">
+                <ArrowRight className="h-5 w-5 flow-arrow" />
+              </span>
+            </div>
+
+            <div className="w-full max-w-md lg:max-w-[440px]">
+              <Screen img={current.artisan} label="Résumé artisan" tone="artisan" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+/* ─── Comparison: Sans vs Avec Monolith AI ────────────────────────────────── */
+function ComparisonSection() {
+  return (
+    <section id="comparaison" className="relative px-6 py-28">
+      <div className="pointer-events-none absolute left-1/2 top-1/3 h-[440px] w-[820px] -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgba(61,123,253,0.1),transparent_65%)] blur-3xl" />
+
+      <div className="relative mx-auto max-w-6xl">
+        <div className="mb-14 text-center">
+          <span className="mb-4 inline-block text-xs font-medium uppercase tracking-[0.22em] text-[var(--accent)]/85">
+            La différence
+          </span>
+          <h2 className="font-[var(--font-syne)] text-[clamp(2rem,4vw,3.2rem)] font-semibold tracking-tight text-white">
+            Chaque minute compte pour un lead.
+          </h2>
+          <p className="mx-auto mt-5 max-w-2xl text-[1rem] leading-relaxed text-[var(--ink-soft)]">
+            Un prospect qui n&apos;obtient pas de réponse immédiate part chez le concurrent.
+            Voici la même demande, traitée sans puis avec Monolith AI.
+          </p>
+        </div>
+
+        <div className="grid gap-6 md:grid-cols-2">
+          {/* Without */}
+          <div className="group relative overflow-hidden rounded-3xl border border-rose-400/20 bg-gradient-to-b from-rose-400/[0.06] to-transparent p-5 transition-all duration-500 hover:-translate-y-1 sm:p-6">
+            <div className="mb-4 flex items-center justify-between">
+              <div className="flex items-center gap-2.5">
+                <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-rose-400/15 text-rose-300">
+                  <AlertIcon className="h-4 w-4" />
+                </span>
+                <span className="font-[var(--font-syne)] text-base font-semibold text-white">Sans Monolith AI</span>
+              </div>
+              <span className="rounded-full border border-rose-400/25 bg-rose-400/10 px-3 py-1 text-[0.65rem] font-medium text-rose-200">
+                Réponse 9h plus tard
+              </span>
+            </div>
+            <div className="overflow-hidden rounded-2xl border border-white/[0.08] bg-[var(--panel)]">
+              <Image
+                src="/comparison-without.png"
+                alt="Sans Monolith AI : réponse tardive, lead perdu"
+                width={1600}
+                height={831}
+                sizes="(max-width: 768px) 90vw, 520px"
+                className="h-auto w-full object-contain"
+              />
+            </div>
+            <p className="mt-4 flex items-center gap-2 text-sm text-rose-200/80">
+              <span className="h-1.5 w-1.5 rounded-full bg-rose-400" />
+              Lead perdu — le client a déjà appelé un concurrent.
+            </p>
+          </div>
+
+          {/* With */}
+          <div className="group relative overflow-hidden rounded-3xl border border-emerald-400/25 bg-gradient-to-b from-emerald-400/[0.08] to-transparent p-5 shadow-[0_30px_80px_-30px_rgba(16,185,129,0.3)] transition-all duration-500 hover:-translate-y-1 sm:p-6">
+            <div className="mb-4 flex items-center justify-between">
+              <div className="flex items-center gap-2.5">
+                <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-emerald-400/15 text-emerald-300">
+                  <Check className="h-4 w-4" />
+                </span>
+                <span className="font-[var(--font-syne)] text-base font-semibold text-white">Avec Monolith AI</span>
+              </div>
+              <span className="rounded-full border border-emerald-400/30 bg-emerald-400/10 px-3 py-1 text-[0.65rem] font-medium text-emerald-200">
+                Réponse en quelques secondes
+              </span>
+            </div>
+            <div className="overflow-hidden rounded-2xl border border-white/[0.08] bg-[var(--panel)]">
+              <Image
+                src="/comparison-with.png"
+                alt="Avec Monolith AI : réponse instantanée, rendez-vous confirmé"
+                width={1600}
+                height={831}
+                sizes="(max-width: 768px) 90vw, 520px"
+                className="h-auto w-full object-contain"
+              />
+            </div>
+            <p className="mt-4 flex items-center gap-2 text-sm text-emerald-200/90">
+              <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 soft-pulse" />
+              Rendez‑vous confirmé — le lead est capté et planifié.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
 /* ─── Interactive Chat Showcase (WhatsApp style, tabbed by trade) ─────────── */
 function ChatShowcase() {
   const [active, setActive] = useState(CHAT_USE_CASES[0].id)
@@ -443,12 +692,12 @@ function ChatShowcase() {
           {/* Phone / WhatsApp frame */}
           <div className="relative mx-auto w-full max-w-sm">
             <div className="pointer-events-none absolute -inset-6 rounded-[44px] bg-[radial-gradient(circle_at_50%_20%,rgba(107,140,255,0.28),transparent_65%)] blur-2xl" />
-            <div className="relative overflow-hidden rounded-[36px] border border-white/[0.12] bg-[#0a1030] shadow-[0_40px_120px_-30px_rgba(20,40,120,0.8)]">
+            <div className="relative overflow-hidden rounded-[36px] border border-white/[0.12] bg-[var(--panel)] shadow-[0_40px_120px_-30px_rgba(20,40,120,0.8)]">
               {/* chat header */}
               <div className="flex items-center gap-3 border-b border-white/[0.06] bg-gradient-to-b from-white/[0.06] to-transparent px-4 py-3.5">
                 <span className="relative flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-[var(--accent)]/50 to-white/10 font-[var(--font-syne)] text-sm font-semibold text-white">
                   <current.Icon className="h-5 w-5" />
-                  <span className="absolute -bottom-0.5 -right-0.5 h-3 w-3 rounded-full border-2 border-[#0a1030] bg-emerald-400" />
+                  <span className="absolute -bottom-0.5 -right-0.5 h-3 w-3 rounded-full border-2 border-[var(--panel)] bg-emerald-400" />
                 </span>
                 <div className="min-w-0">
                   <div className="font-[var(--font-syne)] text-sm font-semibold text-white">Agent Monolith</div>
@@ -581,7 +830,7 @@ function VoiceDemo() {
                   type="button"
                   aria-label={playing ? 'Pause' : 'Lecture'}
                   onClick={() => setPlaying((v) => !v)}
-                  className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-white text-[#06102f] shadow-[0_20px_50px_-15px_rgba(107,140,255,0.6)] transition-transform duration-300 hover:-translate-y-0.5"
+                  className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-white text-[#0d0e12] shadow-[0_20px_50px_-15px_rgba(107,140,255,0.6)] transition-transform duration-300 hover:-translate-y-0.5"
                 >
                   {playing ? <PauseIcon className="h-5 w-5" /> : <PlayIcon className="h-5 w-5 translate-x-0.5" />}
                 </button>
@@ -760,18 +1009,19 @@ export default function MonolithAIPage() {
       <style jsx global>{`
         :root {
           --ink: #ffffff;
-          --ink-soft: #b6c0dd;
-          --ink-mute: #7c87a8;
-          --accent: #6b8cff;
+          --ink-soft: #c2c8d6;
+          --ink-mute: #8991a3;
+          --accent: #3d7bfd;
+          --panel: #15161c;
         }
         html { scroll-behavior: smooth; }
         body {
           margin: 0;
           background:
-            radial-gradient(ellipse 80% 60% at 50% -10%, rgba(107, 140, 255, 0.2), transparent 60%),
-            radial-gradient(ellipse 60% 50% at 100% 20%, rgba(64, 96, 220, 0.12), transparent 60%),
-            radial-gradient(ellipse 70% 60% at 0% 80%, rgba(20, 40, 120, 0.28), transparent 65%),
-            linear-gradient(180deg, #0a1340 0%, #06102f 40%, #04081f 100%);
+            radial-gradient(ellipse 80% 60% at 50% -10%, rgba(61, 123, 253, 0.16), transparent 60%),
+            radial-gradient(ellipse 60% 50% at 100% 20%, rgba(61, 123, 253, 0.10), transparent 60%),
+            radial-gradient(ellipse 70% 60% at 0% 80%, rgba(51, 125, 248, 0.08), transparent 65%),
+            linear-gradient(180deg, #121318 0%, #0d0e12 55%, #0a0b0f 100%);
           background-attachment: fixed;
           color: var(--ink);
           font-family: var(--font-dm), system-ui, sans-serif;
@@ -811,9 +1061,22 @@ export default function MonolithAIPage() {
         .chat-canvas::-webkit-scrollbar { width: 5px; }
         .chat-canvas::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 8px; }
 
+        @keyframes fadeSwap {
+          0% { opacity: 0; transform: translateY(12px); }
+          100% { opacity: 1; transform: translateY(0); }
+        }
+        .fade-swap { animation: fadeSwap 0.5s cubic-bezier(0.22, 1, 0.36, 1); }
+        @keyframes arrowNudge {
+          0%, 100% { transform: translateX(0); }
+          50% { transform: translateX(3px); }
+        }
+        .flow-arrow { animation: arrowNudge 1.6s ease-in-out infinite; }
+
         @media (prefers-reduced-motion: reduce) {
           .msg-in { opacity: 1; animation: none; }
           .wave-bar { animation: none; }
+          .fade-swap { animation: none; }
+          .flow-arrow { animation: none; }
         }
       `}</style>
 
@@ -821,7 +1084,7 @@ export default function MonolithAIPage() {
       <header
         className={`fixed inset-x-0 top-0 z-50 h-[72px] transition-all duration-300 ${
           scrolled
-            ? 'border-b border-white/[0.08] bg-[#04081f]/70 backdrop-blur-xl'
+            ? 'border-b border-white/[0.08] bg-[#0d0e12]/80 backdrop-blur-xl'
             : 'border-b border-transparent bg-transparent'
         }`}
       >
@@ -830,7 +1093,7 @@ export default function MonolithAIPage() {
             {!logoError ? (
               <div className="relative h-9 w-9 shrink-0">
                 <Image
-                  src="/logo.png"
+                  src="/logo-monolith.png"
                   alt="Monolith AI"
                   fill
                   sizes="(max-width: 640px) 32px, 36px"
@@ -849,9 +1112,9 @@ export default function MonolithAIPage() {
 
           <nav className="hidden items-center gap-9 md:flex">
             {[
-              { label: 'Notre Solution', href: '#solution' },
+              { label: 'Comment ça marche', href: '#comment' },
               { label: 'Démo', href: '#demo' },
-              { label: 'Agent Vocal', href: '#voix' },
+              { label: 'Comparaison', href: '#comparaison' },
               { label: 'Tarifs', href: '#tarifs' },
             ].map((l) => (
               <a key={l.label} href={l.href} className="text-sm text-white/65 transition-colors hover:text-white">
@@ -903,7 +1166,7 @@ export default function MonolithAIPage() {
             <div className="mt-9 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
               <a
                 href="#contact"
-                className="group inline-flex items-center gap-2 rounded-full bg-white px-7 py-3.5 text-sm font-semibold text-[#06102f] shadow-[0_20px_60px_-15px_rgba(107,140,255,0.5)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_25px_70px_-15px_rgba(107,140,255,0.7)]"
+                className="group inline-flex items-center gap-2 rounded-full bg-white px-7 py-3.5 text-sm font-semibold text-[#0d0e12] shadow-[0_20px_60px_-15px_rgba(107,140,255,0.5)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_25px_70px_-15px_rgba(107,140,255,0.7)]"
               >
                 Réserver mon appel stratégique
                 <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
@@ -914,6 +1177,10 @@ export default function MonolithAIPage() {
               >
                 Découvrir le processus
               </a>
+            </div>
+
+            <div className="mt-6">
+              <ChannelBadge />
             </div>
 
             <div className="mt-12 flex flex-wrap items-center gap-x-8 gap-y-3 text-[0.7rem] uppercase tracking-[0.18em] text-white/40">
@@ -1017,11 +1284,17 @@ export default function MonolithAIPage() {
         </div>
       </section>
 
+      {/* ════════════════════════════════════════════════════════ COMMENT ÇA MARCHE */}
+      <CommentCaMarche />
+
       {/* ════════════════════════════════════════════════════════ DÉMO CHAT */}
       <ChatShowcase />
 
       {/* ════════════════════════════════════════════════════════ AGENT VOCAL */}
       <VoiceDemo />
+
+      {/* ════════════════════════════════════════════════════════ COMPARAISON */}
+      <ComparisonSection />
 
       {/* ════════════════════════════════════════════════════════ PROCESSUS */}
       <section id="processus" className="relative px-6 py-28">
@@ -1179,7 +1452,7 @@ export default function MonolithAIPage() {
                 }`}
               >
                 {p.highlight && (
-                  <span className="absolute right-5 top-5 rounded-full bg-white px-2.5 py-1 text-[0.6rem] font-semibold uppercase tracking-[0.18em] text-[#06102f]">
+                  <span className="absolute right-5 top-5 rounded-full bg-white px-2.5 py-1 text-[0.6rem] font-semibold uppercase tracking-[0.18em] text-[#0d0e12]">
                     Recommandé
                   </span>
                 )}
@@ -1261,7 +1534,7 @@ export default function MonolithAIPage() {
                   href="#contact"
                   className={`mt-8 inline-flex items-center justify-center gap-2 rounded-full px-5 py-3 text-sm font-semibold transition-all duration-300 ${
                     p.highlight
-                      ? 'bg-white text-[#06102f] hover:-translate-y-0.5 hover:shadow-[0_20px_50px_-15px_rgba(255,255,255,0.4)]'
+                      ? 'bg-white text-[#0d0e12] hover:-translate-y-0.5 hover:shadow-[0_20px_50px_-15px_rgba(255,255,255,0.4)]'
                       : 'border border-white/15 text-white hover:border-white/35 hover:bg-white/[0.06]'
                   }`}
                 >
@@ -1430,7 +1703,7 @@ export default function MonolithAIPage() {
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="group mt-2 inline-flex items-center justify-center gap-2 rounded-full bg-white px-7 py-4 text-sm font-semibold text-[#06102f] shadow-[0_20px_60px_-15px_rgba(107,140,255,0.5)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_25px_70px_-15px_rgba(107,140,255,0.7)] disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0"
+                  className="group mt-2 inline-flex items-center justify-center gap-2 rounded-full bg-white px-7 py-4 text-sm font-semibold text-[#0d0e12] shadow-[0_20px_60px_-15px_rgba(107,140,255,0.5)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_25px_70px_-15px_rgba(107,140,255,0.7)] disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0"
                 >
                   {submitting ? 'Envoi en cours…' : 'Réserver mon appel stratégique'}
                   {!submitting && <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />}
@@ -1453,7 +1726,7 @@ export default function MonolithAIPage() {
               <div className="mb-4 flex items-center gap-3">
                 {!logoError ? (
                   <div className="relative h-8 w-8">
-                    <Image src="/logo.png" alt="Monolith AI" fill sizes="32px" style={{ objectFit: 'contain' }} onError={() => setLogoError(true)} />
+                    <Image src="/logo-monolith.png" alt="Monolith AI" fill sizes="32px" style={{ objectFit: 'contain' }} onError={() => setLogoError(true)} />
                   </div>
                 ) : (
                   <div className="grid h-8 w-8 place-items-center rounded-md bg-[var(--accent)] text-xs font-extrabold">M</div>
