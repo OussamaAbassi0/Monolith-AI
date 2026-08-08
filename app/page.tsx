@@ -107,24 +107,24 @@ const PALIERS = [
     n: 'Palier 1',
     title: 'Client écrit directement sur WhatsApp',
     desc: "Le prospect envoie un message sur votre WhatsApp Business (ou par SMS). L'agent répond en quelques secondes, qualifie la demande et propose un créneau — sans que vous touchiez votre téléphone.",
-    client: { src: '/palier1-client.jpg', w: 392, h: 513 },
-    artisan: { src: '/palier1-artisan.jpg', w: 651, h: 778 },
+    client: { src: '/palier2-client.jpg', w: 1600, h: 831 },
+    artisan: { src: '/palier2-artisan.jpg', w: 1600, h: 831 },
   },
   {
     id: 'p2',
     n: 'Palier 2',
     title: "Appel manqué, l'IA relance le client",
     desc: "Vous êtes sur un chantier et un appel passe en absence. L'agent envoie immédiatement une relance WhatsApp/SMS, engage la conversation et récupère le lead avant qu'il n'appelle un concurrent.",
-    client: { src: '/palier2-client.jpg', w: 1600, h: 831 },
-    artisan: { src: '/palier2-artisan.jpg', w: 1600, h: 831 },
+    client: { src: '/palier3-client.jpg', w: 1600, h: 831 },
+    artisan: { src: '/palier3-artisan.jpg', w: 1600, h: 831 },
   },
   {
     id: 'p3',
     n: 'Palier 3',
     title: 'No‑show, reprise de créneau',
     desc: "Un client ne se présente pas au rendez‑vous. L'agent le recontacte automatiquement, comprend l'imprévu et repositionne un nouveau créneau — votre agenda ne reste jamais vide.",
-    client: { src: '/palier3-client.jpg', w: 1600, h: 831 },
-    artisan: { src: '/palier3-artisan.jpg', w: 1600, h: 831 },
+    client: { src: '/comparison-without.png', w: 1600, h: 831 },
+    artisan: { src: '/comparison-with.png', w: 1600, h: 831 },
   },
 ]
 
@@ -405,38 +405,16 @@ function VoiceAgentMockup() {
 /* ─── Comment ça marche (Paliers tabs + client → artisan screens) ────────── */
 function CommentCaMarche() {
   const [active, setActive] = useState(PALIERS[0].id)
+  const [view, setView] = useState<'client' | 'artisan'>('client')
   const current = PALIERS.find((p) => p.id === active) ?? PALIERS[0]
 
-  const Screen = ({
-    img,
-    label,
-    tone,
-  }: {
-    img: { src: string; w: number; h: number }
-    label: string
-    tone: 'client' | 'artisan'
-  }) => (
-    <figure className="w-full">
-      <figcaption
-        className={`mb-3 flex items-center gap-2 text-xs font-medium uppercase tracking-[0.16em] ${
-          tone === 'client' ? 'text-emerald-300' : 'text-[var(--accent)]'
-        }`}
-      >
-        <span className={`h-1.5 w-1.5 rounded-full ${tone === 'client' ? 'bg-emerald-400' : 'bg-[var(--accent)]'}`} />
-        {label}
-      </figcaption>
-      <div className="overflow-hidden rounded-2xl border border-white/[0.1] bg-[var(--panel)] shadow-[0_30px_80px_-30px_rgba(0,0,0,0.8)]">
-        <Image
-          src={img.src}
-          alt={label}
-          width={img.w}
-          height={img.h}
-          sizes="(max-width: 1024px) 90vw, 420px"
-          className="h-auto w-full object-contain"
-        />
-      </div>
-    </figure>
-  )
+  const selectPalier = (id: string) => {
+    setActive(id)
+    setView('client')
+  }
+
+  const img = view === 'client' ? current.client : current.artisan
+  const label = view === 'client' ? 'Échange client' : "Résumé envoyé à l'artisan"
 
   return (
     <section id="comment" className="relative px-6 py-28">
@@ -468,7 +446,7 @@ function CommentCaMarche() {
                 key={p.id}
                 role="tab"
                 aria-selected={on}
-                onClick={() => setActive(p.id)}
+                onClick={() => selectPalier(p.id)}
                 className={`flex items-center gap-3 rounded-2xl border px-5 py-3 text-left transition-all duration-300 ${
                   on
                     ? 'border-[var(--accent)]/45 bg-gradient-to-r from-[var(--accent)]/[0.16] to-white/[0.02] shadow-[0_20px_50px_-25px_rgba(61,123,253,0.7)]'
@@ -501,21 +479,93 @@ function CommentCaMarche() {
             </p>
           </div>
 
-          {/* client → arrow → artisan */}
-          <div className="flex flex-col items-center gap-6 lg:flex-row lg:items-center lg:justify-center lg:gap-4">
-            <div className="w-full max-w-md lg:max-w-[440px]">
-              <Screen img={current.client} label="Conversation client" tone="client" />
+          {/* view toggle */}
+          <div className="mx-auto mb-6 flex justify-center">
+            <div className="inline-flex items-center gap-1 rounded-full border border-white/[0.1] bg-white/[0.03] p-1">
+              <button
+                type="button"
+                onClick={() => setView('client')}
+                aria-pressed={view === 'client'}
+                className={`flex items-center gap-2 rounded-full px-4 py-2 text-xs font-medium transition-all duration-300 ${
+                  view === 'client'
+                    ? 'bg-emerald-400/15 text-emerald-200 shadow-[0_10px_30px_-15px_rgba(16,185,129,0.6)]'
+                    : 'text-white/55 hover:text-white/80'
+                }`}
+              >
+                <ChatIcon className="h-3.5 w-3.5" />
+                Échange client
+              </button>
+              <button
+                type="button"
+                onClick={() => setView('artisan')}
+                aria-pressed={view === 'artisan'}
+                className={`flex items-center gap-2 rounded-full px-4 py-2 text-xs font-medium transition-all duration-300 ${
+                  view === 'artisan'
+                    ? 'bg-[var(--accent)]/20 text-[var(--accent)] shadow-[0_10px_30px_-15px_rgba(61,123,253,0.7)]'
+                    : 'text-white/55 hover:text-white/80'
+                }`}
+              >
+                <DoubleCheck className="h-3.5 w-3.5" />
+                Résumé artisan
+              </button>
             </div>
+          </div>
 
-            <div className="flex shrink-0 items-center justify-center">
-              <span className="flex h-12 w-12 rotate-90 items-center justify-center rounded-full border border-[var(--accent)]/30 bg-[var(--accent)]/10 text-[var(--accent)] lg:rotate-0">
-                <ArrowRight className="h-5 w-5 flow-arrow" />
-              </span>
-            </div>
+          {/* large screenshot with slider arrow */}
+          <div className="relative mx-auto w-full max-w-4xl">
+            <figure key={view} className="fade-swap w-full">
+              <figcaption
+                className={`mb-3 flex items-center justify-center gap-2 text-xs font-medium uppercase tracking-[0.16em] ${
+                  view === 'client' ? 'text-emerald-300' : 'text-[var(--accent)]'
+                }`}
+              >
+                <span className={`h-1.5 w-1.5 rounded-full ${view === 'client' ? 'bg-emerald-400' : 'bg-[var(--accent)]'}`} />
+                {label}
+              </figcaption>
+              <div className="overflow-hidden rounded-2xl border border-white/[0.1] bg-[var(--panel)] shadow-[0_30px_80px_-30px_rgba(0,0,0,0.8)]">
+                <Image
+                  src={img.src}
+                  alt={label}
+                  width={img.w}
+                  height={img.h}
+                  sizes="(max-width: 1024px) 92vw, 860px"
+                  className="h-auto w-full object-contain"
+                  priority
+                />
+              </div>
+            </figure>
 
-            <div className="w-full max-w-md lg:max-w-[440px]">
-              <Screen img={current.artisan} label="Résumé artisan" tone="artisan" />
-            </div>
+            {/* arrow toggle overlay */}
+            <button
+              type="button"
+              onClick={() => setView((v) => (v === 'client' ? 'artisan' : 'client'))}
+              aria-label={view === 'client' ? "Voir le résumé envoyé à l'artisan" : "Voir l'échange client"}
+              className="absolute right-3 top-1/2 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-white/15 bg-black/50 text-white backdrop-blur-md transition-all duration-300 hover:scale-105 hover:bg-black/70 sm:right-4"
+            >
+              <ArrowRight
+                className={`h-5 w-5 transition-transform duration-300 ${view === 'artisan' ? 'rotate-180' : ''}`}
+              />
+            </button>
+          </div>
+
+          {/* step dots */}
+          <div className="mt-6 flex items-center justify-center gap-2">
+            <button
+              type="button"
+              onClick={() => setView('client')}
+              aria-label="Vue 1 · Échange client"
+              className={`h-2 rounded-full transition-all duration-300 ${
+                view === 'client' ? 'w-6 bg-emerald-400' : 'w-2 bg-white/20 hover:bg-white/40'
+              }`}
+            />
+            <button
+              type="button"
+              onClick={() => setView('artisan')}
+              aria-label="Vue 2 · Résumé artisan"
+              className={`h-2 rounded-full transition-all duration-300 ${
+                view === 'artisan' ? 'w-6 bg-[var(--accent)]' : 'w-2 bg-white/20 hover:bg-white/40'
+              }`}
+            />
           </div>
         </div>
       </div>
@@ -557,13 +607,13 @@ function ComparisonSection() {
                 Réponse 9h plus tard
               </span>
             </div>
-            <div className="overflow-hidden rounded-2xl border border-white/[0.08] bg-[var(--panel)]">
+            <div className="mx-auto max-w-[360px] overflow-hidden rounded-2xl border border-white/[0.08] bg-[var(--panel)]">
               <Image
-                src="/comparison-without.png"
-                alt="Sans Monolith AI : réponse tardive, lead perdu"
-                width={1600}
-                height={831}
-                sizes="(max-width: 768px) 90vw, 520px"
+                src="/palier1-artisan.jpg"
+                alt="Sans Monolith AI : réponse 9h plus tard, lead perdu"
+                width={651}
+                height={778}
+                sizes="(max-width: 768px) 80vw, 360px"
                 className="h-auto w-full object-contain"
               />
             </div>
@@ -586,13 +636,13 @@ function ComparisonSection() {
                 Réponse en quelques secondes
               </span>
             </div>
-            <div className="overflow-hidden rounded-2xl border border-white/[0.08] bg-[var(--panel)]">
+            <div className="mx-auto max-w-[360px] overflow-hidden rounded-2xl border border-white/[0.08] bg-[var(--panel)]">
               <Image
-                src="/comparison-with.png"
-                alt="Avec Monolith AI : réponse instantanée, rendez-vous confirmé"
-                width={1600}
-                height={831}
-                sizes="(max-width: 768px) 90vw, 520px"
+                src="/palier1-client.jpg"
+                alt="Avec Monolith AI : réponse en quelques secondes, rendez-vous fixé"
+                width={392}
+                height={513}
+                sizes="(max-width: 768px) 80vw, 360px"
                 className="h-auto w-full object-contain"
               />
             </div>
@@ -1287,14 +1337,14 @@ export default function MonolithAIPage() {
       {/* ════════════════════════════════════════════════════════ COMMENT ÇA MARCHE */}
       <CommentCaMarche />
 
+      {/* ════════════════════════════════════════════════════════ COMPARAISON */}
+      <ComparisonSection />
+
       {/* ════════════════════════════════════════════════════════ DÉMO CHAT */}
       <ChatShowcase />
 
       {/* ════════════════════════════════════════════════════════ AGENT VOCAL */}
       <VoiceDemo />
-
-      {/* ════════════════════════════════════════════════════════ COMPARAISON */}
-      <ComparisonSection />
 
       {/* ════════════════════════════════════════════════════════ PROCESSUS */}
       <section id="processus" className="relative px-6 py-28">
