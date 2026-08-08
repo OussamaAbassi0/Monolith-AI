@@ -100,6 +100,249 @@ function ChannelBadge({ className = '' }: { className?: string }) {
   )
 }
 
+/* ─── Brand marks (integration ticker) ──────────────────────────────────── */
+const MetaMark = ({ className = 'h-5 w-5' }: { className?: string }) => (
+  <svg viewBox="0 0 24 24" fill="none" className={className} aria-hidden>
+    <path
+      d="M3 15.5c0-3.6 1.9-7 4.4-7 1.6 0 2.7 1.2 4.6 4.3 1.9-3.1 3-4.3 4.6-4.3 2.5 0 4.4 3.4 4.4 7 0 2-1 3.3-2.6 3.3-1.5 0-2.4-.9-4-3.6l-1-1.7-1 1.7c-1.6 2.7-2.5 3.6-4 3.6C4 18.8 3 17.5 3 15.5z"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinejoin="round"
+    />
+  </svg>
+)
+const WhatsAppMark = ({ className = 'h-5 w-5' }: { className?: string }) => (
+  <svg viewBox="0 0 24 24" fill="none" className={className} aria-hidden>
+    <path
+      d="M4 20l1.3-4A8 8 0 1112 20a8 8 0 01-4-1L4 20z"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M9 9c0 3 2.2 5.2 5 5.2.6 0 1.2-.5 1.2-1.1 0-.3-.9-.7-1.2-.8-.4-.1-.6.4-.9.4-.7 0-2.3-1.6-2.3-2.3 0-.3.5-.5.4-.9-.1-.3-.5-1.2-.8-1.2-.6 0-1.1.6-1.1 1.2z"
+      fill="currentColor"
+    />
+  </svg>
+)
+const MapsMark = ({ className = 'h-5 w-5' }: { className?: string }) => (
+  <svg viewBox="0 0 24 24" fill="none" className={className} aria-hidden>
+    <path
+      d="M12 21s6-5.3 6-10a6 6 0 10-12 0c0 4.7 6 10 6 10z"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinejoin="round"
+    />
+    <circle cx="12" cy="11" r="2.2" stroke="currentColor" strokeWidth="1.5" />
+  </svg>
+)
+const StripeMark = ({ className = 'h-5 w-5' }: { className?: string }) => (
+  <svg viewBox="0 0 24 24" fill="none" className={className} aria-hidden>
+    <path
+      d="M14.5 9.2c-1-.5-1.9-.8-1.9-1.4 0-.5.4-.7 1.1-.7 1 0 2.1.4 2.9.9V5.2A7 7 0 0013.8 5C11.5 5 10 6.3 10 8.2c0 2.4 3 2.7 3 3.8 0 .5-.5.7-1.2.7-1 0-2.4-.5-3.3-1v2.8c1 .5 2.2.7 3.3.7 2.4 0 4-1.2 4-3.2 0-2.6-3-2.9-3-3.8z"
+      fill="currentColor"
+    />
+  </svg>
+)
+
+const INTEGRATIONS: { name: string; Mark: (p: { className?: string }) => ReactNode }[] = [
+  { name: 'Meta', Mark: MetaMark },
+  { name: 'WhatsApp Business', Mark: WhatsAppMark },
+  { name: 'Google Maps', Mark: MapsMark },
+  { name: 'Stripe', Mark: StripeMark },
+]
+
+function IntegrationTicker() {
+  const row = [...INTEGRATIONS, ...INTEGRATIONS]
+  return (
+    <div className="ticker-mask w-full overflow-hidden">
+      <div className="ticker-track items-center gap-x-12">
+        {row.map((it, i) => (
+          <span
+            key={`${it.name}-${i}`}
+            className="flex shrink-0 items-center gap-2.5 text-white/45"
+          >
+            <it.Mark className="h-5 w-5" />
+            <span className="whitespace-nowrap text-sm font-medium tracking-tight">{it.name}</span>
+          </span>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+/* ─── Social proof avatars ───────────────────────────────────────────────── */
+const AVATARS = [
+  { initials: 'JM', color: '#3d7bfd' },
+  { initials: 'KB', color: '#12a150' },
+  { initials: 'SL', color: '#b4530a' },
+  { initials: 'AR', color: '#6b4ffd' },
+]
+
+function SocialProof() {
+  return (
+    <div className="inline-flex items-center gap-3 rounded-full border border-[var(--line)] bg-white/[0.03] px-3 py-2">
+      <div className="flex -space-x-2.5">
+        {AVATARS.map((a) => (
+          <span
+            key={a.initials}
+            className="flex h-7 w-7 items-center justify-center rounded-full border-2 border-[var(--bg)] text-[0.62rem] font-semibold text-white"
+            style={{ backgroundColor: a.color }}
+          >
+            {a.initials}
+          </span>
+        ))}
+      </div>
+      <span className="pr-1.5 text-sm font-medium text-white/75">
+        <span className="font-semibold text-white">+110 artisans</span> nous font confiance
+      </span>
+    </div>
+  )
+}
+
+/* ─── FAQ ────────────────────────────────────────────────────────────────── */
+const FAQ_ITEMS = [
+  {
+    q: "Comment l'IA apprend mon métier ?",
+    a: "Lors de l'installation, nous entraînons l'agent sur votre vocabulaire, vos prestations et votre grille tarifaire. Ensuite, grâce à la technologie « Earn to Learn », il s'améliore à chaque appel et chaque conversation — il affine ses réponses et maîtrise vos termes techniques en quelques semaines.",
+  },
+  {
+    q: 'Puis-je garder mon numéro WhatsApp ?',
+    a: "Oui. L'agent se connecte à votre WhatsApp Business existant (ou à votre ligne SMS). Vos clients continuent d'écrire au même numéro — c'est l'IA qui répond à votre place, sans changement pour eux.",
+  },
+  {
+    q: 'Est-ce que je perds le contrôle sur mes clients ?',
+    a: "Jamais. Vous gardez la main à tout moment : l'agent vous notifie des urgences par SMS, vous pouvez reprendre une conversation manuellement, et chaque rendez-vous est visible dans votre agenda. L'IA travaille pour vous, pas à votre place.",
+  },
+  {
+    q: 'Combien de temps pour être opérationnel ?',
+    a: "Comptez 5 à 7 jours entre l'appel de qualification et la mise en service. Nous configurons, testons et calibrons l'agent avec vous avant qu'il ne traite son premier vrai client.",
+  },
+  {
+    q: 'Que se passe-t-il si l\'IA ne comprend pas une demande ?',
+    a: "L'agent est conçu pour ne jamais laisser un client sans réponse. En cas de doute ou de demande complexe, il escalade automatiquement vers vous par SMS avec le contexte complet, pour que vous repreniez la main immédiatement.",
+  },
+]
+
+function FaqSection() {
+  const [open, setOpen] = useState<number | null>(0)
+  return (
+    <section id="faq" className="relative px-6 py-28">
+      <div className="mx-auto max-w-3xl">
+        <div className="mb-14 text-center">
+          <span className="mb-4 inline-block text-xs font-medium uppercase tracking-[0.22em] text-[var(--accent)]">
+            Questions fréquentes
+          </span>
+          <h2 className="font-[var(--font-syne)] text-[clamp(2rem,4vw,3.2rem)] font-semibold tracking-tight text-white">
+            Vous vous posez la question ?
+          </h2>
+          <p className="mx-auto mt-5 max-w-2xl text-[1rem] leading-relaxed text-[var(--ink-soft)]">
+            Les réponses aux objections les plus fréquentes des artisans avant de passer à l&apos;IA.
+          </p>
+        </div>
+
+        <div className="space-y-3">
+          {FAQ_ITEMS.map((item, i) => {
+            const isOpen = open === i
+            return (
+              <div
+                key={item.q}
+                className={`overflow-hidden rounded-2xl border transition-colors duration-300 ${
+                  isOpen ? 'border-[var(--accent)]/40 bg-white/[0.03]' : 'border-[var(--line)] bg-white/[0.015]'
+                }`}
+              >
+                <button
+                  type="button"
+                  onClick={() => setOpen(isOpen ? null : i)}
+                  aria-expanded={isOpen}
+                  className="flex w-full items-center justify-between gap-4 px-5 py-5 text-left"
+                >
+                  <span className="font-[var(--font-syne)] text-[1.02rem] font-semibold tracking-tight text-white">
+                    {item.q}
+                  </span>
+                  <span
+                    className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full border transition-all duration-300 ${
+                      isOpen
+                        ? 'rotate-45 border-[var(--accent)]/50 bg-[var(--accent)]/15 text-[var(--accent)]'
+                        : 'border-white/15 text-white/60'
+                    }`}
+                  >
+                    <svg viewBox="0 0 16 16" fill="none" className="h-3.5 w-3.5" aria-hidden>
+                      <path d="M8 3v10M3 8h10" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+                    </svg>
+                  </span>
+                </button>
+                <div className={`faq-panel ${isOpen ? 'open' : ''}`}>
+                  <div>
+                    <p className="px-5 pb-5 text-[0.95rem] leading-relaxed text-[var(--ink-soft)]">
+                      {item.a}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )
+          })}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+/* ─── YouTube video showcase ─────────────────────────────────────────────── */
+function VideoShowcase({ videoId = 'dQw4w9WgXcQ' }: { videoId?: string }) {
+  const [playing, setPlaying] = useState(false)
+  return (
+    <section id="video" className="relative px-6 py-28">
+      <div className="mx-auto max-w-5xl">
+        <div className="mb-12 text-center">
+          <span className="mb-4 inline-block text-xs font-medium uppercase tracking-[0.22em] text-[var(--accent)]">
+            En vidéo
+          </span>
+          <h2 className="font-[var(--font-syne)] text-[clamp(2rem,4vw,3.2rem)] font-semibold tracking-tight text-white">
+            Voyez Monolith AI en action.
+          </h2>
+          <p className="mx-auto mt-5 max-w-2xl text-[1rem] leading-relaxed text-[var(--ink-soft)]">
+            Une démonstration complète : de l&apos;appel entrant à la prise de rendez‑vous automatisée,
+            en passant par la relance et la détection d&apos;urgence.
+          </p>
+        </div>
+
+        <div className="relative aspect-video w-full overflow-hidden rounded-2xl border border-[var(--line)] bg-[var(--panel)]">
+          {playing ? (
+            <iframe
+              className="absolute inset-0 h-full w-full"
+              src={`https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0`}
+              title="Démonstration Monolith AI"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            />
+          ) : (
+            <button
+              type="button"
+              onClick={() => setPlaying(true)}
+              aria-label="Lire la vidéo de démonstration"
+              className="group absolute inset-0 flex items-center justify-center"
+            >
+              <Image
+                src={`https://i.ytimg.com/vi/${videoId}/maxresdefault.jpg`}
+                alt="Aperçu de la démonstration Monolith AI"
+                fill
+                sizes="(max-width: 1024px) 92vw, 960px"
+                className="object-cover opacity-70 transition-opacity duration-300 group-hover:opacity-90"
+                unoptimized
+              />
+              <span className="absolute inset-0 bg-black/40" />
+              <span className="relative flex h-20 w-20 items-center justify-center rounded-full bg-[var(--accent)] text-white transition-transform duration-300 group-hover:scale-105">
+                <PlayIcon className="h-8 w-8 translate-x-0.5" />
+              </span>
+            </button>
+          )}
+        </div>
+      </div>
+    </section>
+  )
+}
+
 /* ─── Paliers (Comment ça marche) ────────────────────────────────────────── */
 const PALIERS = [
   {
@@ -316,11 +559,8 @@ const TESTIMONIALS = [
 function VoiceAgentMockup() {
   return (
     <div className="relative">
-      {/* ambient halo */}
-      <div className="pointer-events-none absolute -inset-10 rounded-[40px] bg-[radial-gradient(circle_at_50%_30%,rgba(107,140,255,0.35),transparent_65%)] blur-2xl" />
-
       {/* device card */}
-      <div className="relative overflow-hidden rounded-[28px] border border-white/[0.1] bg-gradient-to-br from-white/[0.06] to-white/[0.02] p-6 shadow-[0_40px_120px_-30px_rgba(20,40,120,0.7)] backdrop-blur-xl">
+      <div className="relative overflow-hidden rounded-[28px] border border-[var(--line)] bg-[var(--panel)] p-6">
         {/* topbar */}
         <div className="mb-6 flex items-center justify-between">
           <div className="flex items-center gap-2.5">
@@ -343,7 +583,7 @@ function VoiceAgentMockup() {
           {Array.from({ length: 28 }).map((_, i) => (
             <span
               key={i}
-              className="wave-bar block w-[3px] rounded-full bg-gradient-to-t from-[#6b8cff] to-[#a4baff]"
+              className="wave-bar block w-[3px] rounded-full bg-[var(--accent)]"
               style={{ animationDelay: `${(i % 14) * 0.06}s` }}
             />
           ))}
@@ -388,12 +628,12 @@ function VoiceAgentMockup() {
       </div>
 
       {/* floating side metric */}
-      <div className="absolute -right-4 top-12 hidden rounded-2xl border border-white/[0.1] bg-white/[0.05] px-4 py-3 backdrop-blur-xl sm:block">
+      <div className="absolute -right-4 top-12 hidden rounded-2xl border border-[var(--line)] bg-[var(--panel)] px-4 py-3 sm:block">
         <div className="text-[0.6rem] uppercase tracking-[0.18em] text-white/50">Appels traités</div>
         <div className="font-[var(--font-syne)] text-2xl font-semibold text-white">+ 247</div>
         <div className="text-[0.65rem] text-emerald-300">↗ Cette semaine</div>
       </div>
-      <div className="absolute -left-4 bottom-8 hidden rounded-2xl border border-white/[0.1] bg-white/[0.05] px-4 py-3 backdrop-blur-xl sm:block">
+      <div className="absolute -left-4 bottom-8 hidden rounded-2xl border border-[var(--line)] bg-[var(--panel)] px-4 py-3 sm:block">
         <div className="text-[0.6rem] uppercase tracking-[0.18em] text-white/50">Temps réponse</div>
         <div className="font-[var(--font-syne)] text-2xl font-semibold text-white">0,8 s</div>
         <div className="text-[0.65rem] text-white/55">Latence moyenne</div>
@@ -418,8 +658,6 @@ function CommentCaMarche() {
 
   return (
     <section id="comment" className="relative px-6 py-28">
-      <div className="pointer-events-none absolute left-1/2 top-1/4 h-[420px] w-[820px] -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgba(61,123,253,0.12),transparent_65%)] blur-3xl" />
-
       <div className="relative mx-auto max-w-6xl">
         <div className="mb-10 text-center">
           <span className="mb-4 inline-block text-xs font-medium uppercase tracking-[0.22em] text-[var(--accent)]/85">
@@ -447,10 +685,10 @@ function CommentCaMarche() {
                 role="tab"
                 aria-selected={on}
                 onClick={() => selectPalier(p.id)}
-                className={`flex items-center gap-3 rounded-2xl border px-5 py-3 text-left transition-all duration-300 ${
+                className={`flex items-center gap-3 rounded-2xl border px-5 py-3 text-left transition-colors duration-300 ${
                   on
-                    ? 'border-[var(--accent)]/45 bg-gradient-to-r from-[var(--accent)]/[0.16] to-white/[0.02] shadow-[0_20px_50px_-25px_rgba(61,123,253,0.7)]'
-                    : 'border-white/[0.08] bg-white/[0.02] hover:border-white/[0.18] hover:bg-white/[0.04]'
+                    ? 'border-[var(--accent)]/50 bg-[var(--accent)]/10'
+                    : 'border-[var(--line)] bg-white/[0.02] hover:border-white/[0.18] hover:bg-white/[0.04]'
                 }`}
               >
                 <span
@@ -486,9 +724,9 @@ function CommentCaMarche() {
                 type="button"
                 onClick={() => setView('client')}
                 aria-pressed={view === 'client'}
-                className={`flex items-center gap-2 rounded-full px-4 py-2 text-xs font-medium transition-all duration-300 ${
+                className={`flex items-center gap-2 rounded-full px-4 py-2 text-xs font-medium transition-colors duration-300 ${
                   view === 'client'
-                    ? 'bg-emerald-400/15 text-emerald-200 shadow-[0_10px_30px_-15px_rgba(16,185,129,0.6)]'
+                    ? 'bg-emerald-400/15 text-emerald-200'
                     : 'text-white/55 hover:text-white/80'
                 }`}
               >
@@ -499,9 +737,9 @@ function CommentCaMarche() {
                 type="button"
                 onClick={() => setView('artisan')}
                 aria-pressed={view === 'artisan'}
-                className={`flex items-center gap-2 rounded-full px-4 py-2 text-xs font-medium transition-all duration-300 ${
+                className={`flex items-center gap-2 rounded-full px-4 py-2 text-xs font-medium transition-colors duration-300 ${
                   view === 'artisan'
-                    ? 'bg-[var(--accent)]/20 text-[var(--accent)] shadow-[0_10px_30px_-15px_rgba(61,123,253,0.7)]'
+                    ? 'bg-[var(--accent)]/20 text-[var(--accent)]'
                     : 'text-white/55 hover:text-white/80'
                 }`}
               >
@@ -522,7 +760,7 @@ function CommentCaMarche() {
                 <span className={`h-1.5 w-1.5 rounded-full ${view === 'client' ? 'bg-emerald-400' : 'bg-[var(--accent)]'}`} />
                 {label}
               </figcaption>
-              <div className="overflow-hidden rounded-2xl border border-white/[0.1] bg-[var(--panel)] shadow-[0_30px_80px_-30px_rgba(0,0,0,0.8)]">
+              <div className="overflow-hidden rounded-2xl border border-[var(--line)] bg-[var(--panel)]">
                 <Image
                   src={img.src}
                   alt={label}
@@ -540,7 +778,7 @@ function CommentCaMarche() {
               type="button"
               onClick={() => setView((v) => (v === 'client' ? 'artisan' : 'client'))}
               aria-label={view === 'client' ? "Voir le résumé envoyé à l'artisan" : "Voir l'échange client"}
-              className="absolute right-3 top-1/2 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-white/15 bg-black/50 text-white backdrop-blur-md transition-all duration-300 hover:scale-105 hover:bg-black/70 sm:right-4"
+              className="absolute right-3 top-1/2 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-white/15 bg-[#0c0d10]/90 text-white transition-transform duration-300 hover:scale-105 sm:right-4"
             >
               <ArrowRight
                 className={`h-5 w-5 transition-transform duration-300 ${view === 'artisan' ? 'rotate-180' : ''}`}
@@ -577,8 +815,6 @@ function CommentCaMarche() {
 function ComparisonSection() {
   return (
     <section id="comparaison" className="relative px-6 py-28">
-      <div className="pointer-events-none absolute left-1/2 top-1/3 h-[440px] w-[820px] -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgba(61,123,253,0.1),transparent_65%)] blur-3xl" />
-
       <div className="relative mx-auto max-w-6xl">
         <div className="mb-14 text-center">
           <span className="mb-4 inline-block text-xs font-medium uppercase tracking-[0.22em] text-[var(--accent)]/85">
@@ -595,7 +831,7 @@ function ComparisonSection() {
 
         <div className="grid gap-6 md:grid-cols-2">
           {/* Without */}
-          <div className="group relative overflow-hidden rounded-3xl border border-rose-400/20 bg-gradient-to-b from-rose-400/[0.06] to-transparent p-5 transition-all duration-500 hover:-translate-y-1 sm:p-6">
+          <div className="group relative overflow-hidden rounded-3xl border border-rose-400/20 bg-rose-400/[0.04] p-5 transition-transform duration-500 hover:-translate-y-1 sm:p-6">
             <div className="mb-4 flex items-center justify-between">
               <div className="flex items-center gap-2.5">
                 <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-rose-400/15 text-rose-300">
@@ -624,7 +860,7 @@ function ComparisonSection() {
           </div>
 
           {/* With */}
-          <div className="group relative overflow-hidden rounded-3xl border border-emerald-400/25 bg-gradient-to-b from-emerald-400/[0.08] to-transparent p-5 shadow-[0_30px_80px_-30px_rgba(16,185,129,0.3)] transition-all duration-500 hover:-translate-y-1 sm:p-6">
+          <div className="group relative overflow-hidden rounded-3xl border border-emerald-400/25 bg-emerald-400/[0.05] p-5 transition-transform duration-500 hover:-translate-y-1 sm:p-6">
             <div className="mb-4 flex items-center justify-between">
               <div className="flex items-center gap-2.5">
                 <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-emerald-400/15 text-emerald-300">
@@ -664,8 +900,6 @@ function ChatShowcase() {
 
   return (
     <section id="demo" className="relative px-6 py-28">
-      <div className="pointer-events-none absolute left-1/2 top-1/4 h-[420px] w-[760px] -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgba(107,140,255,0.12),transparent_65%)] blur-3xl" />
-
       <div className="relative mx-auto max-w-6xl">
         <div className="mb-12 text-center">
           <span className="mb-4 inline-block text-xs font-medium uppercase tracking-[0.22em] text-[var(--accent)]/85">
@@ -697,10 +931,10 @@ function ChatShowcase() {
                     role="tab"
                     aria-selected={on}
                     onClick={() => setActive(c.id)}
-                    className={`group flex items-center gap-4 rounded-2xl border px-5 py-4 text-left transition-all duration-300 ${
+                    className={`group flex items-center gap-4 rounded-2xl border px-5 py-4 text-left transition-colors duration-300 ${
                       on
-                        ? 'border-[var(--accent)]/45 bg-gradient-to-r from-[var(--accent)]/[0.14] to-white/[0.02] shadow-[0_20px_50px_-25px_rgba(107,140,255,0.6)]'
-                        : 'border-white/[0.08] bg-white/[0.02] hover:border-white/[0.18] hover:bg-white/[0.04]'
+                        ? 'border-[var(--accent)]/50 bg-[var(--accent)]/10'
+                        : 'border-[var(--line)] bg-white/[0.02] hover:border-white/[0.18] hover:bg-white/[0.04]'
                     }`}
                   >
                     <span
@@ -741,11 +975,10 @@ function ChatShowcase() {
 
           {/* Phone / WhatsApp frame */}
           <div className="relative mx-auto w-full max-w-sm">
-            <div className="pointer-events-none absolute -inset-6 rounded-[44px] bg-[radial-gradient(circle_at_50%_20%,rgba(107,140,255,0.28),transparent_65%)] blur-2xl" />
-            <div className="relative overflow-hidden rounded-[36px] border border-white/[0.12] bg-[var(--panel)] shadow-[0_40px_120px_-30px_rgba(20,40,120,0.8)]">
+            <div className="relative overflow-hidden rounded-[36px] border border-[var(--line)] bg-[var(--panel)]">
               {/* chat header */}
-              <div className="flex items-center gap-3 border-b border-white/[0.06] bg-gradient-to-b from-white/[0.06] to-transparent px-4 py-3.5">
-                <span className="relative flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-[var(--accent)]/50 to-white/10 font-[var(--font-syne)] text-sm font-semibold text-white">
+              <div className="flex items-center gap-3 border-b border-white/[0.06] bg-white/[0.03] px-4 py-3.5">
+                <span className="relative flex h-10 w-10 items-center justify-center rounded-full bg-[var(--accent)]/25 font-[var(--font-syne)] text-sm font-semibold text-white">
                   <current.Icon className="h-5 w-5" />
                   <span className="absolute -bottom-0.5 -right-0.5 h-3 w-3 rounded-full border-2 border-[var(--panel)] bg-emerald-400" />
                 </span>
@@ -778,7 +1011,7 @@ function ChatShowcase() {
                       <div
                         className={`relative max-w-[82%] px-3.5 py-2 text-[0.82rem] leading-relaxed shadow-sm ${
                           agent
-                            ? 'rounded-2xl rounded-br-md bg-gradient-to-br from-emerald-500/90 to-emerald-600/90 text-white'
+                            ? 'rounded-2xl rounded-br-md bg-emerald-600 text-white'
                             : 'rounded-2xl rounded-bl-md border border-white/[0.08] bg-white/[0.06] text-white/90'
                         }`}
                       >
@@ -842,8 +1075,6 @@ function VoiceDemo() {
 
   return (
     <section id="voix" className="relative px-6 py-28">
-      <div className="pointer-events-none absolute right-[8%] top-1/4 h-[380px] w-[380px] rounded-full bg-[radial-gradient(circle,rgba(107,140,255,0.16),transparent_60%)] blur-3xl" />
-
       <div className="relative mx-auto max-w-6xl">
         <div className="mb-14 text-center">
           <span className="mb-4 inline-block text-xs font-medium uppercase tracking-[0.22em] text-[var(--accent)]/85">
@@ -858,7 +1089,7 @@ function VoiceDemo() {
           </p>
         </div>
 
-        <div className="relative overflow-hidden rounded-3xl border border-white/[0.1] bg-gradient-to-br from-white/[0.05] to-white/[0.015] p-7 shadow-[0_40px_120px_-30px_rgba(20,40,120,0.6)] backdrop-blur-xl sm:p-10">
+        <div className="relative overflow-hidden rounded-3xl border border-[var(--line)] bg-[var(--panel)] p-7 sm:p-10">
           <div className="grid items-center gap-10 lg:grid-cols-[0.85fr_1.15fr]">
             {/* player controls */}
             <div>
@@ -880,7 +1111,7 @@ function VoiceDemo() {
                   type="button"
                   aria-label={playing ? 'Pause' : 'Lecture'}
                   onClick={() => setPlaying((v) => !v)}
-                  className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-white text-[#0d0e12] shadow-[0_20px_50px_-15px_rgba(107,140,255,0.6)] transition-transform duration-300 hover:-translate-y-0.5"
+                  className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-[var(--accent)] text-white transition-transform duration-300 hover:-translate-y-0.5"
                 >
                   {playing ? <PauseIcon className="h-5 w-5" /> : <PlayIcon className="h-5 w-5 translate-x-0.5" />}
                 </button>
@@ -1062,17 +1293,14 @@ export default function MonolithAIPage() {
           --ink-soft: #c2c8d6;
           --ink-mute: #8991a3;
           --accent: #3d7bfd;
-          --panel: #15161c;
+          --bg: #0c0d10;
+          --panel: #131419;
+          --line: rgba(255, 255, 255, 0.08);
         }
         html { scroll-behavior: smooth; }
         body {
           margin: 0;
-          background:
-            radial-gradient(ellipse 80% 60% at 50% -10%, rgba(61, 123, 253, 0.16), transparent 60%),
-            radial-gradient(ellipse 60% 50% at 100% 20%, rgba(61, 123, 253, 0.10), transparent 60%),
-            radial-gradient(ellipse 70% 60% at 0% 80%, rgba(51, 125, 248, 0.08), transparent 65%),
-            linear-gradient(180deg, #121318 0%, #0d0e12 55%, #0a0b0f 100%);
-          background-attachment: fixed;
+          background: var(--bg);
           color: var(--ink);
           font-family: var(--font-dm), system-ui, sans-serif;
           -webkit-font-smoothing: antialiased;
@@ -1103,11 +1331,7 @@ export default function MonolithAIPage() {
           100% { opacity: 1; transform: translateY(0) scale(1); }
         }
         .msg-in { opacity: 0; animation: msgIn 0.45s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
-        .chat-canvas {
-          background-image:
-            radial-gradient(circle at 20% 30%, rgba(107,140,255,0.06), transparent 40%),
-            radial-gradient(circle at 80% 70%, rgba(64,96,220,0.05), transparent 40%);
-        }
+        .chat-canvas { background-color: rgba(255,255,255,0.015); }
         .chat-canvas::-webkit-scrollbar { width: 5px; }
         .chat-canvas::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 8px; }
 
@@ -1122,11 +1346,34 @@ export default function MonolithAIPage() {
         }
         .flow-arrow { animation: arrowNudge 1.6s ease-in-out infinite; }
 
+        @keyframes ticker {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
+        }
+        .ticker-track {
+          display: flex;
+          width: max-content;
+          animation: ticker 26s linear infinite;
+        }
+        .ticker-mask {
+          -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+          mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+        }
+
+        .faq-panel {
+          display: grid;
+          grid-template-rows: 0fr;
+          transition: grid-template-rows 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .faq-panel.open { grid-template-rows: 1fr; }
+        .faq-panel > div { overflow: hidden; }
+
         @media (prefers-reduced-motion: reduce) {
           .msg-in { opacity: 1; animation: none; }
           .wave-bar { animation: none; }
           .fade-swap { animation: none; }
           .flow-arrow { animation: none; }
+          .ticker-track { animation: none; }
         }
       `}</style>
 
@@ -1134,26 +1381,26 @@ export default function MonolithAIPage() {
       <header
         className={`fixed inset-x-0 top-0 z-50 h-[72px] transition-all duration-300 ${
           scrolled
-            ? 'border-b border-white/[0.08] bg-[#0d0e12]/80 backdrop-blur-xl'
+            ? 'border-b border-[var(--line)] bg-[var(--bg)]'
             : 'border-b border-transparent bg-transparent'
         }`}
       >
         <div className="mx-auto flex h-full max-w-7xl items-center justify-between gap-6 px-6">
-          <a href="#" className="flex items-center gap-3 no-underline">
+          <a href="#" className="flex items-center gap-2.5 no-underline">
             {!logoError ? (
-              <div className="relative h-9 w-9 shrink-0">
+              <div className="relative h-10 w-10 shrink-0">
                 <Image
                   src="/logo-monolith.png"
                   alt="Monolith AI"
                   fill
-                  sizes="(max-width: 640px) 32px, 36px"
+                  sizes="40px"
                   style={{ objectFit: 'contain' }}
                   onError={() => setLogoError(true)}
-                  preload
+                  priority
                 />
               </div>
             ) : (
-              <div className="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-[var(--accent)] text-sm font-extrabold tracking-tight">M</div>
+              <div className="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-[var(--accent)] text-sm font-extrabold tracking-tight">M</div>
             )}
             <span className="font-[var(--font-syne)] text-[1.05rem] font-semibold tracking-tight text-white">
               Monolith<span className="font-light text-white/60"> AI</span>
@@ -1166,6 +1413,7 @@ export default function MonolithAIPage() {
               { label: 'Démo', href: '#demo' },
               { label: 'Comparaison', href: '#comparaison' },
               { label: 'Tarifs', href: '#tarifs' },
+              { label: 'FAQ', href: '#faq' },
             ].map((l) => (
               <a key={l.label} href={l.href} className="text-sm text-white/65 transition-colors hover:text-white">
                 {l.label}
@@ -1175,7 +1423,7 @@ export default function MonolithAIPage() {
 
           <a
             href="#contact"
-            className="group inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.06] px-5 py-2.5 text-sm font-medium text-white backdrop-blur-md transition-all duration-300 hover:border-white/30 hover:bg-white/[0.12]"
+            className="group inline-flex items-center gap-2 rounded-full bg-[var(--accent)] px-5 py-2.5 text-sm font-semibold text-white transition-colors duration-300 hover:bg-[#3570e6]"
           >
             Réserver un appel
             <ArrowRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-0.5" />
@@ -1184,22 +1432,18 @@ export default function MonolithAIPage() {
       </header>
 
       {/* ════════════════════════════════════════════════════════ HERO */}
-      <section className="relative overflow-hidden px-6 pt-32 pb-24 lg:pt-40 lg:pb-32">
-        <div className="pointer-events-none absolute left-[10%] top-[20%] h-[460px] w-[460px] rounded-full bg-[radial-gradient(circle,rgba(107,140,255,0.25),transparent_60%)] blur-3xl" />
-        <div className="pointer-events-none absolute right-[5%] top-[5%] h-[380px] w-[380px] rounded-full bg-[radial-gradient(circle,rgba(80,130,255,0.18),transparent_60%)] blur-3xl" />
-
+      <section className="relative px-6 pt-32 pb-24 lg:pt-40 lg:pb-32">
         <div className="relative mx-auto grid max-w-7xl items-center gap-16 lg:grid-cols-[1.05fr_0.95fr]">
           <div>
-            <span className="mb-7 inline-flex items-center gap-2 rounded-full border border-white/12 bg-white/[0.04] px-4 py-1.5 text-xs font-medium tracking-wide text-white/75 backdrop-blur-md">
-              <span className="h-1.5 w-1.5 rounded-full bg-[var(--accent)] soft-pulse" />
-              Agence d&apos;automatisation IA · France
-            </span>
+            <div className="mb-7">
+              <SocialProof />
+            </div>
 
             <h1 className="font-[var(--font-syne)] text-[clamp(2.4rem,5.4vw,4.8rem)] font-semibold leading-[1.04] tracking-[-0.035em] text-white">
               L&apos;excellence de l&apos;automatisation
               <br />
               et des{' '}
-              <span className="bg-gradient-to-r from-white via-[#cfd8ff] to-[#8aa0ff] bg-clip-text text-transparent">
+              <span className="text-[var(--accent)]">
                 Agents Vocaux IA
               </span>
               <br />
@@ -1216,7 +1460,7 @@ export default function MonolithAIPage() {
             <div className="mt-9 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
               <a
                 href="#contact"
-                className="group inline-flex items-center gap-2 rounded-full bg-white px-7 py-3.5 text-sm font-semibold text-[#0d0e12] shadow-[0_20px_60px_-15px_rgba(107,140,255,0.5)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_25px_70px_-15px_rgba(107,140,255,0.7)]"
+                className="group inline-flex items-center gap-2 rounded-full bg-[var(--accent)] px-7 py-3.5 text-sm font-semibold text-white transition-colors duration-300 hover:bg-[#3570e6]"
               >
                 Réserver mon appel stratégique
                 <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
@@ -1232,19 +1476,17 @@ export default function MonolithAIPage() {
             <div className="mt-6">
               <ChannelBadge />
             </div>
-
-            <div className="mt-12 flex flex-wrap items-center gap-x-8 gap-y-3 text-[0.7rem] uppercase tracking-[0.18em] text-white/40">
-              <span>OpenAI GPT‑4o</span>
-              <span className="h-1 w-1 rounded-full bg-white/20" />
-              <span>n8n Cloud</span>
-              <span className="h-1 w-1 rounded-full bg-white/20" />
-              <span>WhatsApp Business</span>
-              <span className="h-1 w-1 rounded-full bg-white/20" />
-              <span>Stripe</span>
-            </div>
           </div>
 
           <VoiceAgentMockup />
+        </div>
+
+        {/* integration logo ticker */}
+        <div className="mx-auto mt-16 max-w-7xl lg:mt-24">
+          <p className="mb-6 text-center text-[0.7rem] font-medium uppercase tracking-[0.2em] text-white/40">
+            Compatible avec vos outils
+          </p>
+          <IntegrationTicker />
         </div>
       </section>
 
@@ -1266,7 +1508,7 @@ export default function MonolithAIPage() {
           </div>
 
           {/* triage diagram */}
-          <div className="overflow-hidden rounded-3xl border border-white/[0.08] bg-white/[0.025] p-8 backdrop-blur-sm sm:p-12">
+          <div className="overflow-hidden rounded-3xl border border-[var(--line)] bg-white/[0.02] p-8 sm:p-12">
             <div className="grid items-center gap-10 lg:grid-cols-[1fr_auto_1fr]">
               {/* Inbound call node */}
               <div className="flex justify-center lg:justify-end">
@@ -1340,6 +1582,9 @@ export default function MonolithAIPage() {
       {/* ════════════════════════════════════════════════════════ COMPARAISON */}
       <ComparisonSection />
 
+      {/* ════════════════════════════════════════════════════════ VIDÉO */}
+      <VideoShowcase />
+
       {/* ════════════════════════════════════════════════════════ DÉMO CHAT */}
       <ChatShowcase />
 
@@ -1366,7 +1611,7 @@ export default function MonolithAIPage() {
             {PROCESS_STEPS.map((step) => (
               <li
                 key={step.n}
-                className="group relative overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.025] p-7 backdrop-blur-sm transition-all duration-500 hover:-translate-y-0.5 hover:border-white/[0.18] hover:bg-white/[0.04]"
+                className="group relative overflow-hidden rounded-2xl border border-[var(--line)] bg-white/[0.02] p-7 transition-colors duration-300 hover:border-white/[0.18] hover:bg-white/[0.04]"
               >
                 <div className="mb-4 flex items-center justify-between">
                   <span className="font-[var(--font-syne)] text-2xl font-semibold tracking-tight text-white/30 transition-colors duration-500 group-hover:text-white/60">
@@ -1388,8 +1633,6 @@ export default function MonolithAIPage() {
 
       {/* ════════════════════════════════════════════════════════ TÉMOIGNAGES */}
       <section id="temoignages" className="relative px-6 py-28">
-        <div className="pointer-events-none absolute left-1/2 top-1/4 h-[420px] w-[820px] -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgba(107,140,255,0.1),transparent_65%)] blur-3xl" />
-
         <div className="relative mx-auto max-w-6xl">
           <div className="mb-14 text-center">
             <span className="mb-4 inline-block text-xs font-medium uppercase tracking-[0.22em] text-[var(--accent)]/85">
@@ -1409,9 +1652,8 @@ export default function MonolithAIPage() {
             {METRICS.map((m) => (
               <div
                 key={m.label}
-                className="group relative overflow-hidden rounded-2xl border border-white/[0.08] bg-gradient-to-b from-white/[0.05] to-white/[0.01] p-6 text-center transition-all duration-500 hover:-translate-y-1 hover:border-[var(--accent)]/30"
+                className="group relative overflow-hidden rounded-2xl border border-[var(--line)] bg-white/[0.02] p-6 text-center transition-colors duration-300 hover:border-[var(--accent)]/40"
               >
-                <div className="pointer-events-none absolute inset-x-0 -top-8 mx-auto h-16 w-16 rounded-full bg-[var(--accent)]/20 blur-2xl opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
                 <div className="font-[var(--font-syne)] text-[clamp(1.8rem,3vw,2.6rem)] font-semibold tracking-tight text-white">
                   {m.value}
                 </div>
@@ -1443,7 +1685,7 @@ export default function MonolithAIPage() {
             {TESTIMONIALS.map((t) => (
               <figure
                 key={t.name}
-                className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.025] p-7 backdrop-blur-sm transition-all duration-500 hover:-translate-y-1 hover:border-white/[0.18] hover:bg-white/[0.04]"
+                className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-[var(--line)] bg-white/[0.02] p-7 transition-colors duration-300 hover:border-white/[0.18] hover:bg-white/[0.04]"
               >
                 <svg viewBox="0 0 24 24" fill="none" className="mb-5 h-6 w-6 text-[var(--accent)]/70" aria-hidden>
                   <path d="M9 7H5a2 2 0 00-2 2v3a2 2 0 002 2h2v1a3 3 0 01-3 3v2a5 5 0 005-5V9a2 2 0 00-2-2zm12 0h-4a2 2 0 00-2 2v3a2 2 0 002 2h2v1a3 3 0 01-3 3v2a5 5 0 005-5V9a2 2 0 00-2-2z" fill="currentColor" />
@@ -1452,7 +1694,7 @@ export default function MonolithAIPage() {
                   « {t.quote} »
                 </blockquote>
                 <figcaption className="mt-7 flex items-center gap-3 border-t border-white/[0.06] pt-5">
-                  <span className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-[var(--accent)]/40 to-white/10 font-[var(--font-syne)] text-sm font-semibold text-white">
+                  <span className="flex h-10 w-10 items-center justify-center rounded-full bg-[var(--accent)]/25 font-[var(--font-syne)] text-sm font-semibold text-white">
                     {t.initials}
                   </span>
                   <div>
@@ -1475,8 +1717,6 @@ export default function MonolithAIPage() {
 
       {/* ════════════════════════════════════════════════════════ TARIFS */}
       <section id="tarifs" className="relative px-6 py-28">
-        <div className="pointer-events-none absolute left-1/2 top-1/3 h-[500px] w-[800px] -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgba(107,140,255,0.12),transparent_65%)] blur-3xl" />
-
         <div className="relative mx-auto max-w-6xl">
           <div className="mb-14 text-center">
             <span className="mb-4 inline-block text-xs font-medium uppercase tracking-[0.22em] text-[var(--accent)]/85">
@@ -1495,10 +1735,10 @@ export default function MonolithAIPage() {
             {PRICING.map((p) => (
               <article
                 key={p.name}
-                className={`group relative flex h-full flex-col overflow-hidden rounded-2xl p-8 backdrop-blur-sm transition-all duration-500 hover:-translate-y-1 ${
+                className={`group relative flex h-full flex-col overflow-hidden rounded-2xl p-8 transition-colors duration-300 ${
                   p.highlight
-                    ? 'border border-[var(--accent)]/40 bg-gradient-to-b from-[var(--accent)]/[0.12] to-white/[0.02] shadow-[0_30px_80px_-20px_rgba(107,140,255,0.4)]'
-                    : 'border border-white/[0.08] bg-white/[0.025] hover:border-white/[0.18]'
+                    ? 'border border-[var(--accent)]/50 bg-[var(--accent)]/[0.08]'
+                    : 'border border-[var(--line)] bg-white/[0.02] hover:border-white/[0.18]'
                 }`}
               >
                 {p.highlight && (
@@ -1528,7 +1768,7 @@ export default function MonolithAIPage() {
                 </div>
 
                 {'earnToLearn' in p && p.earnToLearn && (
-                  <div className="mb-4 overflow-hidden rounded-2xl border border-emerald-400/30 bg-gradient-to-br from-emerald-400/[0.12] via-emerald-400/[0.05] to-transparent p-4">
+                  <div className="mb-4 overflow-hidden rounded-2xl border border-emerald-400/30 bg-emerald-400/[0.06] p-4">
                     <div className="mb-2 flex flex-wrap items-center gap-2">
                       <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-400/40 bg-emerald-400/15 px-2.5 py-1 text-[0.6rem] font-semibold uppercase tracking-[0.16em] text-emerald-200">
                         <svg viewBox="0 0 24 24" fill="none" className="h-3 w-3" aria-hidden>
@@ -1551,7 +1791,7 @@ export default function MonolithAIPage() {
                 )}
 
                 {'spotlight' in p && p.spotlight && (
-                  <div className="mb-6 overflow-hidden rounded-2xl border border-[var(--accent)]/35 bg-gradient-to-br from-[var(--accent)]/[0.18] via-[var(--accent)]/[0.08] to-transparent p-4">
+                  <div className="mb-6 overflow-hidden rounded-2xl border border-[var(--accent)]/35 bg-[var(--accent)]/[0.1] p-4">
                     <div className="mb-2 flex items-center gap-2">
                       <span className="inline-flex h-6 w-6 items-center justify-center rounded-md bg-[var(--accent)]/30 text-[var(--accent)]">
                         <svg viewBox="0 0 16 16" fill="none" className="h-3.5 w-3.5" aria-hidden>
@@ -1582,9 +1822,9 @@ export default function MonolithAIPage() {
 
                 <a
                   href="#contact"
-                  className={`mt-8 inline-flex items-center justify-center gap-2 rounded-full px-5 py-3 text-sm font-semibold transition-all duration-300 ${
+                  className={`mt-8 inline-flex items-center justify-center gap-2 rounded-full px-5 py-3 text-sm font-semibold transition-colors duration-300 ${
                     p.highlight
-                      ? 'bg-white text-[#0d0e12] hover:-translate-y-0.5 hover:shadow-[0_20px_50px_-15px_rgba(255,255,255,0.4)]'
+                      ? 'bg-[var(--accent)] text-white hover:bg-[#3570e6]'
                       : 'border border-white/15 text-white hover:border-white/35 hover:bg-white/[0.06]'
                   }`}
                 >
@@ -1598,9 +1838,7 @@ export default function MonolithAIPage() {
       </section>
 
       {/* ════════════════════════════════════════════════════════ CONTACT */}
-      <section id="contact" className="relative overflow-hidden px-6 py-28">
-        <div className="pointer-events-none absolute left-1/2 top-0 h-[500px] w-[900px] -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgba(107,140,255,0.18),transparent_65%)] blur-2xl" />
-
+      <section id="contact" className="relative px-6 py-28">
         <div className="relative mx-auto max-w-4xl">
           <div className="mb-12 text-center">
             <span className="mb-4 inline-block text-xs font-medium uppercase tracking-[0.22em] text-[var(--accent)]/85">
@@ -1609,7 +1847,7 @@ export default function MonolithAIPage() {
             <h2 className="font-[var(--font-syne)] text-[clamp(2.2rem,5vw,3.8rem)] font-semibold leading-[1.05] tracking-[-0.03em] text-white">
               Prêt à automatiser
               <br />
-              <span className="bg-gradient-to-r from-white via-[#cfd8ff] to-[#8aa0ff] bg-clip-text text-transparent">
+              <span className="text-[var(--accent)]">
                 votre croissance ?
               </span>
             </h2>
@@ -1619,10 +1857,7 @@ export default function MonolithAIPage() {
             </p>
           </div>
 
-          <div className="relative overflow-hidden rounded-3xl border border-white/[0.1] bg-gradient-to-br from-white/[0.045] via-white/[0.025] to-white/[0.01] shadow-[0_40px_120px_-30px_rgba(20,40,120,0.6)] backdrop-blur-xl">
-            <div className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-[radial-gradient(circle,rgba(107,140,255,0.28),transparent_70%)] blur-2xl" />
-            <div className="pointer-events-none absolute -bottom-32 -left-16 h-72 w-72 rounded-full bg-[radial-gradient(circle,rgba(64,96,220,0.22),transparent_70%)] blur-2xl" />
-
+          <div className="relative overflow-hidden rounded-3xl border border-[var(--line)] bg-white/[0.02]">
             <div className="flex items-center gap-2.5 border-b border-white/[0.06] px-6 py-4">
               <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 soft-pulse" />
               <span className="text-xs font-medium tracking-wide text-white/65">
@@ -1753,7 +1988,7 @@ export default function MonolithAIPage() {
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="group mt-2 inline-flex items-center justify-center gap-2 rounded-full bg-white px-7 py-4 text-sm font-semibold text-[#0d0e12] shadow-[0_20px_60px_-15px_rgba(107,140,255,0.5)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_25px_70px_-15px_rgba(107,140,255,0.7)] disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0"
+                  className="group mt-2 inline-flex items-center justify-center gap-2 rounded-full bg-[var(--accent)] px-7 py-4 text-sm font-semibold text-white transition-colors duration-300 hover:bg-[#3570e6] disabled:cursor-not-allowed disabled:opacity-60"
                 >
                   {submitting ? 'Envoi en cours…' : 'Réserver mon appel stratégique'}
                   {!submitting && <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />}
@@ -1768,18 +2003,21 @@ export default function MonolithAIPage() {
         </div>
       </section>
 
+      {/* ════════════════════════════════════════════════════════ FAQ */}
+      <FaqSection />
+
       {/* ════════════════════════════════════════════════════════ FOOTER */}
       <footer className="border-t border-white/[0.06] px-6 py-16">
         <div className="mx-auto max-w-7xl">
           <div className="flex flex-col items-start justify-between gap-10 md:flex-row md:items-center">
             <div className="max-w-md">
-              <div className="mb-4 flex items-center gap-3">
+              <div className="mb-4 flex items-center gap-2.5">
                 {!logoError ? (
-                  <div className="relative h-8 w-8">
-                    <Image src="/logo-monolith.png" alt="Monolith AI" fill sizes="32px" style={{ objectFit: 'contain' }} onError={() => setLogoError(true)} />
+                  <div className="relative h-9 w-9 shrink-0">
+                    <Image src="/logo-monolith.png" alt="Monolith AI" fill sizes="36px" style={{ objectFit: 'contain' }} onError={() => setLogoError(true)} />
                   </div>
                 ) : (
-                  <div className="grid h-8 w-8 place-items-center rounded-md bg-[var(--accent)] text-xs font-extrabold">M</div>
+                  <div className="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-[var(--accent)] text-xs font-extrabold">M</div>
                 )}
                 <span className="font-[var(--font-syne)] text-base font-semibold tracking-tight text-white">
                   Monolith<span className="font-light text-white/60"> AI</span>
