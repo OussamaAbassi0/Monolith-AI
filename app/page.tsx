@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState, type FormEvent } from 'react'
+import { useEffect, useState, type FormEvent, type ReactNode } from 'react'
 import Image from 'next/image'
 import { Syne, DM_Sans } from 'next/font/google'
 
@@ -43,6 +43,44 @@ const CalendarIcon = ({ className = 'w-4 h-4' }: { className?: string }) => (
   <svg viewBox="0 0 24 24" fill="none" className={className} aria-hidden>
     <rect x="3.5" y="5" width="17" height="15" rx="2.5" stroke="currentColor" strokeWidth="1.5" />
     <path d="M3.5 10h17M8 3.5v3M16 3.5v3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+  </svg>
+)
+const MicIcon = ({ className = 'w-4 h-4' }: { className?: string }) => (
+  <svg viewBox="0 0 24 24" fill="none" className={className} aria-hidden>
+    <rect x="9" y="3" width="6" height="11" rx="3" stroke="currentColor" strokeWidth="1.5" />
+    <path d="M5 11a7 7 0 0014 0M12 18v3M8.5 21h7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+  </svg>
+)
+const PlayIcon = ({ className = 'w-4 h-4' }: { className?: string }) => (
+  <svg viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden>
+    <path d="M8 5.5v13a1 1 0 001.52.85l10-6.5a1 1 0 000-1.7l-10-6.5A1 1 0 008 5.5z" />
+  </svg>
+)
+const PauseIcon = ({ className = 'w-4 h-4' }: { className?: string }) => (
+  <svg viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden>
+    <rect x="6" y="5" width="4" height="14" rx="1.2" />
+    <rect x="14" y="5" width="4" height="14" rx="1.2" />
+  </svg>
+)
+const WrenchIcon = ({ className = 'w-4 h-4' }: { className?: string }) => (
+  <svg viewBox="0 0 24 24" fill="none" className={className} aria-hidden>
+    <path d="M14.5 6a3.5 3.5 0 00-4.9 4.3L4 15.9a2 2 0 002.8 2.8l5.6-5.6A3.5 3.5 0 1018 8l-2.3 2.3-1.9-1.9L16 6a3.5 3.5 0 00-1.5 0z" stroke="currentColor" strokeWidth="1.4" strokeLinejoin="round" />
+  </svg>
+)
+const BoltIcon = ({ className = 'w-4 h-4' }: { className?: string }) => (
+  <svg viewBox="0 0 24 24" fill="none" className={className} aria-hidden>
+    <path d="M13 2L4.5 13.5H11L10 22l8.5-11.5H12L13 2z" stroke="currentColor" strokeWidth="1.4" strokeLinejoin="round" />
+  </svg>
+)
+const KeyIcon = ({ className = 'w-4 h-4' }: { className?: string }) => (
+  <svg viewBox="0 0 24 24" fill="none" className={className} aria-hidden>
+    <circle cx="7.5" cy="16.5" r="3.5" stroke="currentColor" strokeWidth="1.4" />
+    <path d="M10 14L20 4M17 4h3v3M15.5 7.5l2 2" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+  </svg>
+)
+const DoubleCheck = ({ className = 'w-4 h-4' }: { className?: string }) => (
+  <svg viewBox="0 0 20 16" fill="none" className={className} aria-hidden>
+    <path d="M1 8.5l3.2 3.2L11 4.5M8.5 11.7l.7.7L16 5.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
   </svg>
 )
 
@@ -115,6 +153,80 @@ const PRICING = [
     cta: 'Réserver un appel stratégique',
     highlight: false,
   },
+]
+
+type ChatMsg = { from: 'client' | 'agent'; text: string; time: string }
+type UseCase = {
+  id: string
+  label: string
+  Icon: (props: { className?: string }) => ReactNode
+  client: string
+  context: string
+  messages: ChatMsg[]
+}
+
+const CHAT_USE_CASES: UseCase[] = [
+  {
+    id: 'plombier',
+    label: 'Plombier',
+    Icon: WrenchIcon,
+    client: 'Mme Durand',
+    context: 'Fuite sous évier',
+    messages: [
+      { from: 'client', text: "Bonjour, j'ai une fuite d'eau sous mon évier depuis ce matin, c'est urgent 😰", time: '09:12' },
+      { from: 'agent', text: "Bonjour Mme Durand ! Une fuite peut vite s'aggraver. Avez-vous pu couper l'arrivée d'eau sous l'évier ?", time: '09:12' },
+      { from: 'client', text: "Oui je viens de la couper", time: '09:13' },
+      { from: 'agent', text: "Parfait 👍 Un artisan peut passer aujourd'hui entre 14h et 16h. Je vous réserve ce créneau ?", time: '09:13' },
+      { from: 'client', text: "Oui parfait, merci beaucoup", time: '09:14' },
+      { from: 'agent', text: "C'est noté ✅ RDV confirmé aujourd'hui 14h–16h. Vous recevez la confirmation par WhatsApp. À tout à l'heure !", time: '09:14' },
+    ],
+  },
+  {
+    id: 'electricien',
+    label: 'Électricien',
+    Icon: BoltIcon,
+    client: 'M. Bianchi',
+    context: 'Tableau qui disjoncte',
+    messages: [
+      { from: 'client', text: "Bonsoir, mon tableau électrique disjoncte sans arrêt depuis 1h, je n'ai plus de courant au rez‑de‑chaussée", time: '20:47' },
+      { from: 'agent', text: "Bonsoir M. Bianchi. Je classe votre demande en priorité ⚡ Est‑ce que ça sent le brûlé ou est‑ce uniquement une coupure ?", time: '20:47' },
+      { from: 'client', text: "Non pas d'odeur, juste ça saute quand je remets le disjoncteur", time: '20:48' },
+      { from: 'agent', text: "Compris. Ne forcez pas le réarmement. Un électricien peut intervenir demain à 8h30, ou ce soir en urgence (+ majoration). Que préférez‑vous ?", time: '20:48' },
+      { from: 'client', text: "Demain 8h30 c'est parfait", time: '20:49' },
+      { from: 'agent', text: "Réservé ✅ Demain 8h30. J'ai alerté le patron de votre dossier. Rappel WhatsApp envoyé 1h avant. Bonne soirée !", time: '20:49' },
+    ],
+  },
+  {
+    id: 'serrurier',
+    label: 'Serrurier',
+    Icon: KeyIcon,
+    client: 'Léa M.',
+    context: 'Porte claquée',
+    messages: [
+      { from: 'client', text: "Bonjour j'ai claqué ma porte avec les clés à l'intérieur, je suis dehors avec mon bébé 😩", time: '13:02' },
+      { from: 'agent', text: "Bonjour Léa, je comprends l'urgence 🙏 Vous êtes bien au 8 rue Victor Hugo ? La porte est‑elle simplement claquée ou verrouillée à clé ?", time: '13:02' },
+      { from: 'client', text: "Oui c'est ça, juste claquée", time: '13:03' },
+      { from: 'agent', text: "Parfait, ouverture simple sans dégât. Un serrurier est à 12 min de chez vous, j'envoie une intervention immédiate ?", time: '13:03' },
+      { from: 'client', text: "Oui allez‑y vite svp !", time: '13:03' },
+      { from: 'agent', text: "En route ✅ Arrivée estimée 13h15. Vous recevez le nom et le numéro de l'artisan par WhatsApp. Restez au chaud avec bébé 💙", time: '13:04' },
+    ],
+  },
+]
+
+const METRICS = [
+  { value: '+35%', label: 'de devis signés', sub: 'sur 3 mois' },
+  { value: 'Zéro', label: 'appel manqué', sub: '24h/24 · 7j/7' },
+  { value: '× 2', label: 'de RDV honorés', sub: 'rappels auto' },
+  { value: '0,8 s', label: 'temps de réponse', sub: 'latence moyenne' },
+]
+
+const VOICE_TRANSCRIPT: { at: number; from: 'client' | 'agent'; text: string }[] = [
+  { at: 0, from: 'client', text: "Allô ? Bonjour, je vous appelle pour un devis de rénovation…" },
+  { at: 22, from: 'agent', text: "Bonjour et bienvenue chez Dupont Artisans ! Avec plaisir. De quel type de travaux s'agit‑il ?" },
+  { at: 46, from: 'client', text: "La réfection complète d'une salle de bain." },
+  { at: 66, from: 'agent', text: "Très bien. Je note « rénovation salle de bain ». Souhaitez‑vous une visite technique cette semaine ?" },
+  { at: 86, from: 'client', text: "Oui, jeudi si possible." },
+  { at: 100, from: 'agent', text: "C'est réservé ✅ Jeudi 10h. Vous recevez la confirmation par SMS. Excellente journée !" },
 ]
 
 const TESTIMONIALS = [
@@ -246,6 +358,319 @@ function VoiceAgentMockup() {
   )
 }
 
+/* ─── Interactive Chat Showcase (WhatsApp style, tabbed by trade) ─────────── */
+function ChatShowcase() {
+  const [active, setActive] = useState(CHAT_USE_CASES[0].id)
+  const current = CHAT_USE_CASES.find((c) => c.id === active) ?? CHAT_USE_CASES[0]
+
+  return (
+    <section id="demo" className="relative px-6 py-28">
+      <div className="pointer-events-none absolute left-1/2 top-1/4 h-[420px] w-[760px] -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgba(107,140,255,0.12),transparent_65%)] blur-3xl" />
+
+      <div className="relative mx-auto max-w-6xl">
+        <div className="mb-12 text-center">
+          <span className="mb-4 inline-block text-xs font-medium uppercase tracking-[0.22em] text-[var(--accent)]/85">
+            Démo interactive
+          </span>
+          <h2 className="font-[var(--font-syne)] text-[clamp(2rem,4vw,3.2rem)] font-semibold tracking-tight text-white">
+            Voyez l&apos;agent gérer un vrai client.
+          </h2>
+          <p className="mx-auto mt-5 max-w-2xl text-[1rem] leading-relaxed text-[var(--ink-soft)]">
+            Choisissez votre métier et suivez une conversation réelle : le prospect
+            demande un devis ou un dépannage, l&apos;agent qualifie et réserve —
+            instantanément, sans que vous décrochiez.
+          </p>
+        </div>
+
+        <div className="grid items-center gap-12 lg:grid-cols-[0.9fr_1.1fr]">
+          {/* Tabs + narrative */}
+          <div>
+            <div
+              role="tablist"
+              aria-label="Métiers"
+              className="flex flex-col gap-3"
+            >
+              {CHAT_USE_CASES.map((c) => {
+                const on = c.id === active
+                return (
+                  <button
+                    key={c.id}
+                    role="tab"
+                    aria-selected={on}
+                    onClick={() => setActive(c.id)}
+                    className={`group flex items-center gap-4 rounded-2xl border px-5 py-4 text-left transition-all duration-300 ${
+                      on
+                        ? 'border-[var(--accent)]/45 bg-gradient-to-r from-[var(--accent)]/[0.14] to-white/[0.02] shadow-[0_20px_50px_-25px_rgba(107,140,255,0.6)]'
+                        : 'border-white/[0.08] bg-white/[0.02] hover:border-white/[0.18] hover:bg-white/[0.04]'
+                    }`}
+                  >
+                    <span
+                      className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl transition-colors duration-300 ${
+                        on ? 'bg-[var(--accent)]/25 text-[var(--accent)]' : 'bg-white/[0.05] text-white/55 group-hover:text-white/80'
+                      }`}
+                    >
+                      <c.Icon className="h-5 w-5" />
+                    </span>
+                    <span className="min-w-0">
+                      <span className="block font-[var(--font-syne)] text-base font-semibold tracking-tight text-white">
+                        {c.label}
+                      </span>
+                      <span className="block truncate text-[0.8rem] text-[var(--ink-soft)]">
+                        {c.context} · {c.client}
+                      </span>
+                    </span>
+                    <ArrowRight
+                      className={`ml-auto h-4 w-4 shrink-0 transition-all duration-300 ${
+                        on ? 'text-[var(--accent)]' : 'text-white/20 group-hover:translate-x-0.5 group-hover:text-white/50'
+                      }`}
+                    />
+                  </button>
+                )
+              })}
+            </div>
+
+            <div className="mt-6 flex items-center gap-3 rounded-2xl border border-emerald-400/20 bg-emerald-400/[0.05] px-5 py-4">
+              <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-400/15 text-emerald-300">
+                <Check className="h-4 w-4" />
+              </span>
+              <p className="text-sm leading-relaxed text-[var(--ink-soft)]">
+                Réponse en moins d&apos;une seconde, ton naturel, prise de RDV et
+                confirmation WhatsApp — <span className="text-white">100 % automatisé.</span>
+              </p>
+            </div>
+          </div>
+
+          {/* Phone / WhatsApp frame */}
+          <div className="relative mx-auto w-full max-w-sm">
+            <div className="pointer-events-none absolute -inset-6 rounded-[44px] bg-[radial-gradient(circle_at_50%_20%,rgba(107,140,255,0.28),transparent_65%)] blur-2xl" />
+            <div className="relative overflow-hidden rounded-[36px] border border-white/[0.12] bg-[#0a1030] shadow-[0_40px_120px_-30px_rgba(20,40,120,0.8)]">
+              {/* chat header */}
+              <div className="flex items-center gap-3 border-b border-white/[0.06] bg-gradient-to-b from-white/[0.06] to-transparent px-4 py-3.5">
+                <span className="relative flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-[var(--accent)]/50 to-white/10 font-[var(--font-syne)] text-sm font-semibold text-white">
+                  <current.Icon className="h-5 w-5" />
+                  <span className="absolute -bottom-0.5 -right-0.5 h-3 w-3 rounded-full border-2 border-[#0a1030] bg-emerald-400" />
+                </span>
+                <div className="min-w-0">
+                  <div className="font-[var(--font-syne)] text-sm font-semibold text-white">Agent Monolith</div>
+                  <div className="flex items-center gap-1.5 text-[0.7rem] text-emerald-300">
+                    <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 soft-pulse" />
+                    en ligne · répond en 0,8 s
+                  </div>
+                </div>
+                <span className="ml-auto flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.04] px-2.5 py-1 text-[0.6rem] font-medium uppercase tracking-[0.14em] text-white/60">
+                  <PhoneIcon className="h-3 w-3" />
+                  WhatsApp
+                </span>
+              </div>
+
+              {/* messages */}
+              <div key={active} className="chat-canvas max-h-[440px] space-y-3 overflow-y-auto px-4 py-5">
+                <div className="mx-auto w-fit rounded-full bg-white/[0.06] px-3 py-1 text-[0.65rem] text-white/50">
+                  Aujourd&apos;hui · {current.context}
+                </div>
+                {current.messages.map((m, i) => {
+                  const agent = m.from === 'agent'
+                  return (
+                    <div
+                      key={i}
+                      className={`msg-in flex ${agent ? 'justify-end' : 'justify-start'}`}
+                      style={{ animationDelay: `${i * 0.55 + 0.1}s` }}
+                    >
+                      <div
+                        className={`relative max-w-[82%] px-3.5 py-2 text-[0.82rem] leading-relaxed shadow-sm ${
+                          agent
+                            ? 'rounded-2xl rounded-br-md bg-gradient-to-br from-emerald-500/90 to-emerald-600/90 text-white'
+                            : 'rounded-2xl rounded-bl-md border border-white/[0.08] bg-white/[0.06] text-white/90'
+                        }`}
+                      >
+                        {m.text}
+                        <span className={`mt-1 flex items-center justify-end gap-1 text-[0.6rem] ${agent ? 'text-white/70' : 'text-white/40'}`}>
+                          {m.time}
+                          {agent && <DoubleCheck className="h-3 w-3 text-sky-200" />}
+                        </span>
+                      </div>
+                    </div>
+                  )
+                })}
+                <div className="msg-in flex justify-end" style={{ animationDelay: `${current.messages.length * 0.55 + 0.2}s` }}>
+                  <span className="flex items-center gap-1.5 rounded-full border border-emerald-400/25 bg-emerald-400/10 px-3 py-1 text-[0.62rem] font-medium text-emerald-200">
+                    <CalendarIcon className="h-3 w-3" />
+                    RDV réservé automatiquement
+                  </span>
+                </div>
+              </div>
+
+              {/* composer */}
+              <div className="flex items-center gap-2.5 border-t border-white/[0.06] px-4 py-3">
+                <div className="flex-1 rounded-full border border-white/[0.08] bg-white/[0.04] px-4 py-2 text-[0.75rem] text-white/35">
+                  L&apos;agent répond à votre place…
+                </div>
+                <span className="flex h-9 w-9 items-center justify-center rounded-full bg-emerald-500 text-white">
+                  <MicIcon className="h-4 w-4" />
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+/* ─── Voice Agent Demo Player ─────────────────────────────────────────────── */
+function VoiceDemo() {
+  const [playing, setPlaying] = useState(false)
+  const [progress, setProgress] = useState(0)
+
+  useEffect(() => {
+    if (!playing) return
+    const id = window.setInterval(() => {
+      setProgress((p) => {
+        if (p >= 100) return 0
+        return Math.min(100, p + 0.7)
+      })
+    }, 90)
+    return () => window.clearInterval(id)
+  }, [playing])
+
+  const activeIndex = VOICE_TRANSCRIPT.reduce(
+    (acc, line, i) => (progress >= line.at ? i : acc),
+    0,
+  )
+  const total = 42 // ~seconds of the mock call
+  const elapsed = Math.round((progress / 100) * total)
+  const fmt = (s: number) => `0:${String(s).padStart(2, '0')}`
+
+  return (
+    <section id="voix" className="relative px-6 py-28">
+      <div className="pointer-events-none absolute right-[8%] top-1/4 h-[380px] w-[380px] rounded-full bg-[radial-gradient(circle,rgba(107,140,255,0.16),transparent_60%)] blur-3xl" />
+
+      <div className="relative mx-auto max-w-6xl">
+        <div className="mb-14 text-center">
+          <span className="mb-4 inline-block text-xs font-medium uppercase tracking-[0.22em] text-[var(--accent)]/85">
+            Agent Vocal
+          </span>
+          <h2 className="font-[var(--font-syne)] text-[clamp(2rem,4vw,3.2rem)] font-semibold tracking-tight text-white">
+            Écoutez un appel réel, géré par l&apos;IA.
+          </h2>
+          <p className="mx-auto mt-5 max-w-2xl text-[1rem] leading-relaxed text-[var(--ink-soft)]">
+            Votre agent vocal décroche à la première sonnerie, comprend la demande,
+            qualifie le besoin et réserve le rendez‑vous — 24h/24, même la nuit et le week‑end.
+          </p>
+        </div>
+
+        <div className="relative overflow-hidden rounded-3xl border border-white/[0.1] bg-gradient-to-br from-white/[0.05] to-white/[0.015] p-7 shadow-[0_40px_120px_-30px_rgba(20,40,120,0.6)] backdrop-blur-xl sm:p-10">
+          <div className="grid items-center gap-10 lg:grid-cols-[0.85fr_1.15fr]">
+            {/* player controls */}
+            <div>
+              <div className="mb-6 flex items-center gap-3">
+                <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[var(--accent)]/15 text-[var(--accent)]">
+                  <MicIcon className="h-5 w-5" />
+                </span>
+                <div>
+                  <div className="font-[var(--font-syne)] text-base font-semibold text-white">Appel entrant · Dupont Artisans</div>
+                  <div className="flex items-center gap-1.5 text-[0.72rem] text-emerald-300">
+                    <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 soft-pulse" />
+                    {playing ? 'En cours de lecture' : 'Démo · 0:42'}
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-4">
+                <button
+                  type="button"
+                  aria-label={playing ? 'Pause' : 'Lecture'}
+                  onClick={() => setPlaying((v) => !v)}
+                  className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-white text-[#06102f] shadow-[0_20px_50px_-15px_rgba(107,140,255,0.6)] transition-transform duration-300 hover:-translate-y-0.5"
+                >
+                  {playing ? <PauseIcon className="h-5 w-5" /> : <PlayIcon className="h-5 w-5 translate-x-0.5" />}
+                </button>
+
+                {/* waveform + progress */}
+                <div className="flex-1">
+                  <div className="flex h-12 items-center gap-[3px] overflow-hidden">
+                    {Array.from({ length: 40 }).map((_, i) => {
+                      const filled = (i / 40) * 100 <= progress
+                      return (
+                        <span
+                          key={i}
+                          className={`block w-[3px] rounded-full transition-colors duration-150 ${
+                            filled ? 'bg-[var(--accent)]' : 'bg-white/15'
+                          } ${playing ? 'wave-bar' : ''}`}
+                          style={{
+                            height: `${28 + Math.abs(Math.sin(i * 0.9)) * 60}%`,
+                            animationDelay: `${(i % 12) * 0.06}s`,
+                          }}
+                        />
+                      )
+                    })}
+                  </div>
+                  <div className="mt-2 flex items-center justify-between text-[0.68rem] tabular-nums text-white/45">
+                    <span>{fmt(elapsed)}</span>
+                    <span>0:42</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="mt-7 grid grid-cols-3 gap-3">
+                {[
+                  { k: 'Décroché', v: '1re sonnerie' },
+                  { k: 'Langue', v: 'Français 🇫🇷' },
+                  { k: 'Issue', v: 'RDV pris' },
+                ].map((s) => (
+                  <div key={s.k} className="rounded-xl border border-white/[0.08] bg-white/[0.03] px-3 py-3 text-center">
+                    <div className="text-[0.6rem] uppercase tracking-[0.14em] text-white/45">{s.k}</div>
+                    <div className="mt-1 font-[var(--font-syne)] text-sm font-semibold text-white">{s.v}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* live transcript */}
+            <div className="rounded-2xl border border-white/[0.06] bg-black/20 p-5">
+              <div className="mb-4 flex items-center justify-between">
+                <span className="text-[0.65rem] font-medium uppercase tracking-[0.16em] text-white/45">Transcription en direct</span>
+                <span className="flex items-center gap-1.5 text-[0.65rem] text-white/45">
+                  <span className={`h-1.5 w-1.5 rounded-full ${playing ? 'bg-rose-400 soft-pulse' : 'bg-white/25'}`} />
+                  {playing ? 'REC' : 'Prêt'}
+                </span>
+              </div>
+              <div className="space-y-3">
+                {VOICE_TRANSCRIPT.map((line, i) => {
+                  const agent = line.from === 'agent'
+                  const isActive = i === activeIndex && playing
+                  const revealed = progress >= line.at || !playing
+                  return (
+                    <div
+                      key={i}
+                      className={`flex ${agent ? 'justify-end' : 'justify-start'} transition-opacity duration-500 ${
+                        revealed ? 'opacity-100' : 'opacity-30'
+                      }`}
+                    >
+                      <div
+                        className={`max-w-[85%] rounded-2xl px-3.5 py-2 text-[0.8rem] leading-relaxed transition-all duration-300 ${
+                          agent
+                            ? 'rounded-tr-sm bg-[var(--accent)]/15 text-white/95'
+                            : 'rounded-tl-sm border border-white/[0.06] bg-white/[0.04] text-white/85'
+                        } ${isActive ? 'ring-2 ring-[var(--accent)]/50' : ''}`}
+                      >
+                        <span className={`mb-1 block text-[0.6rem] uppercase tracking-[0.14em] ${agent ? 'text-[var(--accent)]' : 'text-white/40'}`}>
+                          {agent ? 'Agent IA' : 'Client'}
+                        </span>
+                        {line.text}
+                      </div>
+                    </div>
+                  )
+                })}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
 /* ─── Form Field ─────────────────────────────────────────────────────────── */
 function Field({
   label,
@@ -372,6 +797,24 @@ export default function MonolithAIPage() {
 
         @keyframes flowDash { to { stroke-dashoffset: -24; } }
         .flow-line { stroke-dasharray: 5 5; animation: flowDash 2.4s linear infinite; }
+
+        @keyframes msgIn {
+          0% { opacity: 0; transform: translateY(10px) scale(0.98); }
+          100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        .msg-in { opacity: 0; animation: msgIn 0.45s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+        .chat-canvas {
+          background-image:
+            radial-gradient(circle at 20% 30%, rgba(107,140,255,0.06), transparent 40%),
+            radial-gradient(circle at 80% 70%, rgba(64,96,220,0.05), transparent 40%);
+        }
+        .chat-canvas::-webkit-scrollbar { width: 5px; }
+        .chat-canvas::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 8px; }
+
+        @media (prefers-reduced-motion: reduce) {
+          .msg-in { opacity: 1; animation: none; }
+          .wave-bar { animation: none; }
+        }
       `}</style>
 
       {/* ════════════════════════════════════════════════════════ HEADER */}
@@ -407,7 +850,8 @@ export default function MonolithAIPage() {
           <nav className="hidden items-center gap-9 md:flex">
             {[
               { label: 'Notre Solution', href: '#solution' },
-              { label: 'Le Processus', href: '#processus' },
+              { label: 'Démo', href: '#demo' },
+              { label: 'Agent Vocal', href: '#voix' },
               { label: 'Tarifs', href: '#tarifs' },
             ].map((l) => (
               <a key={l.label} href={l.href} className="text-sm text-white/65 transition-colors hover:text-white">
@@ -573,6 +1017,12 @@ export default function MonolithAIPage() {
         </div>
       </section>
 
+      {/* ════════════════════════════════════════════════════════ DÉMO CHAT */}
+      <ChatShowcase />
+
+      {/* ════════════════════════════════════════════════════════ AGENT VOCAL */}
+      <VoiceDemo />
+
       {/* ════════════════════════════════════════════════════════ PROCESSUS */}
       <section id="processus" className="relative px-6 py-28">
         <div className="mx-auto max-w-6xl">
@@ -629,6 +1079,41 @@ export default function MonolithAIPage() {
               Des artisans français de tous corps de métier qui ont remplacé leur répondeur
               par un agent vocal IA — et qui voient les résultats au quotidien.
             </p>
+          </div>
+
+          {/* metric cards */}
+          <div className="mb-12 grid grid-cols-2 gap-4 lg:grid-cols-4">
+            {METRICS.map((m) => (
+              <div
+                key={m.label}
+                className="group relative overflow-hidden rounded-2xl border border-white/[0.08] bg-gradient-to-b from-white/[0.05] to-white/[0.01] p-6 text-center transition-all duration-500 hover:-translate-y-1 hover:border-[var(--accent)]/30"
+              >
+                <div className="pointer-events-none absolute inset-x-0 -top-8 mx-auto h-16 w-16 rounded-full bg-[var(--accent)]/20 blur-2xl opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+                <div className="font-[var(--font-syne)] text-[clamp(1.8rem,3vw,2.6rem)] font-semibold tracking-tight text-white">
+                  {m.value}
+                </div>
+                <div className="mt-1 text-sm font-medium text-[var(--ink-soft)]">{m.label}</div>
+                <div className="mt-2 text-[0.65rem] uppercase tracking-[0.16em] text-[var(--accent)]/70">{m.sub}</div>
+              </div>
+            ))}
+          </div>
+
+          {/* rating summary bar */}
+          <div className="mx-auto mb-12 flex w-fit flex-wrap items-center justify-center gap-x-6 gap-y-3 rounded-full border border-white/[0.08] bg-white/[0.03] px-6 py-3">
+            <span className="flex items-center gap-2">
+              <span className="flex gap-0.5 text-[#ffd166]">
+                {Array.from({ length: 5 }).map((_, i) => (
+                  <svg key={i} viewBox="0 0 16 16" className="h-4 w-4" fill="currentColor" aria-hidden>
+                    <path d="M8 1.5l1.95 4.18 4.55.55-3.36 3.13.86 4.5L8 11.6 3.99 13.86l.86-4.5L1.5 6.23l4.55-.55L8 1.5z" />
+                  </svg>
+                ))}
+              </span>
+              <span className="text-sm font-semibold text-white">4,9/5</span>
+            </span>
+            <span className="h-4 w-px bg-white/10" />
+            <span className="text-sm text-[var(--ink-soft)]">+120 artisans équipés</span>
+            <span className="h-4 w-px bg-white/10" />
+            <span className="text-sm text-[var(--ink-soft)]">Plombiers · Électriciens · Serruriers</span>
           </div>
 
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
