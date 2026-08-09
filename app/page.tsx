@@ -100,77 +100,6 @@ function ChannelBadge({ className = '' }: { className?: string }) {
   )
 }
 
-/* ─── Brand marks (integration ticker) ──────────────────────────────────── */
-const MetaMark = ({ className = 'h-5 w-5' }: { className?: string }) => (
-  <svg viewBox="0 0 24 24" fill="none" className={className} aria-hidden>
-    <path
-      d="M3 15.5c0-3.6 1.9-7 4.4-7 1.6 0 2.7 1.2 4.6 4.3 1.9-3.1 3-4.3 4.6-4.3 2.5 0 4.4 3.4 4.4 7 0 2-1 3.3-2.6 3.3-1.5 0-2.4-.9-4-3.6l-1-1.7-1 1.7c-1.6 2.7-2.5 3.6-4 3.6C4 18.8 3 17.5 3 15.5z"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinejoin="round"
-    />
-  </svg>
-)
-const WhatsAppMark = ({ className = 'h-5 w-5' }: { className?: string }) => (
-  <svg viewBox="0 0 24 24" fill="none" className={className} aria-hidden>
-    <path
-      d="M4 20l1.3-4A8 8 0 1112 20a8 8 0 01-4-1L4 20z"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinejoin="round"
-    />
-    <path
-      d="M9 9c0 3 2.2 5.2 5 5.2.6 0 1.2-.5 1.2-1.1 0-.3-.9-.7-1.2-.8-.4-.1-.6.4-.9.4-.7 0-2.3-1.6-2.3-2.3 0-.3.5-.5.4-.9-.1-.3-.5-1.2-.8-1.2-.6 0-1.1.6-1.1 1.2z"
-      fill="currentColor"
-    />
-  </svg>
-)
-const MapsMark = ({ className = 'h-5 w-5' }: { className?: string }) => (
-  <svg viewBox="0 0 24 24" fill="none" className={className} aria-hidden>
-    <path
-      d="M12 21s6-5.3 6-10a6 6 0 10-12 0c0 4.7 6 10 6 10z"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinejoin="round"
-    />
-    <circle cx="12" cy="11" r="2.2" stroke="currentColor" strokeWidth="1.5" />
-  </svg>
-)
-const StripeMark = ({ className = 'h-5 w-5' }: { className?: string }) => (
-  <svg viewBox="0 0 24 24" fill="none" className={className} aria-hidden>
-    <path
-      d="M14.5 9.2c-1-.5-1.9-.8-1.9-1.4 0-.5.4-.7 1.1-.7 1 0 2.1.4 2.9.9V5.2A7 7 0 0013.8 5C11.5 5 10 6.3 10 8.2c0 2.4 3 2.7 3 3.8 0 .5-.5.7-1.2.7-1 0-2.4-.5-3.3-1v2.8c1 .5 2.2.7 3.3.7 2.4 0 4-1.2 4-3.2 0-2.6-3-2.9-3-3.8z"
-      fill="currentColor"
-    />
-  </svg>
-)
-
-const INTEGRATIONS: { name: string; Mark: (p: { className?: string }) => ReactNode }[] = [
-  { name: 'Meta', Mark: MetaMark },
-  { name: 'WhatsApp Business', Mark: WhatsAppMark },
-  { name: 'Google Maps', Mark: MapsMark },
-  { name: 'Stripe', Mark: StripeMark },
-]
-
-function IntegrationTicker() {
-  const row = [...INTEGRATIONS, ...INTEGRATIONS]
-  return (
-    <div className="ticker-mask w-full overflow-hidden">
-      <div className="ticker-track items-center gap-x-12">
-        {row.map((it, i) => (
-          <span
-            key={`${it.name}-${i}`}
-            className="flex shrink-0 items-center gap-2.5 text-white/45"
-          >
-            <it.Mark className="h-5 w-5" />
-            <span className="whitespace-nowrap text-sm font-medium tracking-tight">{it.name}</span>
-          </span>
-        ))}
-      </div>
-    </div>
-  )
-}
-
 /* ─── Social proof avatars ───────────────────────────────────────────────── */
 const AVATARS = [
   { initials: 'JM', color: '#3d7bfd' },
@@ -606,6 +535,52 @@ const COMPARISON_TABLE = {
   w: 839,
   h: 345,
 }
+
+/* Written quotes, rendered under the screenshot cards. */
+const TESTIMONIAL_QUOTES = [
+  {
+    name: 'Jean Moreau',
+    role: 'Artisan · Paris',
+    initials: 'JM',
+    headline: '+38 % de chiffre d’affaires',
+    quote: "L'agent vocal a capté une urgence à 23h un dimanche. Mon client a été pris en charge en moins de 2 minutes, et j'ai gagné un contrat de 2 800 €. En trois mois, mon chiffre d'affaires a bondi de 38 %.",
+  },
+  {
+    name: 'Karim Benali',
+    role: 'Artisan · Lyon',
+    initials: 'KB',
+    headline: 'Zéro appel manqué',
+    quote: "Avant Monolith AI, je laissais filer 6 à 8 appels par jour quand j'étais sur un chantier. Aujourd'hui, chaque appel est traité, qualifié et planifié. Mon planning est plein deux semaines à l'avance.",
+  },
+  {
+    name: 'Sophie Lefèvre',
+    role: 'Artisan · Marseille',
+    initials: 'SL',
+    headline: 'Taux de conversion doublé',
+    quote: "Les urgences nocturnes sont gérées sans que je touche mon téléphone. L'IA me notifie uniquement quand c'est critique. Mon taux de conversion a doublé et mes clients adorent la réactivité.",
+  },
+  {
+    name: 'Antoine Rivière',
+    role: 'Artisan · Bordeaux',
+    initials: 'AR',
+    headline: 'Vocabulaire métier maîtrisé',
+    quote: "Ce qui me bluffe, c'est que l'agent s'améliore tout seul. Au début il confondait certains termes techniques, aujourd'hui il les maîtrise mieux que mon apprenti. Il a appris mon vocabulaire métier en quelques semaines.",
+  },
+  {
+    name: 'Mehdi Cherif',
+    role: 'Artisan · Toulouse',
+    initials: 'MC',
+    headline: 'Qualification 100 % automatique',
+    quote: "L'IA apprend de chaque appel — elle anticipe maintenant les bonnes questions à poser pour qualifier une demande. C'est comme avoir une secrétaire qui maîtrise mon métier, sans pause, sans congé.",
+  },
+  {
+    name: 'Laurent Pasquier',
+    role: 'Artisan · Nantes',
+    initials: 'LP',
+    headline: '+22 % de RDV honorés',
+    quote: "Au bout de trois mois, l'agent a intégré tout notre catalogue de prestations et notre grille tarifaire. Il qualifie les devis avec une précision que je n'aurais pas crue possible. + 22 % de RDV honorés depuis qu'on l'utilise.",
+  },
+]
 
 /* ─── Hero Voice Agent Mockup ────────────────────────────────────────────── */
 function VoiceAgentMockup() {
@@ -1286,8 +1261,56 @@ function TestimonialsSection() {
 
         {/* 5 cards below the comparison table */}
         <TestimonialGrid items={TESTIMONIALS_BOTTOM} startIndex={TESTIMONIALS_TOP.length} />
+
+        {/* written quotes */}
+        <div className="mt-20">
+          <h3 className="mb-8 text-center font-[var(--font-syne)] text-xl font-semibold tracking-tight text-white sm:text-2xl">
+            Ce qu&apos;ils en disent
+          </h3>
+          <QuoteGrid />
+        </div>
       </div>
     </section>
+  )
+}
+
+/* ─── Written testimonial cards (quote + author) ─────────────────────────── */
+function QuoteGrid() {
+  return (
+    <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      {TESTIMONIAL_QUOTES.map((t) => (
+        <figure
+          key={t.name}
+          className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-[var(--line)] bg-white/[0.02] p-7 transition-colors duration-300 hover:border-white/[0.18] hover:bg-white/[0.04]"
+        >
+          <svg viewBox="0 0 24 24" fill="none" className="mb-5 h-6 w-6 text-[var(--accent)]/70" aria-hidden>
+            <path d="M9 7H5a2 2 0 00-2 2v3a2 2 0 002 2h2v1a3 3 0 01-3 3v2a5 5 0 005-5V9a2 2 0 00-2-2zm12 0h-4a2 2 0 00-2 2v3a2 2 0 002 2h2v1a3 3 0 01-3 3v2a5 5 0 005-5V9a2 2 0 00-2-2z" fill="currentColor" />
+          </svg>
+          <h4 className="mb-3 font-[var(--font-syne)] text-[1.15rem] font-bold leading-snug tracking-tight text-[var(--accent)]">
+            {t.headline}
+          </h4>
+          <blockquote className="flex-1 text-[0.97rem] leading-relaxed text-white/90">
+            « {t.quote} »
+          </blockquote>
+          <figcaption className="mt-7 flex items-center gap-3 border-t border-white/[0.06] pt-5">
+            <span className="flex h-10 w-10 items-center justify-center rounded-full bg-[var(--accent)]/25 font-[var(--font-syne)] text-sm font-semibold text-white">
+              {t.initials}
+            </span>
+            <div>
+              <div className="font-[var(--font-syne)] text-sm font-semibold text-white">{t.name}</div>
+              <div className="text-xs text-white/55">{t.role}</div>
+            </div>
+            <div className="ml-auto flex gap-0.5 text-[#ffd166]">
+              {Array.from({ length: 5 }).map((_, i) => (
+                <svg key={i} viewBox="0 0 16 16" className="h-3.5 w-3.5" fill="currentColor" aria-hidden>
+                  <path d="M8 1.5l1.95 4.18 4.55.55-3.36 3.13.86 4.5L8 11.6 3.99 13.86l.86-4.5L1.5 6.23l4.55-.55L8 1.5z" />
+                </svg>
+              ))}
+            </div>
+          </figcaption>
+        </figure>
+      ))}
+    </div>
   )
 }
 
@@ -1471,20 +1494,6 @@ export default function MonolithAIPage() {
         }
         .flow-arrow { animation: arrowNudge 1.6s ease-in-out infinite; }
 
-        @keyframes ticker {
-          0% { transform: translateX(0); }
-          100% { transform: translateX(-50%); }
-        }
-        .ticker-track {
-          display: flex;
-          width: max-content;
-          animation: ticker 26s linear infinite;
-        }
-        .ticker-mask {
-          -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
-          mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
-        }
-
         .faq-panel {
           display: grid;
           grid-template-rows: 0fr;
@@ -1498,7 +1507,6 @@ export default function MonolithAIPage() {
           .wave-bar { animation: none; }
           .fade-swap { animation: none; }
           .flow-arrow { animation: none; }
-          .ticker-track { animation: none; }
         }
       `}</style>
 
@@ -1604,14 +1612,6 @@ export default function MonolithAIPage() {
           </div>
 
           <VoiceAgentMockup />
-        </div>
-
-        {/* integration logo ticker */}
-        <div className="mx-auto mt-16 max-w-7xl lg:mt-24">
-          <p className="mb-6 text-center text-[0.7rem] font-medium uppercase tracking-[0.2em] text-white/40">
-            Compatible avec vos outils
-          </p>
-          <IntegrationTicker />
         </div>
       </section>
 
