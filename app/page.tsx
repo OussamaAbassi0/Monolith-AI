@@ -365,24 +365,24 @@ const CAS = [
     n: 'Cas 1',
     title: 'Client écrit directement sur WhatsApp',
     desc: "Le prospect envoie un message sur votre WhatsApp Business (ou par SMS). L'agent répond en quelques secondes, qualifie la demande et propose un créneau — sans que vous touchiez votre téléphone.",
-    client: { src: '/WhatsApp Image 2026-08-08 at 06.03.13 (2).jpeg', w: 1600, h: 831 },
-    artisan: { src: '/WhatsApp Image 2026-08-08 at 06.03.13 (3).jpeg', w: 1600, h: 831 },
+    client: { src: '/Cas1.jpeg', w: 1600, h: 831 },
+    artisan: null,
   },
   {
     id: 'c2',
     n: 'Cas 2',
     title: "Appel manqué, l'IA relance le client",
     desc: "Vous êtes sur un chantier et un appel passe en absence. L'agent envoie immédiatement une relance WhatsApp/SMS, engage la conversation et récupère le lead avant qu'il n'appelle un concurrent.",
-    client: { src: '/WhatsApp Image 2026-08-09 at 02.36.24.jpeg', w: 1201, h: 627 },
-    artisan: { src: '/WhatsApp Image 2026-08-09 at 02.35.50.jpeg', w: 1273, h: 660 },
+    client: { src: '/Cas2.jpeg', w: 1600, h: 831 },
+    artisan: { src: '/WhatsApp Image 2026-08-08 at 06.03.13 (3).jpeg', w: 1600, h: 831 },
   },
   {
     id: 'c3',
     n: 'Cas 3',
     title: 'No‑show, reprise de créneau',
     desc: "Un client ne se présente pas au rendez‑vous. L'agent le recontacte automatiquement, comprend l'imprévu et repositionne un nouveau créneau — votre agenda ne reste jamais vide.",
-    client: { src: '/WhatsApp Image 2026-08-08 at 06.04.14 (1).jpeg', w: 1600, h: 831 },
-    artisan: { src: '/WhatsApp Image 2026-08-08 at 06.04.15 (1).jpeg', w: 1600, h: 831 },
+    client: { src: '/Cas3.jpeg', w: 1201, h: 627 },
+    artisan: { src: '/WhatsApp Image 2026-08-09 at 02.35.50.jpeg', w: 1273, h: 660 },
   },
 ]
 
@@ -705,9 +705,11 @@ function LesTroisCas() {
     setView('client')
   }
 
-  const img = view === 'client' ? current.client : current.artisan
-  const label = view === 'client' ? 'Échange client' : 'Résumé artisan'
-  const ViewIcon = view === 'client' ? ChatIcon : DoubleCheck
+  const hasArtisan = current.artisan !== null
+  const shownView = hasArtisan ? view : 'client'
+  const img = shownView === 'client' ? current.client : current.artisan!
+  const label = shownView === 'client' ? 'Échange client' : 'Résumé artisan'
+  const ViewIcon = shownView === 'client' ? ChatIcon : DoubleCheck
 
   return (
     <section id="comment" className="relative px-6 py-28">
@@ -772,10 +774,10 @@ function LesTroisCas() {
 
           {/* large screenshot with slider arrow */}
           <div className="relative mx-auto w-full max-w-4xl">
-            <figure key={view} className="fade-swap w-full">
+            <figure key={shownView} className="fade-swap w-full">
               <figcaption
                 className={`mb-3 flex items-center justify-center gap-2 text-xs font-medium uppercase tracking-[0.16em] ${
-                  view === 'client' ? 'text-emerald-300' : 'text-[var(--accent)]'
+                  shownView === 'client' ? 'text-emerald-300' : 'text-[var(--accent)]'
                 }`}
               >
                 <ViewIcon className="h-3.5 w-3.5" />
@@ -795,21 +797,25 @@ function LesTroisCas() {
             </figure>
 
             {/* arrow toggle overlay */}
-            <button
-              type="button"
-              onClick={() => setView((v) => (v === 'client' ? 'artisan' : 'client'))}
-              aria-label={view === 'client' ? "Voir le résumé envoyé à l'artisan" : "Voir l'échange client"}
-              className="absolute right-3 top-1/2 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-white/15 bg-[#0c0d10]/90 text-white transition-transform duration-300 hover:scale-105 sm:right-4"
-            >
-              <ArrowRight
-                className={`h-5 w-5 transition-transform duration-300 ${view === 'artisan' ? 'rotate-180' : ''}`}
-              />
-            </button>
+            {hasArtisan && (
+              <button
+                type="button"
+                onClick={() => setView((v) => (v === 'client' ? 'artisan' : 'client'))}
+                aria-label={shownView === 'client' ? "Voir le résumé envoyé à l'artisan" : "Voir l'échange client"}
+                className="absolute right-3 top-1/2 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-white/15 bg-[#0c0d10]/90 text-white transition-transform duration-300 hover:scale-105 sm:right-4"
+              >
+                <ArrowRight
+                  className={`h-5 w-5 transition-transform duration-300 ${shownView === 'artisan' ? 'rotate-180' : ''}`}
+                />
+              </button>
+            )}
           </div>
 
-          <p className="mt-5 text-center text-xs text-white/40">
-            Utilisez la flèche pour passer de l&apos;échange client au résumé artisan.
-          </p>
+          {hasArtisan && (
+            <p className="mt-5 text-center text-xs text-white/40">
+              Utilisez la flèche pour passer de l&apos;échange client au résumé artisan.
+            </p>
+          )}
         </div>
       </div>
     </section>
