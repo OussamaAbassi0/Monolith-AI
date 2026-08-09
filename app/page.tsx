@@ -366,8 +366,8 @@ const PALIERS = [
     n: 'Palier 3',
     title: 'No‑show, reprise de créneau',
     desc: "Un client ne se présente pas au rendez‑vous. L'agent le recontacte automatiquement, comprend l'imprévu et repositionne un nouveau créneau — votre agenda ne reste jamais vide.",
-    client: { src: '/palier3-client-clean.jpg', w: 1600, h: 831 },
-    artisan: { src: '/palier3-artisan-clean.jpg', w: 1600, h: 831 },
+    client: { src: '/palier3-client.jpg', w: 355, h: 184 },
+    artisan: { src: '/palier3-artisan.jpg', w: 355, h: 183 },
   },
 ]
 
