@@ -856,10 +856,10 @@ function ComparisonSection() {
             </div>
             <div className="mx-auto max-w-[360px] overflow-hidden rounded-2xl border border-white/[0.08] bg-[var(--panel)]">
               <Image
-                src="/WhatsApp Image 2026-08-08 at 06.04.14 (1).jpeg"
+                src="/sans.jpeg"
                 alt="Sans Monolith AI : réponse 9h plus tard, lead perdu"
-                width={1600}
-                height={831}
+                width={651}
+                height={778}
                 sizes="(max-width: 768px) 80vw, 360px"
                 className="h-auto w-full object-contain"
               />
@@ -885,10 +885,10 @@ function ComparisonSection() {
             </div>
             <div className="mx-auto max-w-[360px] overflow-hidden rounded-2xl border border-white/[0.08] bg-[var(--panel)]">
               <Image
-                src="/WhatsApp Image 2026-08-08 at 06.04.15 (1).jpeg"
+                src="/avec.jpeg"
                 alt="Avec Monolith AI : réponse en quelques secondes, rendez-vous fixé"
-                width={1600}
-                height={831}
+                width={392}
+                height={513}
                 sizes="(max-width: 768px) 80vw, 360px"
                 className="h-auto w-full object-contain"
               />
