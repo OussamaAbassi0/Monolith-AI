@@ -249,8 +249,8 @@ function VideoShowcase({ videoId = '0LT64_mgkro' }: { videoId?: string }) {
             </svg>
           </span>
           <p className="text-[0.9rem] leading-snug text-white/85">
-            Exemple de la technologie vocale utilisée par Monolith AI, ici en anglais avec l&apos;un de
-            nos partenaires. Le même niveau de qualité est disponible dans toutes les langues, y
+            Exemple de la technologie vocale utilisée par Monolith AI, en collaboration avec notre
+            partenaire Retell. Le même niveau de qualité est disponible dans toutes les langues, y
             compris le français.
           </p>
         </div>
@@ -504,9 +504,9 @@ const TESTIMONIALS_TOP: Testimonial[] = [
 const TESTIMONIALS_BOTTOM: Testimonial[] = [
   {
     text: "Il perdait une fortune chaque soir sur des urgences qu'il ne voyait même pas passer. Aujourd'hui, l'IA verrouille les interventions la nuit et il n'a plus qu'à consulter ses nouveaux chantiers le lendemain matin.",
-    src: '/WhatsApp Image 2026-08-09 at 05.14.44.jpeg',
-    w: 932,
-    h: 1600,
+    src: '/WhatsApp Image 2026-08-09 at 12.47.45.jpeg',
+    w: 1440,
+    h: 2560,
   },
   {
     text: "Il stagnait à 2 100 € par mois parce qu'il passait à côté de la moitié de ses clients. En déléguant sa réception téléphonique à l'IA, il a fait x10 sur son chiffre d'affaires pour encaisser 20 000 € en un mois.",
