@@ -357,27 +357,27 @@ function VideoShowcase({ videoId = '0LT64_mgkro' }: { videoId?: string }) {
   )
 }
 
-/* ─── Paliers (Comment ça marche) ────────────────────────────────────────── */
-const PALIERS = [
+/* ─── Cas (Comment ça marche) ────────────────────────────────────────────── */
+const CAS = [
   {
-    id: 'p1',
-    n: 'Palier 1',
+    id: 'c1',
+    n: 'Cas 1',
     title: 'Client écrit directement sur WhatsApp',
     desc: "Le prospect envoie un message sur votre WhatsApp Business (ou par SMS). L'agent répond en quelques secondes, qualifie la demande et propose un créneau — sans que vous touchiez votre téléphone.",
     client: { src: '/WhatsApp Image 2026-08-08 at 06.03.13 (2).jpeg', w: 1600, h: 831 },
     artisan: { src: '/WhatsApp Image 2026-08-08 at 06.03.13 (3).jpeg', w: 1600, h: 831 },
   },
   {
-    id: 'p2',
-    n: 'Palier 2',
+    id: 'c2',
+    n: 'Cas 2',
     title: "Appel manqué, l'IA relance le client",
     desc: "Vous êtes sur un chantier et un appel passe en absence. L'agent envoie immédiatement une relance WhatsApp/SMS, engage la conversation et récupère le lead avant qu'il n'appelle un concurrent.",
     client: { src: '/WhatsApp Image 2026-08-09 at 02.36.24.jpeg', w: 1201, h: 627 },
     artisan: { src: '/WhatsApp Image 2026-08-09 at 02.35.50.jpeg', w: 1273, h: 660 },
   },
   {
-    id: 'p3',
-    n: 'Palier 3',
+    id: 'c3',
+    n: 'Cas 3',
     title: 'No‑show, reprise de créneau',
     desc: "Un client ne se présente pas au rendez‑vous. L'agent le recontacte automatiquement, comprend l'imprévu et repositionne un nouveau créneau — votre agenda ne reste jamais vide.",
     client: { src: '/WhatsApp Image 2026-08-08 at 06.04.14 (1).jpeg', w: 1600, h: 831 },
@@ -662,19 +662,20 @@ function VoiceAgentMockup() {
   )
 }
 
-/* ─── Comment ça marche (Paliers tabs + client → artisan screens) ────────── */
-function CommentCaMarche() {
-  const [active, setActive] = useState(PALIERS[0].id)
+/* ─── Comment ça marche (Cas tabs + client → artisan screens) ────────────── */
+function LesTroisCas() {
+  const [active, setActive] = useState(CAS[0].id)
   const [view, setView] = useState<'client' | 'artisan'>('client')
-  const current = PALIERS.find((p) => p.id === active) ?? PALIERS[0]
+  const current = CAS.find((c) => c.id === active) ?? CAS[0]
 
-  const selectPalier = (id: string) => {
+  const selectCas = (id: string) => {
     setActive(id)
     setView('client')
   }
 
   const img = view === 'client' ? current.client : current.artisan
-  const label = view === 'client' ? 'Échange client' : "Résumé envoyé à l'artisan"
+  const label = view === 'client' ? 'Échange client' : 'Résumé artisan'
+  const ViewIcon = view === 'client' ? ChatIcon : DoubleCheck
 
   return (
     <section id="comment" className="relative px-6 py-28">
@@ -684,7 +685,7 @@ function CommentCaMarche() {
             Comment ça marche
           </span>
           <h2 className="font-[var(--font-syne)] text-[clamp(2rem,4vw,3.2rem)] font-semibold tracking-tight text-white">
-            Trois paliers, zéro lead perdu.
+            Trois cas, zéro lead perdu.
           </h2>
           <p className="mx-auto mt-5 max-w-2xl text-[1rem] leading-relaxed text-[var(--ink-soft)]">
             De la première prise de contact au rattrapage d&apos;un rendez‑vous manqué,
@@ -696,15 +697,15 @@ function CommentCaMarche() {
         </div>
 
         {/* tabs */}
-        <div role="tablist" aria-label="Paliers" className="mb-10 flex flex-wrap justify-center gap-3">
-          {PALIERS.map((p) => {
-            const on = p.id === active
+        <div role="tablist" aria-label="Cas" className="mb-10 flex flex-wrap justify-center gap-3">
+          {CAS.map((c) => {
+            const on = c.id === active
             return (
               <button
-                key={p.id}
+                key={c.id}
                 role="tab"
                 aria-selected={on}
-                onClick={() => selectPalier(p.id)}
+                onClick={() => selectCas(c.id)}
                 className={`flex items-center gap-3 rounded-2xl border px-5 py-3 text-left transition-colors duration-300 ${
                   on
                     ? 'border-[var(--accent)]/50 bg-[var(--accent)]/10'
@@ -716,17 +717,17 @@ function CommentCaMarche() {
                     on ? 'bg-[var(--accent)]/25 text-[var(--accent)]' : 'bg-white/[0.05] text-white/55'
                   }`}
                 >
-                  {p.n.split(' ')[1]}
+                  {c.n.split(' ')[1]}
                 </span>
                 <span className="font-[var(--font-syne)] text-sm font-semibold tracking-tight text-white">
-                  {p.n}
+                  {c.n}
                 </span>
               </button>
             )
           })}
         </div>
 
-        {/* active palier */}
+        {/* active cas */}
         <div key={active} className="fade-swap">
           <div className="mx-auto mb-8 max-w-2xl text-center">
             <h3 className="font-[var(--font-syne)] text-xl font-semibold tracking-tight text-white sm:text-2xl">
@@ -737,38 +738,6 @@ function CommentCaMarche() {
             </p>
           </div>
 
-          {/* view toggle */}
-          <div className="mx-auto mb-6 flex justify-center">
-            <div className="inline-flex items-center gap-1 rounded-full border border-white/[0.1] bg-white/[0.03] p-1">
-              <button
-                type="button"
-                onClick={() => setView('client')}
-                aria-pressed={view === 'client'}
-                className={`flex items-center gap-2 rounded-full px-4 py-2 text-xs font-medium transition-colors duration-300 ${
-                  view === 'client'
-                    ? 'bg-emerald-400/15 text-emerald-200'
-                    : 'text-white/55 hover:text-white/80'
-                }`}
-              >
-                <ChatIcon className="h-3.5 w-3.5" />
-                Échange client
-              </button>
-              <button
-                type="button"
-                onClick={() => setView('artisan')}
-                aria-pressed={view === 'artisan'}
-                className={`flex items-center gap-2 rounded-full px-4 py-2 text-xs font-medium transition-colors duration-300 ${
-                  view === 'artisan'
-                    ? 'bg-[var(--accent)]/20 text-[var(--accent)]'
-                    : 'text-white/55 hover:text-white/80'
-                }`}
-              >
-                <DoubleCheck className="h-3.5 w-3.5" />
-                Résumé artisan
-              </button>
-            </div>
-          </div>
-
           {/* large screenshot with slider arrow */}
           <div className="relative mx-auto w-full max-w-4xl">
             <figure key={view} className="fade-swap w-full">
@@ -777,7 +746,7 @@ function CommentCaMarche() {
                   view === 'client' ? 'text-emerald-300' : 'text-[var(--accent)]'
                 }`}
               >
-                <span className={`h-1.5 w-1.5 rounded-full ${view === 'client' ? 'bg-emerald-400' : 'bg-[var(--accent)]'}`} />
+                <ViewIcon className="h-3.5 w-3.5" />
                 {label}
               </figcaption>
               <div className="overflow-hidden rounded-2xl border border-[var(--line)] bg-[var(--panel)]">
@@ -806,25 +775,9 @@ function CommentCaMarche() {
             </button>
           </div>
 
-          {/* step dots */}
-          <div className="mt-6 flex items-center justify-center gap-2">
-            <button
-              type="button"
-              onClick={() => setView('client')}
-              aria-label="Vue 1 · Échange client"
-              className={`h-2 rounded-full transition-all duration-300 ${
-                view === 'client' ? 'w-6 bg-emerald-400' : 'w-2 bg-white/20 hover:bg-white/40'
-              }`}
-            />
-            <button
-              type="button"
-              onClick={() => setView('artisan')}
-              aria-label="Vue 2 · Résumé artisan"
-              className={`h-2 rounded-full transition-all duration-300 ${
-                view === 'artisan' ? 'w-6 bg-[var(--accent)]' : 'w-2 bg-white/20 hover:bg-white/40'
-              }`}
-            />
-          </div>
+          <p className="mt-5 text-center text-xs text-white/40">
+            Utilisez la flèche pour passer de l&apos;échange client au résumé artisan.
+          </p>
         </div>
       </div>
     </section>
@@ -1687,17 +1640,17 @@ export default function MonolithAIPage() {
         </div>
       </section>
 
-      {/* ════════════════════════════════════════════════════════ COMMENT ÇA MARCHE */}
-      <CommentCaMarche />
+      {/* ══════════════════════════════════════ ÉTAPE 1 · LES 3 CAS */}
+      <LesTroisCas />
 
-      {/* ════════════════════════════════════════════════════════ TÉMOIGNAGES */}
-      <TestimonialsSection />
-
-      {/* ════════════════════════════════════════════════════════ COMPARAISON */}
+      {/* ══════════════════════════════════════ ÉTAPE 2 · COMPARAISON */}
       <ComparisonSection />
 
-      {/* ════════════════════════════════════════════════════════ VIDÉO */}
+      {/* ══════════════════════════════════════ ÉTAPE 3 · VIDÉO */}
       <VideoShowcase />
+
+      {/* ══════════════════════════════════════ ÉTAPE 4 · TÉMOIGNAGES */}
+      <TestimonialsSection />
 
       {/* ════════════════════════════════════════════════════════ DÉMO CHAT */}
       <ChatShowcase />
@@ -1705,7 +1658,7 @@ export default function MonolithAIPage() {
       {/* ════════════════════════════════════════════════════════ AGENT VOCAL */}
       <VoiceDemo />
 
-      {/* ════════════════════════════════════════════════════════ PROCESSUS */}
+      {/* ══════════════════════════════════════ ÉTAPE 5 · PROCESSUS, TARIFS, CONTACT, FAQ */}
       <section id="processus" className="relative px-6 py-28">
         <div className="mx-auto max-w-6xl">
           <div className="mb-16 text-center">

@@ -1,26 +1,33 @@
 @import "tailwindcss";
 
+/* Flat dark theme — Stripe-like grays with a royal-blue accent.
+   The page-level tokens live in page.tsx; these are the document-level
+   defaults so the shell never paints light before hydration. */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  color-scheme: dark;
+  --background: #0c0d10;
+  --foreground: #ffffff;
+  --accent: #3d7bfd;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-accent: var(--accent);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  background: var(--background);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-dm), system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+::selection {
+  background: rgba(61, 123, 253, 0.3);
 }
