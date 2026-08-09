@@ -289,7 +289,7 @@ function FaqSection() {
 }
 
 /* ─── YouTube video showcase ─────────────────────────────────────────────── */
-function VideoShowcase({ videoId = 'dQw4w9WgXcQ' }: { videoId?: string }) {
+function VideoShowcase({ videoId = '0LT64_mgkro' }: { videoId?: string }) {
   const [playing, setPlaying] = useState(false)
   return (
     <section id="video" className="relative px-6 py-28">
@@ -366,8 +366,8 @@ const PALIERS = [
     n: 'Palier 3',
     title: 'No‑show, reprise de créneau',
     desc: "Un client ne se présente pas au rendez‑vous. L'agent le recontacte automatiquement, comprend l'imprévu et repositionne un nouveau créneau — votre agenda ne reste jamais vide.",
-    client: { src: '/comparison-without.png', w: 1600, h: 831 },
-    artisan: { src: '/comparison-with.png', w: 1600, h: 831 },
+    client: { src: '/palier3-client-clean.jpg', w: 1600, h: 831 },
+    artisan: { src: '/palier3-artisan-clean.jpg', w: 1600, h: 831 },
   },
 ]
 
@@ -1201,6 +1201,94 @@ function VoiceDemo() {
   )
 }
 
+/* ─── Testimonials / Retours clients ─────────────────────────────────────── */
+function TestimonialsSection() {
+  return (
+    <section id="temoignages" className="relative px-6 py-28">
+      <div className="relative mx-auto max-w-6xl">
+        <div className="mb-14 text-center">
+          <span className="mb-4 inline-block text-xs font-medium uppercase tracking-[0.22em] text-[var(--accent)]/85">
+            Témoignages clients
+          </span>
+          <h2 className="font-[var(--font-syne)] text-[clamp(2rem,4vw,3.2rem)] font-semibold tracking-tight text-white">
+            Ils ne ratent plus jamais un appel.
+          </h2>
+          <p className="mx-auto mt-5 max-w-2xl text-[1rem] leading-relaxed text-[var(--ink-soft)]">
+            Des artisans français de tous corps de métier qui ont remplacé leur répondeur
+            par un agent vocal IA — et qui voient les résultats au quotidien.
+          </p>
+        </div>
+
+        {/* metric cards */}
+        <div className="mb-12 grid grid-cols-2 gap-4 lg:grid-cols-4">
+          {METRICS.map((m) => (
+            <div
+              key={m.label}
+              className="group relative overflow-hidden rounded-2xl border border-[var(--line)] bg-white/[0.02] p-6 text-center transition-colors duration-300 hover:border-[var(--accent)]/40"
+            >
+              <div className="font-[var(--font-syne)] text-[clamp(1.8rem,3vw,2.6rem)] font-semibold tracking-tight text-white">
+                {m.value}
+              </div>
+              <div className="mt-1 text-sm font-medium text-[var(--ink-soft)]">{m.label}</div>
+              <div className="mt-2 text-[0.65rem] uppercase tracking-[0.16em] text-[var(--accent)]/70">{m.sub}</div>
+            </div>
+          ))}
+        </div>
+
+        {/* rating summary bar */}
+        <div className="mx-auto mb-12 flex w-fit flex-wrap items-center justify-center gap-x-6 gap-y-3 rounded-full border border-white/[0.08] bg-white/[0.03] px-6 py-3">
+          <span className="flex items-center gap-2">
+            <span className="flex gap-0.5 text-[#ffd166]">
+              {Array.from({ length: 5 }).map((_, i) => (
+                <svg key={i} viewBox="0 0 16 16" className="h-4 w-4" fill="currentColor" aria-hidden>
+                  <path d="M8 1.5l1.95 4.18 4.55.55-3.36 3.13.86 4.5L8 11.6 3.99 13.86l.86-4.5L1.5 6.23l4.55-.55L8 1.5z" />
+                </svg>
+              ))}
+            </span>
+            <span className="text-sm font-semibold text-white">4,9/5</span>
+          </span>
+          <span className="h-4 w-px bg-white/10" />
+          <span className="text-sm text-[var(--ink-soft)]">+120 artisans équipés</span>
+          <span className="h-4 w-px bg-white/10" />
+          <span className="text-sm text-[var(--ink-soft)]">Plombiers · Électriciens · Serruriers</span>
+        </div>
+
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {TESTIMONIALS.map((t) => (
+            <figure
+              key={t.name}
+              className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-[var(--line)] bg-white/[0.02] p-7 transition-colors duration-300 hover:border-white/[0.18] hover:bg-white/[0.04]"
+            >
+              <svg viewBox="0 0 24 24" fill="none" className="mb-5 h-6 w-6 text-[var(--accent)]/70" aria-hidden>
+                <path d="M9 7H5a2 2 0 00-2 2v3a2 2 0 002 2h2v1a3 3 0 01-3 3v2a5 5 0 005-5V9a2 2 0 00-2-2zm12 0h-4a2 2 0 00-2 2v3a2 2 0 002 2h2v1a3 3 0 01-3 3v2a5 5 0 005-5V9a2 2 0 00-2-2z" fill="currentColor" />
+              </svg>
+              <blockquote className="flex-1 text-[0.97rem] leading-relaxed text-white/90">
+                « {t.quote} »
+              </blockquote>
+              <figcaption className="mt-7 flex items-center gap-3 border-t border-white/[0.06] pt-5">
+                <span className="flex h-10 w-10 items-center justify-center rounded-full bg-[var(--accent)]/25 font-[var(--font-syne)] text-sm font-semibold text-white">
+                  {t.initials}
+                </span>
+                <div>
+                  <div className="font-[var(--font-syne)] text-sm font-semibold text-white">{t.name}</div>
+                  <div className="text-xs text-white/55">{t.role}</div>
+                </div>
+                <div className="ml-auto flex gap-0.5 text-[#ffd166]">
+                  {Array.from({ length: 5 }).map((_, i) => (
+                    <svg key={i} viewBox="0 0 16 16" className="h-3.5 w-3.5" fill="currentColor" aria-hidden>
+                      <path d="M8 1.5l1.95 4.18 4.55.55-3.36 3.13.86 4.5L8 11.6 3.99 13.86l.86-4.5L1.5 6.23l4.55-.55L8 1.5z" />
+                    </svg>
+                  ))}
+                </div>
+              </figcaption>
+            </figure>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
 /* ─── Form Field ─────────────────────────────────────────────────────────── */
 function Field({
   label,
@@ -1579,6 +1667,9 @@ export default function MonolithAIPage() {
       {/* ════════════════════════════════════════════════════════ COMMENT ÇA MARCHE */}
       <CommentCaMarche />
 
+      {/* ════════════════════════════════════════════════════════ TÉMOIGNAGES */}
+      <TestimonialsSection />
+
       {/* ════════════════════════════════════════════════════════ COMPARAISON */}
       <ComparisonSection />
 
@@ -1628,90 +1719,6 @@ export default function MonolithAIPage() {
               </li>
             ))}
           </ol>
-        </div>
-      </section>
-
-      {/* ════════════════════════════════════════════════════════ TÉMOIGNAGES */}
-      <section id="temoignages" className="relative px-6 py-28">
-        <div className="relative mx-auto max-w-6xl">
-          <div className="mb-14 text-center">
-            <span className="mb-4 inline-block text-xs font-medium uppercase tracking-[0.22em] text-[var(--accent)]/85">
-              Témoignages clients
-            </span>
-            <h2 className="font-[var(--font-syne)] text-[clamp(2rem,4vw,3.2rem)] font-semibold tracking-tight text-white">
-              Ils ne ratent plus jamais un appel.
-            </h2>
-            <p className="mx-auto mt-5 max-w-2xl text-[1rem] leading-relaxed text-[var(--ink-soft)]">
-              Des artisans français de tous corps de métier qui ont remplacé leur répondeur
-              par un agent vocal IA — et qui voient les résultats au quotidien.
-            </p>
-          </div>
-
-          {/* metric cards */}
-          <div className="mb-12 grid grid-cols-2 gap-4 lg:grid-cols-4">
-            {METRICS.map((m) => (
-              <div
-                key={m.label}
-                className="group relative overflow-hidden rounded-2xl border border-[var(--line)] bg-white/[0.02] p-6 text-center transition-colors duration-300 hover:border-[var(--accent)]/40"
-              >
-                <div className="font-[var(--font-syne)] text-[clamp(1.8rem,3vw,2.6rem)] font-semibold tracking-tight text-white">
-                  {m.value}
-                </div>
-                <div className="mt-1 text-sm font-medium text-[var(--ink-soft)]">{m.label}</div>
-                <div className="mt-2 text-[0.65rem] uppercase tracking-[0.16em] text-[var(--accent)]/70">{m.sub}</div>
-              </div>
-            ))}
-          </div>
-
-          {/* rating summary bar */}
-          <div className="mx-auto mb-12 flex w-fit flex-wrap items-center justify-center gap-x-6 gap-y-3 rounded-full border border-white/[0.08] bg-white/[0.03] px-6 py-3">
-            <span className="flex items-center gap-2">
-              <span className="flex gap-0.5 text-[#ffd166]">
-                {Array.from({ length: 5 }).map((_, i) => (
-                  <svg key={i} viewBox="0 0 16 16" className="h-4 w-4" fill="currentColor" aria-hidden>
-                    <path d="M8 1.5l1.95 4.18 4.55.55-3.36 3.13.86 4.5L8 11.6 3.99 13.86l.86-4.5L1.5 6.23l4.55-.55L8 1.5z" />
-                  </svg>
-                ))}
-              </span>
-              <span className="text-sm font-semibold text-white">4,9/5</span>
-            </span>
-            <span className="h-4 w-px bg-white/10" />
-            <span className="text-sm text-[var(--ink-soft)]">+120 artisans équipés</span>
-            <span className="h-4 w-px bg-white/10" />
-            <span className="text-sm text-[var(--ink-soft)]">Plombiers · Électriciens · Serruriers</span>
-          </div>
-
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {TESTIMONIALS.map((t) => (
-              <figure
-                key={t.name}
-                className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-[var(--line)] bg-white/[0.02] p-7 transition-colors duration-300 hover:border-white/[0.18] hover:bg-white/[0.04]"
-              >
-                <svg viewBox="0 0 24 24" fill="none" className="mb-5 h-6 w-6 text-[var(--accent)]/70" aria-hidden>
-                  <path d="M9 7H5a2 2 0 00-2 2v3a2 2 0 002 2h2v1a3 3 0 01-3 3v2a5 5 0 005-5V9a2 2 0 00-2-2zm12 0h-4a2 2 0 00-2 2v3a2 2 0 002 2h2v1a3 3 0 01-3 3v2a5 5 0 005-5V9a2 2 0 00-2-2z" fill="currentColor" />
-                </svg>
-                <blockquote className="flex-1 text-[0.97rem] leading-relaxed text-white/90">
-                  « {t.quote} »
-                </blockquote>
-                <figcaption className="mt-7 flex items-center gap-3 border-t border-white/[0.06] pt-5">
-                  <span className="flex h-10 w-10 items-center justify-center rounded-full bg-[var(--accent)]/25 font-[var(--font-syne)] text-sm font-semibold text-white">
-                    {t.initials}
-                  </span>
-                  <div>
-                    <div className="font-[var(--font-syne)] text-sm font-semibold text-white">{t.name}</div>
-                    <div className="text-xs text-white/55">{t.role}</div>
-                  </div>
-                  <div className="ml-auto flex gap-0.5 text-[#ffd166]">
-                    {Array.from({ length: 5 }).map((_, i) => (
-                      <svg key={i} viewBox="0 0 16 16" className="h-3.5 w-3.5" fill="currentColor" aria-hidden>
-                        <path d="M8 1.5l1.95 4.18 4.55.55-3.36 3.13.86 4.5L8 11.6 3.99 13.86l.86-4.5L1.5 6.23l4.55-.55L8 1.5z" />
-                      </svg>
-                    ))}
-                  </div>
-                </figcaption>
-              </figure>
-            ))}
-          </div>
         </div>
       </section>
 
