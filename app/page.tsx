@@ -307,6 +307,20 @@ function VideoShowcase({ videoId = '0LT64_mgkro' }: { videoId?: string }) {
           </p>
         </div>
 
+        {/* multi-language capability badge */}
+        <div className="mx-auto mb-8 flex w-fit max-w-3xl items-center gap-3 rounded-2xl border border-[var(--accent)]/30 bg-[var(--accent)]/[0.07] px-5 py-3.5 text-center sm:rounded-full sm:text-left">
+          <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[var(--accent)]/20 text-[var(--accent)]">
+            <svg viewBox="0 0 24 24" fill="none" className="h-4 w-4" aria-hidden>
+              <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="1.6" />
+              <path d="M3 12h18M12 3c2.5 2.6 3.8 5.7 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.7-3.8-9S9.5 5.6 12 3z" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </span>
+          <p className="text-[0.9rem] leading-snug text-white/85">
+            L&apos;IA comprend et répond naturellement dans toutes les langues{' '}
+            <span className="text-[var(--ink-soft)]">(Français, Anglais, Espagnol, Deutsch...)</span>
+          </p>
+        </div>
+
         <div className="relative aspect-video w-full overflow-hidden rounded-2xl border border-[var(--line)] bg-[var(--panel)]">
           {playing ? (
             <iframe
@@ -350,24 +364,24 @@ const PALIERS = [
     n: 'Palier 1',
     title: 'Client écrit directement sur WhatsApp',
     desc: "Le prospect envoie un message sur votre WhatsApp Business (ou par SMS). L'agent répond en quelques secondes, qualifie la demande et propose un créneau — sans que vous touchiez votre téléphone.",
-    client: { src: '/palier2-client.jpg', w: 1600, h: 831 },
-    artisan: { src: '/palier2-artisan.jpg', w: 1600, h: 831 },
+    client: { src: '/WhatsApp Image 2026-08-08 at 06.03.13 (2).jpeg', w: 1600, h: 831 },
+    artisan: { src: '/WhatsApp Image 2026-08-08 at 06.03.13 (3).jpeg', w: 1600, h: 831 },
   },
   {
     id: 'p2',
     n: 'Palier 2',
     title: "Appel manqué, l'IA relance le client",
     desc: "Vous êtes sur un chantier et un appel passe en absence. L'agent envoie immédiatement une relance WhatsApp/SMS, engage la conversation et récupère le lead avant qu'il n'appelle un concurrent.",
-    client: { src: '/palier3-client.jpg', w: 1600, h: 831 },
-    artisan: { src: '/palier3-artisan.jpg', w: 1600, h: 831 },
+    client: { src: '/WhatsApp Image 2026-08-09 at 02.36.24.jpeg', w: 1201, h: 627 },
+    artisan: { src: '/WhatsApp Image 2026-08-09 at 02.35.50.jpeg', w: 1273, h: 660 },
   },
   {
     id: 'p3',
     n: 'Palier 3',
     title: 'No‑show, reprise de créneau',
     desc: "Un client ne se présente pas au rendez‑vous. L'agent le recontacte automatiquement, comprend l'imprévu et repositionne un nouveau créneau — votre agenda ne reste jamais vide.",
-    client: { src: '/palier3-client.jpg', w: 355, h: 184 },
-    artisan: { src: '/palier3-artisan.jpg', w: 355, h: 183 },
+    client: { src: '/WhatsApp Image 2026-08-09 at 02.36.24.jpeg', w: 1201, h: 627 },
+    artisan: { src: '/WhatsApp Image 2026-08-09 at 02.35.50.jpeg', w: 1273, h: 660 },
   },
 ]
 
@@ -521,36 +535,42 @@ const TESTIMONIALS = [
     name: 'Jean Moreau',
     role: 'Artisan · Paris',
     initials: 'JM',
+    headline: '+38 % de chiffre d\'affaires',
     quote: "L'agent vocal a capté une urgence à 23h un dimanche. Mon client a été pris en charge en moins de 2 minutes, et j'ai gagné un contrat de 2 800 €. En trois mois, mon chiffre d'affaires a bondi de 38 %.",
   },
   {
     name: 'Karim Benali',
     role: 'Artisan · Lyon',
     initials: 'KB',
+    headline: 'Zéro appel manqué',
     quote: "Avant Monolith AI, je laissais filer 6 à 8 appels par jour quand j'étais sur un chantier. Aujourd'hui, chaque appel est traité, qualifié et planifié. Mon planning est plein deux semaines à l'avance.",
   },
   {
     name: 'Sophie Lefèvre',
     role: 'Artisan · Marseille',
     initials: 'SL',
+    headline: 'Taux de conversion doublé',
     quote: "Les urgences nocturnes sont gérées sans que je touche mon téléphone. L'IA me notifie uniquement quand c'est critique. Mon taux de conversion a doublé et mes clients adorent la réactivité.",
   },
   {
     name: 'Antoine Rivière',
     role: 'Artisan · Bordeaux',
     initials: 'AR',
+    headline: 'Vocabulaire métier maîtrisé',
     quote: "Ce qui me bluffe, c'est que l'agent s'améliore tout seul. Au début il confondait certains termes techniques, aujourd'hui il les maîtrise mieux que mon apprenti. Il a appris mon vocabulaire métier en quelques semaines.",
   },
   {
     name: 'Mehdi Cherif',
     role: 'Artisan · Toulouse',
     initials: 'MC',
+    headline: 'Qualification 100 % automatique',
     quote: "L'IA apprend de chaque appel — elle anticipe maintenant les bonnes questions à poser pour qualifier une demande. C'est comme avoir une secrétaire qui maîtrise mon métier, sans pause, sans congé.",
   },
   {
     name: 'Laurent Pasquier',
     role: 'Artisan · Nantes',
     initials: 'LP',
+    headline: '+22 % de RDV honorés',
     quote: "Au bout de trois mois, l'agent a intégré tout notre catalogue de prestations et notre grille tarifaire. Il qualifie les devis avec une précision que je n'aurais pas crue possible. + 22 % de RDV honorés depuis qu'on l'utilise.",
   },
 ]
@@ -845,10 +865,10 @@ function ComparisonSection() {
             </div>
             <div className="mx-auto max-w-[360px] overflow-hidden rounded-2xl border border-white/[0.08] bg-[var(--panel)]">
               <Image
-                src="/palier1-artisan.jpg"
+                src="/WhatsApp Image 2026-08-08 at 06.04.14 (1).jpeg"
                 alt="Sans Monolith AI : réponse 9h plus tard, lead perdu"
-                width={651}
-                height={778}
+                width={1600}
+                height={831}
                 sizes="(max-width: 768px) 80vw, 360px"
                 className="h-auto w-full object-contain"
               />
@@ -874,10 +894,10 @@ function ComparisonSection() {
             </div>
             <div className="mx-auto max-w-[360px] overflow-hidden rounded-2xl border border-white/[0.08] bg-[var(--panel)]">
               <Image
-                src="/palier1-client.jpg"
+                src="/WhatsApp Image 2026-08-08 at 06.04.15 (1).jpeg"
                 alt="Avec Monolith AI : réponse en quelques secondes, rendez-vous fixé"
-                width={392}
-                height={513}
+                width={1600}
+                height={831}
                 sizes="(max-width: 768px) 80vw, 360px"
                 className="h-auto w-full object-contain"
               />
@@ -1262,6 +1282,9 @@ function TestimonialsSection() {
               <svg viewBox="0 0 24 24" fill="none" className="mb-5 h-6 w-6 text-[var(--accent)]/70" aria-hidden>
                 <path d="M9 7H5a2 2 0 00-2 2v3a2 2 0 002 2h2v1a3 3 0 01-3 3v2a5 5 0 005-5V9a2 2 0 00-2-2zm12 0h-4a2 2 0 00-2 2v3a2 2 0 002 2h2v1a3 3 0 01-3 3v2a5 5 0 005-5V9a2 2 0 00-2-2z" fill="currentColor" />
               </svg>
+              <h3 className="mb-3 font-[var(--font-syne)] text-[1.15rem] font-bold leading-snug tracking-tight text-[var(--accent)]">
+                {t.headline}
+              </h3>
               <blockquote className="flex-1 text-[0.97rem] leading-relaxed text-white/90">
                 « {t.quote} »
               </blockquote>
