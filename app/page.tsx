@@ -108,6 +108,10 @@ const AVATARS = [
   { initials: 'AR', color: '#6b4ffd' },
 ]
 
+/* Single source of truth — this claim appears in the hero and in the
+   testimonials rating bar, and the two used to drift apart. */
+const ARTISAN_COUNT = '+120'
+
 function SocialProof() {
   return (
     <div className="inline-flex items-center gap-3 rounded-full border border-[var(--line)] bg-white/[0.03] px-3 py-2">
@@ -123,7 +127,7 @@ function SocialProof() {
         ))}
       </div>
       <span className="pr-1.5 text-sm font-medium text-white/75">
-        <span className="font-semibold text-white">+110 artisans</span> nous font confiance
+        <span className="font-semibold text-white">{ARTISAN_COUNT} artisans</span> nous font confiance
       </span>
     </div>
   )
@@ -1234,7 +1238,7 @@ function TestimonialsSection() {
             <span className="text-sm font-semibold text-white">4,9/5</span>
           </span>
           <span className="h-4 w-px bg-white/10" />
-          <span className="text-sm text-[var(--ink-soft)]">+120 artisans équipés</span>
+          <span className="text-sm text-[var(--ink-soft)]">{ARTISAN_COUNT} artisans équipés</span>
           <span className="h-4 w-px bg-white/10" />
           <span className="text-sm text-[var(--ink-soft)]">Plombiers · Électriciens · Serruriers</span>
         </div>
