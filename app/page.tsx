@@ -372,8 +372,8 @@ const PALIERS = [
     n: 'Palier 2',
     title: "Appel manqué, l'IA relance le client",
     desc: "Vous êtes sur un chantier et un appel passe en absence. L'agent envoie immédiatement une relance WhatsApp/SMS, engage la conversation et récupère le lead avant qu'il n'appelle un concurrent.",
-    client: { src: '/WhatsApp Image 2026-08-09 at 02.36.24.jpeg', w: 1201, h: 627 },
-    artisan: { src: '/WhatsApp Image 2026-08-09 at 02.35.50.jpeg', w: 1273, h: 660 },
+    client: { src: '/WhatsApp Image 2026-08-08 at 06.03.13 (2).jpeg', w: 1600, h: 831 },
+    artisan: { src: '/WhatsApp Image 2026-08-08 at 06.03.13 (3).jpeg', w: 1600, h: 831 },
   },
   {
     id: 'p3',
