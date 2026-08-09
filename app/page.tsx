@@ -534,11 +534,42 @@ const TESTIMONIALS_BOTTOM: Testimonial[] = [
   },
 ]
 
-const COMPARISON_TABLE = {
-  src: '/WhatsApp Image 2026-08-09 at 05.17.31.jpeg',
-  w: 839,
-  h: 345,
+/* `tone` drives the red/green treatment on the money row only. */
+type ComparisonRow = {
+  label: string
+  self: string
+  monolith: string
+  diff: string
+  tone?: 'money'
 }
+
+const COMPARISON_ROWS: ComparisonRow[] = [
+  {
+    label: 'Temps de réponse',
+    self: 'Quelques heures',
+    monolith: 'Moins de 2 secondes',
+    diff: 'Immédiat',
+  },
+  {
+    label: 'Disponibilité',
+    self: 'Heures de chantier',
+    monolith: '24h/24, 7j/7',
+    diff: 'Continue',
+  },
+  {
+    label: 'Relance des devis',
+    self: 'Manuelle, souvent oubliée',
+    monolith: 'Automatique',
+    diff: 'Zéro oubli',
+  },
+  {
+    label: 'CA perdu par mois',
+    self: '12 000€ à 56 000€',
+    monolith: '0€',
+    diff: 'Récupéré',
+    tone: 'money',
+  },
+]
 
 /* Written quotes, rendered under the screenshot cards. */
 const TESTIMONIAL_QUOTES = [
@@ -1251,16 +1282,7 @@ function TestimonialsSection() {
           <h3 className="mb-6 text-center font-[var(--font-syne)] text-xl font-semibold tracking-tight text-white sm:text-2xl">
             Toi‑même vs Monolith AI
           </h3>
-          <div className="mx-auto max-w-3xl overflow-hidden rounded-2xl border border-[var(--line)] bg-[var(--panel)]">
-            <Image
-              src={COMPARISON_TABLE.src}
-              alt="Tableau comparatif : Toi‑même vs Monolith AI vs Différence"
-              width={COMPARISON_TABLE.w}
-              height={COMPARISON_TABLE.h}
-              sizes="(max-width: 768px) 92vw, 768px"
-              className="h-auto w-full object-contain"
-            />
-          </div>
+          <ComparisonTable />
         </div>
 
         {/* 5 cards below the comparison table */}
@@ -1275,6 +1297,100 @@ function TestimonialsSection() {
         </div>
       </div>
     </section>
+  )
+}
+
+/* ─── Comparison table: Toi-même vs Monolith AI vs Différence ────────────── */
+/* Four columns don't fit a phone, so the same rows render as stacked cards
+   below sm. Only one of the two is in the DOM flow at a time (`display:none`
+   keeps the hidden one out of the accessibility tree). */
+const selfTone = (r: ComparisonRow) => (r.tone === 'money' ? 'text-rose-300' : 'text-white/70')
+const monolithTone = (r: ComparisonRow) => (r.tone === 'money' ? 'text-emerald-300' : 'text-white')
+
+function ComparisonTable() {
+  return (
+    <div className="mx-auto max-w-3xl">
+      {/* ≥ sm: real table */}
+      <div className="hidden overflow-hidden rounded-2xl border border-[var(--line)] bg-[var(--panel)] sm:block">
+        <table className="w-full border-collapse">
+          <caption className="sr-only">
+            Comparaison entre gérer sa réception d&apos;appels soi‑même et la confier à Monolith AI
+          </caption>
+          <thead>
+            <tr className="border-b border-[var(--line)]">
+              <th
+                scope="col"
+                className="px-5 py-4 text-left text-[0.65rem] font-medium uppercase tracking-[0.16em] text-white/40"
+              >
+                Critère
+              </th>
+              <th scope="col" className="px-5 py-4 text-center text-sm font-semibold text-[var(--ink-soft)]">
+                Toi‑même
+              </th>
+              <th
+                scope="col"
+                className="relative bg-[var(--accent)]/[0.07] px-5 py-4 text-center text-sm font-semibold text-[var(--accent)]"
+              >
+                Monolith AI
+                <span className="absolute inset-x-0 bottom-0 h-[2px] bg-[var(--accent)]" aria-hidden />
+              </th>
+              <th scope="col" className="px-5 py-4 text-center text-sm font-semibold text-white">
+                Différence
+              </th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-[var(--line)]">
+            {COMPARISON_ROWS.map((r) => (
+              <tr key={r.label}>
+                <th
+                  scope="row"
+                  className="px-5 py-4 text-left text-sm font-medium text-[var(--ink-soft)]"
+                >
+                  {r.label}
+                </th>
+                <td className={`px-5 py-4 text-center text-sm ${selfTone(r)}`}>{r.self}</td>
+                <td
+                  className={`bg-[var(--accent)]/[0.07] px-5 py-4 text-center text-sm font-semibold ${monolithTone(r)}`}
+                >
+                  {r.monolith}
+                </td>
+                <td className="px-5 py-4 text-center text-sm text-[var(--ink-soft)]">{r.diff}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      {/* < sm: one card per criterion */}
+      <div className="space-y-3 sm:hidden">
+        {COMPARISON_ROWS.map((r) => (
+          <div
+            key={r.label}
+            className="overflow-hidden rounded-2xl border border-[var(--line)] bg-[var(--panel)]"
+          >
+            <div className="border-b border-[var(--line)] px-4 py-3 text-sm font-semibold text-white">
+              {r.label}
+            </div>
+            <dl className="divide-y divide-[var(--line)]">
+              <div className="flex items-baseline justify-between gap-4 px-4 py-3">
+                <dt className="text-[0.65rem] uppercase tracking-[0.14em] text-white/40">Toi‑même</dt>
+                <dd className={`text-right text-sm ${selfTone(r)}`}>{r.self}</dd>
+              </div>
+              <div className="flex items-baseline justify-between gap-4 border-l-2 border-[var(--accent)] bg-[var(--accent)]/[0.07] px-4 py-3">
+                <dt className="text-[0.65rem] uppercase tracking-[0.14em] text-[var(--accent)]">
+                  Monolith AI
+                </dt>
+                <dd className={`text-right text-sm font-semibold ${monolithTone(r)}`}>{r.monolith}</dd>
+              </div>
+              <div className="flex items-baseline justify-between gap-4 px-4 py-3">
+                <dt className="text-[0.65rem] uppercase tracking-[0.14em] text-white/40">Différence</dt>
+                <dd className="text-right text-sm text-[var(--ink-soft)]">{r.diff}</dd>
+              </div>
+            </dl>
+          </div>
+        ))}
+      </div>
+    </div>
   )
 }
 
