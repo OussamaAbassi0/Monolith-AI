@@ -494,7 +494,7 @@ const TESTIMONIALS_TOP: Testimonial[] = [
   },
   {
     text: "Il a sécurisé 10 000 $ de chiffre d'affaires supplémentaire en un seul mois sur des interventions nocturnes. L'agent IA prend le relais à la fermeture et convertit les urgences pendant qu'il dort.",
-    src: '/WhatsApp Image 2026-08-09 at 05.14.44 (1).jpeg',
+    src: '/WhatsApp Image 2026-08-09 at 05.14.45.jpeg',
     w: 576,
     h: 1024,
   },
@@ -504,15 +504,15 @@ const TESTIMONIALS_TOP: Testimonial[] = [
 const TESTIMONIALS_BOTTOM: Testimonial[] = [
   {
     text: "Il perdait une fortune chaque soir sur des urgences qu'il ne voyait même pas passer. Aujourd'hui, l'IA verrouille les interventions la nuit et il n'a plus qu'à consulter ses nouveaux chantiers le lendemain matin.",
-    src: '/WhatsApp Image 2026-08-09 at 12.47.45.jpeg',
-    w: 1440,
-    h: 2560,
+    src: '/WhatsApp Image 2026-08-09 at 05.14.44 (1).jpeg',
+    w: 576,
+    h: 1024,
   },
   {
     text: "Il stagnait à 2 100 € par mois parce qu'il passait à côté de la moitié de ses clients. En déléguant sa réception téléphonique à l'IA, il a fait x10 sur son chiffre d'affaires pour encaisser 20 000 € en un mois.",
-    src: '/WhatsApp Image 2026-08-09 at 05.14.45.jpeg',
-    w: 576,
-    h: 1024,
+    src: '/WhatsApp Image 2026-08-09 at 12.47.45.jpeg',
+    w: 1440,
+    h: 2560,
   },
   {
     text: "Il a rempli son calendrier de rendez-vous sans lever le petit doigt. En deux mois d'utilisation, absolument aucun de ses prospects ne s'est rendu compte qu'il parlait à une intelligence artificielle.",
