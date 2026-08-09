@@ -1216,7 +1216,7 @@ function VoiceDemo() {
 function TestimonialsSection() {
   return (
     <section id="temoignages" className="relative px-6 py-28">
-      <div className="relative mx-auto max-w-6xl">
+      <div className="relative mx-auto max-w-7xl">
         <div className="mb-14 text-center">
           <span className="mb-4 inline-block text-xs font-medium uppercase tracking-[0.22em] text-[var(--accent)]/85">
             Témoignages clients
@@ -1294,19 +1294,19 @@ function TestimonialsSection() {
 /* ─── Testimonial card grid (text above screenshot) ──────────────────────── */
 function TestimonialGrid({ items, startIndex }: { items: Testimonial[]; startIndex: number }) {
   return (
-    <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
       {items.map((t, i) => (
         <figure
           key={t.src}
-          className="flex h-full flex-col overflow-hidden rounded-2xl border border-[var(--line)] bg-white/[0.02] p-6 transition-colors duration-300 hover:border-white/[0.18] hover:bg-white/[0.04]"
+          className="flex h-full flex-col overflow-hidden rounded-2xl border border-[var(--line)] bg-white/[0.02] p-4 transition-colors duration-300 hover:border-white/[0.18] hover:bg-white/[0.04]"
         >
           {/* descriptive text sits ABOVE the screenshot */}
-          <figcaption className="mb-5">
-            <span className="mb-3 inline-flex items-center gap-2 text-[0.65rem] font-medium uppercase tracking-[0.16em] text-[var(--accent)]">
-              <DoubleCheck className="h-3.5 w-3.5" />
+          <figcaption className="mb-4">
+            <span className="mb-2 inline-flex items-center gap-1.5 text-[0.6rem] font-medium uppercase tracking-[0.14em] text-[var(--accent)]">
+              <DoubleCheck className="h-3 w-3" />
               Retour client {String(startIndex + i + 1).padStart(2, '0')}
             </span>
-            <p className="text-[0.95rem] leading-relaxed text-white/90">{t.text}</p>
+            <p className="text-[0.8rem] leading-relaxed text-white/90">{t.text}</p>
           </figcaption>
 
           <div className="mt-auto overflow-hidden rounded-xl border border-white/[0.08] bg-[var(--panel)]">
@@ -1315,7 +1315,7 @@ function TestimonialGrid({ items, startIndex }: { items: Testimonial[]; startInd
               alt={`Capture WhatsApp — retour client ${startIndex + i + 1}`}
               width={t.w}
               height={t.h}
-              sizes="(max-width: 768px) 88vw, (max-width: 1024px) 44vw, 360px"
+              sizes="(max-width: 640px) 88vw, (max-width: 1024px) 44vw, (max-width: 1280px) 30vw, 240px"
               className="h-auto w-full object-contain"
               loading="lazy"
             />
