@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState, type FormEvent, type ReactNode } from 'react'
+import { useEffect, useState, type ReactNode } from 'react'
 import Image from 'next/image'
 import { Syne, DM_Sans } from 'next/font/google'
 
@@ -89,6 +89,27 @@ const ChatIcon = ({ className = 'w-4 h-4' }: { className?: string }) => (
     <path d="M8 9h8M8 12h5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
   </svg>
 )
+
+/* Official WhatsApp glyph — used inside every primary CTA. */
+const WhatsAppIcon = ({ className = 'w-4 h-4' }: { className?: string }) => (
+  <svg viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden>
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347M12.05 21.785h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.002-5.45 4.437-9.884 9.889-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.886 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413" />
+  </svg>
+)
+
+/* ─── WhatsApp CTA target ────────────────────────────────────────────────── */
+/* Single source of truth for every CTA on the page. The number is in
+   international format without "+" or spaces, as wa.me requires. */
+const WHATSAPP_NUMBER = '33678337850'
+const WHATSAPP_MESSAGE = 'Bonjour, je souhaite en savoir plus sur Monolith AI'
+const WHATSAPP_LINK = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`
+
+/* Props shared by every CTA anchor so a click always opens WhatsApp safely. */
+const waLinkProps = {
+  href: WHATSAPP_LINK,
+  target: '_blank',
+  rel: 'noopener noreferrer',
+} as const
 
 /* ─── SMS & WhatsApp badge ───────────────────────────────────────────────── */
 function ChannelBadge({ className = '' }: { className?: string }) {
@@ -1469,83 +1490,10 @@ function TestimonialGrid({ items, startIndex }: { items: Testimonial[]; startInd
   )
 }
 
-/* ─── Form Field ─────────────────────────────────────────────────────────── */
-function Field({
-  label,
-  name,
-  type = 'text',
-  placeholder,
-  value,
-  onChange,
-  required,
-}: {
-  label: string
-  name: string
-  type?: string
-  placeholder?: string
-  value: string
-  onChange: (v: string) => void
-  required?: boolean
-}) {
-  return (
-    <div>
-      <label htmlFor={name} className="mb-2 block text-xs font-medium uppercase tracking-[0.16em] text-white/55">
-        {label}
-      </label>
-      <input
-        id={name}
-        name={name}
-        type={type}
-        required={required}
-        placeholder={placeholder}
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        className="w-full rounded-xl border border-white/[0.1] bg-white/[0.03] px-4 py-3 text-sm text-white placeholder:text-white/30 outline-none transition-all duration-300 focus:border-[var(--accent)]/60 focus:bg-white/[0.05] focus:ring-2 focus:ring-[var(--accent)]/25"
-      />
-    </div>
-  )
-}
-
 /* ─── Page ───────────────────────────────────────────────────────────────── */
-type FormState = {
-  fullName: string
-  company: string
-  phone: string
-  message: string
-  date: string
-  time: string
-}
-
-const INITIAL_FORM: FormState = {
-  fullName: '',
-  company: '',
-  phone: '',
-  message: '',
-  date: '',
-  time: '',
-}
-
 export default function MonolithAIPage() {
   const [scrolled, setScrolled] = useState(false)
   const [logoError, setLogoError] = useState(false)
-  const [form, setForm] = useState<FormState>(INITIAL_FORM)
-  const [submitting, setSubmitting] = useState(false)
-  const [submitted, setSubmitted] = useState(false)
-
-  const minDate = new Date().toISOString().split('T')[0]
-
-  const updateField = <K extends keyof FormState>(key: K, value: FormState[K]) => {
-    setForm((prev) => ({ ...prev, [key]: value }))
-  }
-
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    setSubmitting(true)
-    await new Promise((r) => setTimeout(r, 900))
-    setSubmitting(false)
-    setSubmitted(true)
-    setForm(INITIAL_FORM)
-  }
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24)
@@ -1675,11 +1623,11 @@ export default function MonolithAIPage() {
           </nav>
 
           <a
-            href="#contact"
+            {...waLinkProps}
             className="group inline-flex items-center gap-2 rounded-full bg-[var(--accent)] px-5 py-2.5 text-sm font-semibold text-white transition-colors duration-300 hover:bg-[#3570e6]"
           >
+            <WhatsAppIcon className="h-4 w-4" />
             Réserver un appel
-            <ArrowRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-0.5" />
           </a>
         </div>
       </header>
@@ -1712,11 +1660,11 @@ export default function MonolithAIPage() {
 
             <div className="mt-9 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
               <a
-                href="#contact"
+                {...waLinkProps}
                 className="group inline-flex items-center gap-2 rounded-full bg-[var(--accent)] px-7 py-3.5 text-sm font-semibold text-white transition-colors duration-300 hover:bg-[#3570e6]"
               >
+                <WhatsAppIcon className="h-[1.15rem] w-[1.15rem]" />
                 Réserver mon appel stratégique
-                <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
               </a>
               <a
                 href="#processus"
@@ -1985,15 +1933,15 @@ export default function MonolithAIPage() {
                 </ul>
 
                 <a
-                  href="#contact"
+                  {...waLinkProps}
                   className={`mt-8 inline-flex items-center justify-center gap-2 rounded-full px-5 py-3 text-sm font-semibold transition-colors duration-300 ${
                     p.highlight
                       ? 'bg-[var(--accent)] text-white hover:bg-[#3570e6]'
                       : 'border border-white/15 text-white hover:border-white/35 hover:bg-white/[0.06]'
                   }`}
                 >
+                  <WhatsAppIcon className="h-4 w-4" />
                   {p.cta}
-                  <ArrowRight className="h-3.5 w-3.5" />
                 </a>
               </article>
             ))}
@@ -2025,144 +1973,36 @@ export default function MonolithAIPage() {
             <div className="flex items-center gap-2.5 border-b border-white/[0.06] px-6 py-4">
               <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 soft-pulse" />
               <span className="text-xs font-medium tracking-wide text-white/65">
-                Formulaire de réservation · Réponse sous 2h ouvrées · Gratuit
+                Discussion WhatsApp directe · Réponse sous 2h ouvrées · Gratuit
               </span>
             </div>
 
-            {submitted ? (
-              <div className="relative px-8 py-16 text-center sm:px-12">
-                <div className="mx-auto mb-6 flex h-14 w-14 items-center justify-center rounded-full border border-emerald-400/30 bg-emerald-400/15 text-emerald-300">
-                  <Check className="h-6 w-6" />
-                </div>
-                <h3 className="font-[var(--font-syne)] text-2xl font-semibold tracking-tight text-white">
-                  Demande envoyée
-                </h3>
-                <p className="mx-auto mt-3 max-w-md text-[0.95rem] leading-relaxed text-[var(--ink-soft)]">
-                  Merci. Notre équipe vous contacte sous 2 heures ouvrées pour confirmer votre créneau et préparer l&apos;appel stratégique.
-                </p>
-                <button
-                  type="button"
-                  onClick={() => setSubmitted(false)}
-                  className="mt-8 inline-flex items-center gap-2 rounded-full border border-white/15 px-5 py-2.5 text-sm font-medium text-white/85 transition-colors hover:border-white/35 hover:text-white"
-                >
-                  Envoyer une autre demande
-                </button>
+            <div className="relative px-6 py-12 text-center sm:px-12 sm:py-14">
+              <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-2xl border border-emerald-400/25 bg-emerald-400/[0.1] text-emerald-300">
+                <WhatsAppIcon className="h-8 w-8" />
               </div>
-            ) : (
-              <form onSubmit={handleSubmit} className="relative grid gap-5 px-6 py-8 sm:px-10 sm:py-10">
-                <div className="grid gap-5 sm:grid-cols-2">
-                  <Field
-                    label="Nom complet"
-                    name="fullName"
-                    placeholder="Jean Dupont"
-                    value={form.fullName}
-                    onChange={(v) => updateField('fullName', v)}
-                    required
-                  />
-                  <Field
-                    label="Nom de l'entreprise"
-                    name="company"
-                    placeholder="Dupont Artisans SARL"
-                    value={form.company}
-                    onChange={(v) => updateField('company', v)}
-                    required
-                  />
-                </div>
 
-                <Field
-                  label="Numéro de téléphone"
-                  name="phone"
-                  type="tel"
-                  placeholder="+33 6 12 34 56 78"
-                  value={form.phone}
-                  onChange={(v) => updateField('phone', v)}
-                  required
-                />
+              <h3 className="font-[var(--font-syne)] text-2xl font-semibold tracking-tight text-white sm:text-[1.75rem]">
+                Écrivez‑nous sur WhatsApp
+              </h3>
+              <p className="mx-auto mt-4 max-w-lg text-[0.98rem] leading-relaxed text-[var(--ink-soft)]">
+                Pas de formulaire, pas d&apos;attente. Un message et nous fixons ensemble
+                le créneau de votre appel stratégique — directement dans la conversation.
+              </p>
 
-                <div>
-                  <label htmlFor="message" className="mb-2 block text-xs font-medium uppercase tracking-[0.16em] text-white/55">
-                    Message · Problème à résoudre
-                  </label>
-                  <textarea
-                    id="message"
-                    name="message"
-                    rows={4}
-                    required
-                    placeholder="Décrivez brièvement votre activité et le goulot d'étranglement que vous voulez automatiser…"
-                    value={form.message}
-                    onChange={(e) => updateField('message', e.target.value)}
-                    className="w-full resize-none rounded-xl border border-white/[0.1] bg-white/[0.03] px-4 py-3 text-sm text-white placeholder:text-white/30 outline-none transition-all duration-300 focus:border-[var(--accent)]/60 focus:bg-white/[0.05] focus:ring-2 focus:ring-[var(--accent)]/25"
-                  />
-                </div>
+              <a
+                {...waLinkProps}
+                className="mt-8 inline-flex items-center justify-center gap-2.5 rounded-full bg-[var(--accent)] px-8 py-4 text-sm font-semibold text-white transition-colors duration-300 hover:bg-[#3570e6]"
+              >
+                <WhatsAppIcon className="h-5 w-5" />
+                Réserver mon appel stratégique
+              </a>
 
-                <div className="rounded-2xl border border-white/[0.08] bg-white/[0.02] p-5">
-                  <div className="mb-4 flex items-center gap-2.5">
-                    <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-[var(--accent)]/15 text-[var(--accent)]">
-                      <CalendarIcon className="h-3.5 w-3.5" />
-                    </span>
-                    <span className="text-xs font-medium uppercase tracking-[0.16em] text-white/65">
-                      Vos disponibilités pour l&apos;appel
-                    </span>
-                  </div>
-                  <div className="grid gap-4 sm:grid-cols-2">
-                    <div>
-                      <label htmlFor="date" className="mb-2 block text-[0.7rem] font-medium uppercase tracking-[0.16em] text-white/50">
-                        Date
-                      </label>
-                      <input
-                        id="date"
-                        name="date"
-                        type="date"
-                        required
-                        min={minDate}
-                        value={form.date}
-                        onChange={(e) => updateField('date', e.target.value)}
-                        className="w-full rounded-xl border border-white/[0.1] bg-white/[0.03] px-4 py-3 text-sm text-white outline-none transition-all duration-300 focus:border-[var(--accent)]/60 focus:bg-white/[0.05] focus:ring-2 focus:ring-[var(--accent)]/25 [color-scheme:dark]"
-                      />
-                    </div>
-                    <div>
-                      <label htmlFor="time" className="mb-2 block text-[0.7rem] font-medium uppercase tracking-[0.16em] text-white/50">
-                        Créneau horaire
-                      </label>
-                      <select
-                        id="time"
-                        name="time"
-                        required
-                        value={form.time}
-                        onChange={(e) => updateField('time', e.target.value)}
-                        className="w-full appearance-none rounded-xl border border-white/[0.1] bg-white/[0.03] px-4 py-3 text-sm text-white outline-none transition-all duration-300 focus:border-[var(--accent)]/60 focus:bg-white/[0.05] focus:ring-2 focus:ring-[var(--accent)]/25 [color-scheme:dark]"
-                      >
-                        <option value="" disabled>Choisir un créneau</option>
-                        <option value="09:00">09h00 – 09h30</option>
-                        <option value="10:00">10h00 – 10h30</option>
-                        <option value="11:00">11h00 – 11h30</option>
-                        <option value="14:00">14h00 – 14h30</option>
-                        <option value="15:00">15h00 – 15h30</option>
-                        <option value="16:00">16h00 – 16h30</option>
-                        <option value="17:00">17h00 – 17h30</option>
-                        <option value="18:00">18h00 – 18h30</option>
-                      </select>
-                    </div>
-                  </div>
-                  <p className="mt-3 text-[0.72rem] leading-relaxed text-white/40">
-                    Notre équipe confirme votre créneau par WhatsApp dans les 2 heures ouvrées suivantes.
-                  </p>
-                </div>
-
-                <button
-                  type="submit"
-                  disabled={submitting}
-                  className="group mt-2 inline-flex items-center justify-center gap-2 rounded-full bg-[var(--accent)] px-7 py-4 text-sm font-semibold text-white transition-colors duration-300 hover:bg-[#3570e6] disabled:cursor-not-allowed disabled:opacity-60"
-                >
-                  {submitting ? 'Envoi en cours…' : 'Réserver mon appel stratégique'}
-                  {!submitting && <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />}
-                </button>
-
-                <p className="text-center text-[0.7rem] text-white/35">
-                  En soumettant ce formulaire, vous acceptez d&apos;être recontacté par Monolith AI. Aucune donnée n&apos;est partagée avec des tiers.
-                </p>
-              </form>
-            )}
+              <p className="mt-5 text-[0.8rem] text-white/45">
+                Ou enregistrez le numéro :{' '}
+                <span className="font-medium text-white/70">+33 6 78 33 78 50</span>
+              </p>
+            </div>
           </div>
         </div>
       </section>
@@ -2193,11 +2033,20 @@ export default function MonolithAIPage() {
               </p>
             </div>
 
-            <div className="flex flex-wrap gap-8 text-sm">
-              <a href="#solution" className="text-white/55 transition-colors hover:text-white">Notre Solution</a>
-              <a href="#processus" className="text-white/55 transition-colors hover:text-white">Le Processus</a>
-              <a href="#tarifs" className="text-white/55 transition-colors hover:text-white">Tarifs</a>
-              <a href="#contact" className="text-white/55 transition-colors hover:text-white">Contact</a>
+            <div className="flex flex-col items-start gap-6 md:items-end">
+              <div className="flex flex-wrap gap-8 text-sm">
+                <a href="#solution" className="text-white/55 transition-colors hover:text-white">Notre Solution</a>
+                <a href="#processus" className="text-white/55 transition-colors hover:text-white">Le Processus</a>
+                <a href="#tarifs" className="text-white/55 transition-colors hover:text-white">Tarifs</a>
+                <a {...waLinkProps} className="text-white/55 transition-colors hover:text-white">Contact</a>
+              </div>
+              <a
+                {...waLinkProps}
+                className="inline-flex items-center gap-2 rounded-full bg-[var(--accent)] px-6 py-3 text-sm font-semibold text-white transition-colors duration-300 hover:bg-[#3570e6]"
+              >
+                <WhatsAppIcon className="h-4 w-4" />
+                Discuter sur WhatsApp
+              </a>
             </div>
           </div>
 
