@@ -154,6 +154,66 @@ function SocialProof() {
   )
 }
 
+/* ─── FOMO callout ───────────────────────────────────────────────────────── */
+/* Sits between the hero and the three cases: names the race the visitor is
+   already losing, before the product is ever pitched. */
+function Hl({ children }: { children: ReactNode }) {
+  return <span className="font-bold text-[#3d7bfd]">{children}</span>
+}
+
+function FomoCallout() {
+  return (
+    <section className="relative px-6 pb-4 pt-4">
+      <div className="mx-auto max-w-4xl">
+        <div className="relative overflow-hidden rounded-2xl border border-[var(--line)] border-l-4 border-l-[#3d7bfd] bg-[#131419] p-7 sm:p-10">
+          {/* soft blue bloom anchored to the accent edge */}
+          <span
+            aria-hidden
+            className="pointer-events-none absolute -left-24 top-0 h-64 w-64 rounded-full bg-[#3d7bfd]/10 blur-3xl"
+          />
+
+          <div className="relative">
+            <span className="mb-4 inline-flex items-center gap-2 text-xs font-medium uppercase tracking-[0.22em] text-[#3d7bfd]">
+              <BoltIcon className="h-3.5 w-3.5" />
+              Ce que personne ne vous dit
+            </span>
+
+            <h2 className="font-[var(--font-syne)] text-[clamp(1.7rem,3.6vw,2.6rem)] font-semibold leading-[1.12] tracking-[-0.02em] text-white">
+              La course que <Hl>très peu d&apos;artisans</Hl> voient venir
+            </h2>
+
+            <div className="mt-6 space-y-5 text-[1rem] leading-[1.75] text-white/85">
+              <p>
+                Quand un client a une fuite d&apos;eau, une panne d&apos;électricité ou une porte
+                fracturée, il ne cherche pas « le meilleur » artisan,{' '}
+                <Hl>il cherche celui qui répond en premier</Hl>. Sur Google, il appelle 3 plombiers,
+                électriciens ou serruriers d&apos;affilée, parfois en même temps.{' '}
+                <Hl>
+                  Le premier qui décroche, qualifie le besoin et verrouille le rendez‑vous,
+                  c&apos;est lui qui gagne le chantier
+                </Hl>
+                . Pas le plus expérimenté, pas le moins cher,{' '}
+                <Hl>celui qui a été le plus rapide</Hl>.
+              </p>
+              <p>
+                C&apos;est une <Hl>course silencieuse</Hl> qui se joue en quelques minutes, tous les
+                jours, sur chaque urgence. Et la plupart des artisans ne la voient même pas, parce
+                qu&apos;ils ne savent jamais qu&apos;ils l&apos;ont perdue. Ils voient juste un appel
+                manqué, pas{' '}
+                <Hl>
+                  le chantier qui vient de partir chez le concurrent d&apos;à côté qui a décroché à
+                  leur place
+                </Hl>
+                .
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
 /* ─── FAQ ────────────────────────────────────────────────────────────────── */
 const FAQ_ITEMS = [
   {
@@ -1682,6 +1742,9 @@ export default function MonolithAIPage() {
           <VoiceAgentMockup />
         </div>
       </section>
+
+      {/* ════════════════════════════════════════════════════════ FOMO */}
+      <FomoCallout />
 
       {/* ════════════════════════════════════════════════════════ SOLUTION */}
       <section id="solution" className="relative px-6 py-28">
