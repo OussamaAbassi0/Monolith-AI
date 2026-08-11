@@ -613,6 +613,12 @@ const TESTIMONIALS_BOTTOM: Testimonial[] = [
     w: 576,
     h: 1024,
   },
+  {
+    text: "9 384 € encaissés en juillet. Un client serrurier, quelques semaines après la mise en place de l'agent Monolith AI.",
+    src: '/WhatsApp Image 2026-08-10 at 23.06.32.jpeg',
+    w: 721,
+    h: 1568,
+  },
 ]
 
 /* `tone` drives the red/green treatment on the money row only. */
@@ -1517,12 +1523,21 @@ function QuoteGrid() {
 
 /* ─── Testimonial card grid (text above screenshot) ──────────────────────── */
 function TestimonialGrid({ items, startIndex }: { items: Testimonial[]; startIndex: number }) {
+  /* A trailing card left alone on the last row is centred instead of hugging
+     the left edge — otherwise a 6th card looks like an accident. */
+  const orphanXl = items.length % 5 === 1
+  const orphanLg = items.length % 3 === 1
+
   return (
     <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
       {items.map((t, i) => (
         <figure
           key={t.src}
-          className="flex h-full flex-col overflow-hidden rounded-2xl border border-[var(--line)] bg-white/[0.02] p-4 transition-colors duration-300 hover:border-white/[0.18] hover:bg-white/[0.04]"
+          className={`flex h-full flex-col overflow-hidden rounded-2xl border border-[var(--line)] bg-white/[0.02] p-4 transition-colors duration-300 hover:border-white/[0.18] hover:bg-white/[0.04] ${
+            i === items.length - 1
+              ? `${orphanLg ? 'lg:col-start-2' : ''} ${orphanXl ? 'xl:col-start-3' : ''}`
+              : ''
+          }`}
         >
           {/* descriptive text sits ABOVE the screenshot */}
           <figcaption className="mb-4">
